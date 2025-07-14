@@ -1,0 +1,46 @@
+name: "🐞 Bug"
+description: "프론트엔드 UI/UX 버그 리포트를 위한 템플릿"
+labels: [frontend, bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: "🐛 버그 설명"
+      description: "무슨 문제가 발생했는지 간단히 적어 주세요."
+      placeholder: "ex) 버튼 클릭 시 아무 동작이 발생하지 않음"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "🔁 재현 방법"
+      description: |
+        문제를 어떻게 재현할 수 있었는지 단계별로 적어주세요:
+        1. 어떤 페이지에서
+        2. 어떤 동작을 했을 때
+        3. 어떤 현상이 발생했는지
+      placeholder: |
+        1. 로그인 페이지로 이동  
+        2. 이메일 입력 후 로그인 버튼 클릭  
+        3. 에러 메시지 출력 안 됨
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "✅ 기대 동작"
+      description: "정상적으로 동작했다면 어떻게 되었어야 하는지 적어주세요."
+      placeholder: "ex) 로그인 실패 시 '비밀번호가 틀렸습니다' 경고가 떠야 함"
+
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: "📸 스크린샷 (선택)"
+      description: "UI 깨짐/동작 오류가 보이는 화면 캡처를 첨부해 주세요."
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: "📝 기타 참고 사항"
+      description: "리뷰어나 팀원에게 알려야 할 추가적인 정보가 있다면 적어주세요."
