@@ -11,15 +11,17 @@ body:
     validations:
       required: true
 
+
   - type: textarea
     id: tasks
     attributes:
       label: ✅ 작업 내용
       description: 자유롭게 작성하세요. 아래는 예시입니다:
       placeholder: |
-        - [ ] 컴포넌트 추가 or 수정
-        - [ ] 사용자 이벤트 처리 (버튼, 입력 등)
+        - [ ] 컴포넌트 추가 or 수정  
+        - [ ] 사용자 이벤트 처리 (버튼, 입력 등)  
         - [ ] 애니메이션 or 스타일 작업
+
 
   - type: textarea
     id: references
