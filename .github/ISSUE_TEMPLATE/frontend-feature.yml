@@ -1,4 +1,4 @@
-name: 프론트엔드 기능 이슈
+name: ✨ Feature
 description: 프론트엔드 관련 UI/UX 기능 개발을 위한 이슈 템플릿
 labels: [frontend, feature]
 body:
@@ -11,14 +11,15 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
+  - type: textarea
     id: tasks
     attributes:
       label: ✅ 작업 내용
-      options:
-        - label: 컴포넌트 추가 or 수정
-        - label: 사용자 이벤트 처리 (버튼, 입력 등)
-        - label: 애니메이션 or 스타일 작업
+      description: 자유롭게 작성하세요. 아래는 예시입니다:
+      placeholder: |
+        - [ ] 컴포넌트 추가 or 수정
+        - [ ] 사용자 이벤트 처리 (버튼, 입력 등)
+        - [ ] 애니메이션 or 스타일 작업
 
   - type: textarea
     id: references
