@@ -1,0 +1,40 @@
+name: 프론트엔드 기능 이슈
+description: 프론트엔드 관련 UI/UX 기능 개발을 위한 이슈 템플릿
+labels: [frontend, feature]
+body:
+  - type: textarea
+    id: overview
+    attributes:
+      label: 📌 개요
+      description: 어떤 UI/기능을 개발하는지 간단히 설명해 주세요.
+      placeholder: ex) 로그인 버튼 클릭 시 상태 변경 및 알림 표시
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: ✅ 작업 내용
+      options:
+        - label: 컴포넌트 추가 or 수정
+        - label: 사용자 이벤트 처리 (버튼, 입력 등)
+        - label: 애니메이션 or 스타일 작업
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 📷 참고 자료
+      description: 디자인 링크 또는 참고 자료 (Figma 등)
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 📸 스크린샷 (선택)
+      description: 구현 중인 UI를 캡처해서 첨부할 수 있어요.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 기타 참고 사항
+      description: 리뷰어나 팀원에게 알려야 할 추가적인 정보가 있다면 작성해 주세요.
+      placeholder: ex) 이 기능은 로그인 이후 페이지에서만 테스트 가능함.
