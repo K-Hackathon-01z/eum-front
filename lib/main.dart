@@ -1,14 +1,18 @@
+import 'package:eum_demo/screens/user/career_test.dart';
 import 'package:flutter/material.dart';
-import '../widgets/user/button.dart';
-import '../widgets/user/skill_list.dart';
-import '../screens/user/home.dart';
+
 import '../widgets/user/navigation.dart';
-import '../screens/common/title.dart';
 import 'routes.dart';
 
 // 위젯 파일들은 따로 dart 파일에 두고 import해도 됩니다. 지금은 예시.
 
-void main() => runApp(const PreviewApp(child: TitleScreen()));
+// void main() => runApp(const PreviewApp(child: TitleScreen()));
+void main() => runApp(
+  MaterialApp(
+    home: TestScreen(), // ← 여기만 바꿔주면 됨!
+    debugShowCheckedModeBanner: false,
+  ),
+);
 
 // 보고 싶은 위젯은 아래처럼 child에 직접 전달!
 
@@ -19,7 +23,11 @@ class PreviewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: '/', routes: appRoutes, debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      initialRoute: '/',
+      routes: appRoutes,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
 
