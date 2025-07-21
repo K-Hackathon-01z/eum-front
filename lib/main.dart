@@ -9,7 +9,7 @@ import 'routes.dart';
 // void main() => runApp(const PreviewApp(child: TitleScreen()));
 void main() => runApp(
   MaterialApp(
-    home: TestScreen(), // ← 여기만 바꿔주면 됨!
+    home: CareerTestScreen(), // ← 여기만 바꿔주면 됨!
     debugShowCheckedModeBanner: false,
   ),
 );
