@@ -22,7 +22,7 @@ class TitleScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 290,
                       height: 155,
                       // decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class TitleScreen extends StatelessWidget {
                       // ),
                       child: Center(child: Image.asset('assets/logos/eum_logo_title.png', fit: BoxFit.contain)),
                     ),
-                    Container(
+                    SizedBox(
                       width: 140,
                       height: 100,
                       // decoration: BoxDecoration(

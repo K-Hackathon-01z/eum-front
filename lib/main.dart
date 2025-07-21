@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import '../widgets/user/button.dart';
-import '../widgets/user/skill_list.dart';
-import '../screens/user/home.dart';
-import '../widgets/user/navigation.dart';
 import '../screens/common/title.dart';
 import 'routes.dart';
 

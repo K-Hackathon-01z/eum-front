@@ -41,6 +41,8 @@ class _RootScreenState extends State<RootScreen> {
 }
 
 class PopularClassCard extends StatelessWidget {
+  const PopularClassCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -76,7 +78,7 @@ class PopularClassCard extends StatelessWidget {
 class BannerButton extends StatelessWidget {
   final IconData icon;
   final String text;
-  const BannerButton({required this.icon, required this.text});
+  const BannerButton({super.key, required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +104,8 @@ class BannerButton extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
