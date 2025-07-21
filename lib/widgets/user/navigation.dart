@@ -8,42 +8,31 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<IconData> icons = [Icons.home, Icons.map, Icons.explore, Icons.person];
-    //final List<String> labels = ['홈', '지도', '내 정보', '탐색'];
-
     return Container(
       height: 80,
-      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(0)),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(icons.length, (index) {
-          final isSelected = currentIndex == index;
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12), // 좌우 간격 추가
-            child: GestureDetector(
-              onTap: () => onTap(index),
-              behavior: HitTestBehavior.opaque,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(icons[index], size: 32, color: isSelected ? Colors.black : Colors.black26),
-                  const SizedBox(height: 4),
-                  /*Text(
-                    labels[index],
-                    style: TextStyle(
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      color: isSelected ? Colors.black : Colors.black26,
-                    ),
-                  ),*/
-                ],
-              ),
-            ),
-          );
-        }),
+      child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: onTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black26,
+        selectedFontSize: 0, // 라벨 숨김
+        unselectedFontSize: 0, // 라벨 숨김
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: 32), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.map, size: 32), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.explore, size: 32), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.person, size: 32), label: ''),
+        ],
       ),
     );
   }
