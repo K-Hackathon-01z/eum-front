@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/user/navigation.dart';
 import 'career.dart';
 import 'map.dart';
@@ -201,54 +202,112 @@ class HomeScreen extends StatelessWidget {
         ),
         // 정부지원금 배너
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(
-            margin: const EdgeInsets.only(bottom: 8),
             width: double.infinity,
             height: 108,
-            child: Row(
+            child: Stack(
               children: [
-                const SizedBox(width: 16),
                 Container(
-                  width: 72,
-                  height: 72,
-                  decoration: BoxDecoration(color: Colors.grey[400], borderRadius: BorderRadius.circular(36)),
-                  child: const Center(child: Text('임티')),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '이음 제안',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black54),
-                      ),
-                      const SizedBox(height: 4),
-                      const Text('나에게 꼭 맞는 정부 지원 혜택', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[700]?.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: const Text(
-                              '클릭 한 번으로 확인하기',
-                              style: TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, size: 20, color: Colors.grey[700]),
-                        ],
-                      ),
-                    ],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0x4DF5B342), // 30% 불투명도
+                        Color(0x4DF5E94C), // 30% 불투명도
+                      ],
+                      stops: [0.11, 0.96],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 4)],
                   ),
                 ),
-                const SizedBox(width: 16),
+                Positioned(
+                  left: 276,
+                  top: 18,
+                  child: Container(
+                    width: 72,
+                    height: 72,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: Center(child: SvgPicture.asset('assets/icons/money.svg')),
+                  ),
+                ),
+                Positioned(
+                  left: 35,
+                  top: 12,
+                  child: SizedBox(
+                    width: 67,
+                    height: 23,
+                    child: Text(
+                      '이음 제안',
+                      style: TextStyle(
+                        color: Colors.black.withValues(alpha: 0.50),
+                        fontSize: 13,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                        height: 1.69,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 35,
+                  top: 35,
+                  child: SizedBox(
+                    width: 261,
+                    height: 30,
+                    child: Text(
+                      '나에게 꼭 맞는 정부 지원 혜택',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                        height: 1.29,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 35,
+                  top: 69,
+                  child: Container(
+                    width: 256,
+                    height: 28,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          top: 0,
+                          child: Container(
+                            width: 205,
+                            height: 28,
+                            decoration: ShapeDecoration(
+                              color: const Color(0x7F4E4E4E),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 48,
+                          top: 3,
+                          child: Text(
+                            '클릭 한 번으로 확인하기',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
