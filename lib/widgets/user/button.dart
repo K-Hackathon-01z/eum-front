@@ -27,22 +27,12 @@ class Button extends StatelessWidget {
           backgroundColor: color,
           elevation: 10,
           shadowColor: Colors.black.withOpacity(0.25),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ),
     );
