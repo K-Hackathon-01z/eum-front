@@ -24,33 +24,3 @@ class PreviewApp extends StatelessWidget {
 }
 
 // ====== 아래부터는 커스텀 위젯들! ======
-
-class NavigationBarPreview extends StatefulWidget {
-  const NavigationBarPreview({super.key});
-
-  @override
-  State<NavigationBarPreview> createState() => _NavigationBarPreviewState();
-}
-
-class _NavigationBarPreviewState extends State<NavigationBarPreview> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // 선택된 탭 인덱스 표시 (테스트용)
-        const SizedBox(height: 24),
-        CustomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ),
-      ],
-    );
-  }
-}
