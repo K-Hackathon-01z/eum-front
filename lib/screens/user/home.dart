@@ -90,8 +90,8 @@ class BannerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -101,7 +101,7 @@ class BannerButton extends StatelessWidget {
         children: [
           Icon(icon, size: 28, color: Colors.black54),
           const SizedBox(width: 16),
-          Text(text, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          Text(text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
           const Spacer(),
           const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black26),
         ],
@@ -124,9 +124,9 @@ class HomeScreen extends StatelessWidget {
         children: [
           // 헤더
           Container(
-            height: 130,
+            height: 70,
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+            padding: const EdgeInsets.only(left: 24, right: 24, top: 10, bottom: 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -147,7 +147,6 @@ class HomeScreen extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
               width: double.infinity,
-              // height: 200, // 자동 높이로 변경
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -156,7 +155,13 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('오늘의 인기 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            const Text('오늘의 인기 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.whatshot, color: Colors.redAccent, size: 20),
+                          ],
+                        ),
                         Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
                       ],
                     ),
@@ -165,7 +170,7 @@ class HomeScreen extends StatelessWidget {
                     height: 170,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 16), // 좌우 여백 균일하게
                       itemCount: 3,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
@@ -184,7 +189,6 @@ class HomeScreen extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
               width: double.infinity,
-              // height: 188, // 자동 높이로 변경
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -193,7 +197,13 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('사용자 위치 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            const Text('사용자 위치 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.place, size: 20),
+                          ],
+                        ),
                         Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
                       ],
                     ),
@@ -202,9 +212,9 @@ class HomeScreen extends StatelessWidget {
                     height: 170,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 16), // 좌우 여백 균일하게
                       itemCount: 3,
-                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
                         return PopularClassCard();
                       },
@@ -216,17 +226,17 @@ class HomeScreen extends StatelessWidget {
           ),
           // 정부지원금 배너 (반응형, 그라데이션, SVG, 너비 통일)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Container(
               width: double.infinity,
               height: bannerHeight,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0x66F5B342), // #F5B342, 40% 불투명도
-                    Color(0x66F5E94C), // #F5E94C, 40% 불투명도
+                    Color(0xB3FFF9C4), // 밝은 파스텔 노랑 (연노랑, 50% 불투명도)
+                    Color(0xB3FFE082), // 파스텔 금빛 (밝은 노랑/금, 50% 불투명도)
                   ],
-                  stops: [0.1058, 0.9567],
+                  stops: [0.10, 0.95],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -256,22 +266,29 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 4),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '이음 제안',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.5),
-                                  fontSize: 13,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.69,
-                                ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '이음 제안',
+                                    style: TextStyle(
+                                      color: Colors.black.withOpacity(0.5),
+                                      fontSize: 13,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.69,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Icon(Icons.auto_awesome, color: Colors.black.withOpacity(0.5), size: 18),
+                                ],
                               ),
                               const SizedBox(height: 4),
                               const Text(
@@ -326,11 +343,11 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 BannerButton(icon: Icons.people, text: '장인 • 작가 목록 보기'),
-                BannerButton(icon: Icons.list, text: '전통 기술 목록 보기'),
+                BannerButton(icon: Icons.handyman, text: '전통 기술 목록 보기'),
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          //const SizedBox(height: 24),
         ],
       ),
     );
