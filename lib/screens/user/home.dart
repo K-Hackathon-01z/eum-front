@@ -4,6 +4,7 @@ import '../../widgets/user/navigation.dart';
 import 'career.dart';
 import 'map.dart';
 import 'my_info.dart';
+import 'government_help.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -302,27 +303,35 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Container(
-                                width: 200, // 텍스트 길이에 따라 자동 조절
-                                height: 28,
-                                decoration: BoxDecoration(
-                                  color: const Color(0x7F4E4E4E),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 12),
-                                    child: Text(
-                                      '클릭 한 번으로 확인하기',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 11,
-                                        fontFamily: 'Inter',
-                                        fontWeight: FontWeight.w700,
-                                        height: 2,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => GovernmentHelpScreen()),
+                                  );
+                                },
+                                child: Container(
+                                  width: 200, // 텍스트 길이에 따라 자동 조절
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0x7F4E4E4E),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 12),
+                                      child: Text(
+                                        '클릭 한 번으로 확인하기',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 11,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w700,
+                                          height: 2,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ),
