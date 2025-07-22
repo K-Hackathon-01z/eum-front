@@ -86,26 +86,30 @@ class PopularClassCard extends StatelessWidget {
 class BannerButton extends StatelessWidget {
   final IconData icon;
   final String text;
-  const BannerButton({super.key, required this.icon, required this.text});
+  final VoidCallback? onTap;
+  const BannerButton({super.key, required this.icon, required this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 4)],
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 28, color: Colors.black54),
-          const SizedBox(width: 16),
-          Text(text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          const Spacer(),
-          const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black26),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 4)],
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 28, color: Colors.black54),
+            const SizedBox(width: 16),
+            Text(text, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            const Spacer(),
+            const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black26),
+          ],
+        ),
       ),
     );
   }
@@ -163,7 +167,12 @@ class HomeScreen extends StatelessWidget {
                             Icon(Icons.whatshot, color: Colors.redAccent, size: 20),
                           ],
                         ),
-                        Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/oneday-class');
+                          },
+                          child: Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
+                        ),
                       ],
                     ),
                   ),
@@ -205,7 +214,12 @@ class HomeScreen extends StatelessWidget {
                             Icon(Icons.place, size: 20),
                           ],
                         ),
-                        Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/oneday-class');
+                          },
+                          child: Icon(Icons.arrow_forward, size: 28, color: Colors.grey[700]),
+                        ),
                       ],
                     ),
                   ),
@@ -305,9 +319,9 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(height: 8),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
+                                  Navigator.pushNamed(
                                     context,
-                                    MaterialPageRoute(builder: (context) => GovernmentHelpScreen()),
+                                    '/government-help', // 정부 지원 혜택 페이지로 이동
                                   );
                                 },
                                 child: Container(
@@ -351,8 +365,20 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
               children: [
-                BannerButton(icon: Icons.handyman, text: '전통 기술 목록 보기'),
-                BannerButton(icon: Icons.people, text: '장인 • 작가 목록 보기'),
+                BannerButton(
+                  icon: Icons.handyman,
+                  text: '전통 기술 목록 보기',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/skill-list');
+                  },
+                ),
+                BannerButton(
+                  icon: Icons.people,
+                  text: '장인 • 작가 목록 보기',
+                  onTap: () {
+                    Navigator.pushNamed(context, '/creator-list');
+                  },
+                ),
               ],
             ),
           ),
