@@ -6,8 +6,7 @@ class SkillList extends StatelessWidget {
   final String photoLabel;
   final VoidCallback? onTap;
 
-  const SkillList({Key? key, this.title = '기술명', this.category = '카테고리', this.photoLabel = 'Photo', this.onTap})
-    : super(key: key);
+  const SkillList({super.key, this.title = '기술명', this.category = '카테고리', this.photoLabel = 'Photo', this.onTap});
 
   @override
   Widget build(BuildContext context) {

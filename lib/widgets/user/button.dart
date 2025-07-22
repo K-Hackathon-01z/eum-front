@@ -8,13 +8,13 @@ class Button extends StatelessWidget {
   final Color color;
 
   const Button({
-    Key? key,
+    super.key,
     this.text = '텍스트',
     this.onPressed,
     this.width = 220,
     this.height = 48,
     this.color = const Color(0xFFD9D9D9),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
