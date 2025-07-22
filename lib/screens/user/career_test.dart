@@ -5,7 +5,6 @@ import 'home.dart';
 // 예시 데이터 (DB에서 받아온다고 가정)
 final question = "전통 기술을 배우고 싶은 이유는 무엇인가요?";
 final options = ["취미", "취업", "창업", "멘토 만남", "기타"];
-
 // 이건 그냥 고정해두어도 됨 db쓸 필요 없음
 final description = "목표에 맞는 맞춤 추천을 제공해요!";
 
@@ -16,14 +15,15 @@ class CareerTestScreen extends StatefulWidget {
 }
 
 class _CareerTestScreenState extends State<CareerTestScreen> {
-  int selectedIndex = 0; // 선택된 인덱스
-
-  // 여기다가 상태 관리 하는 서비스 두어야 함
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    // build 함수는 화면을 구성하는 메서드
-    // 위젯 그려주는 함수
+    // final controller = Provider.of<TestController>(context); // 상태 불러오기
+    // final question = controller.currentQuestion;
+    // final options = question.options;
+    // var selectedIndex = controller.selectedIndex;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -126,7 +126,11 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    // 다음 질문으로 이동
+                    // if (controller.isLast) {
+                    //   controller.submit();
+                    // } else {
+                    //   controller.goToNext(); // 다음 문제로 이동
+                    // }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFF2F2F2),

@@ -1,14 +1,19 @@
 class Question {
-  final String id;
-  final String title;
+  final int id;
+  final String questionText;
   final List<Option> options;
 
-  Question({required this.id, required this.title, required this.options});
+  // 생성자
+  Question({
+    required this.id,
+    required this.questionText,
+    required this.options,
+  });
 
   factory Question.fromJson(Map<String, dynamic> json) {
     return Question(
       id: json['id'],
-      title: json['title'],
+      questionText: json['text'],
       options: (json['options'] as List)
           .map((opt) => Option.fromJson(opt))
           .toList(),
@@ -16,10 +21,12 @@ class Question {
   }
 }
 
+// 어차피 딸려오는거라 그냥 분리 안함
 class Option {
-  final String id;
+  final int id;
   final String text;
 
+  // 생성자
   Option({required this.id, required this.text});
 
   factory Option.fromJson(Map<String, dynamic> json) {

@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import '../../models/career_test/question.dart';
 
-class TestService {
-  Future<List<Question>> fetchQuestions(dynamic http) async {
-    // 여기다가 api 쓰기
-    final res = await http.get(Uri.parse('https://your.api/questions'));
-    final data = jsonDecode(res.body) as List;
-    return data.map((q) => Question.fromJson(q)).toList();
+Future<List<Question>> fetchQuestions() async {
+  var http;
+  final response = await http.get(Uri.parse('https://your.api/survey'));
+
+  if (response.statusCode == 200) {
+    final List data = json.decode(response.body);
+    return data.map((e) => Question.fromJson(e)).toList();
+  } else {
+    // 응답 실패시 예외 던지기
+    throw Exception('Failed to load survey');
   }
 }
