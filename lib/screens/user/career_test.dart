@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
 // 예시 데이터 (DB에서 받아온다고 가정)
 final question = "전통 기술을 배우고 싶은 이유는 무엇인가요?";
 final options = ["취미", "취업", "창업", "멘토 만남", "기타"];
@@ -33,13 +31,8 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // 홈화면으로 이동
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (_) => HomeScreen()),
-              (route) => false, // 이전 스택 전부 제거(설문 초기화 하려고)
-              // 로그인 상태는 우리가 전역적으로 관리할거라 화면 날리는건 상관없음
-            );
+            // 홈화면으로 이동 (네임드 라우트, 스택 초기화) 일단 이거 원래는 홈이 아닐텐데 임시로
+            Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
           },
         ),
         title: Text(
@@ -56,10 +49,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
             // 진행률
             Align(
               alignment: Alignment.center,
-              child: Text(
-                "20% 진행중...",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              child: Text("20% 진행중...", style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             SizedBox(height: 24),
             // 질문
@@ -94,22 +84,16 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? Color(0xFFB9A6E7)
-                            : Color(0xFFF2EDFB),
+                        color: isSelected ? Color(0xFFB9A6E7) : Color(0xFFF2EDFB),
                         borderRadius: BorderRadius.circular(20),
-                        border: isSelected
-                            ? Border.all(color: Color(0xFF3B2D5B), width: 3)
-                            : null,
+                        border: isSelected ? Border.all(color: Color(0xFF3B2D5B), width: 3) : null,
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         options[index],
                         style: TextStyle(
                           fontSize: 18,
-                          color: isSelected
-                              ? Color(0xFF3B2D5B)
-                              : Color(0xFFB9A6E7),
+                          color: isSelected ? Color(0xFF3B2D5B) : Color(0xFFB9A6E7),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -135,17 +119,11 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFF2F2F2),
                     elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   ),
                   child: Text(
                     "다음으로",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
               ),

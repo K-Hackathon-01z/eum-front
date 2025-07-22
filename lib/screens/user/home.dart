@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/user/navigation.dart';
-import 'career.dart';
+import 'career_test.dart';
 import 'map.dart';
 import 'my_info.dart';
-import 'government_help.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -16,7 +15,7 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [HomeScreen(), MapScreen(), CareerScreen(), MyInfoScreen()];
+  final List<Widget> _pages = [HomeScreen(), MapScreen(), CareerTestScreen(), MyInfoScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +119,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double bannerWidth = screenWidth < 500 ? screenWidth - 32 : 468; // 모바일/웹 대응
     final double bannerHeight = 108;
 
     return SingleChildScrollView(
