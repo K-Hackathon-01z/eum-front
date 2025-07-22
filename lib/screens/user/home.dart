@@ -233,8 +233,8 @@ class HomeScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xB3FFF9C4), // 밝은 파스텔 노랑 (연노랑, 50% 불투명도)
                     Color(0xB3FFE082), // 파스텔 금빛 (밝은 노랑/금, 50% 불투명도)
+                    Color(0xB3FFF9C4), // 밝은 파스텔 노랑 (연노랑, 50% 불투명도)
                   ],
                   stops: [0.10, 0.95],
                   begin: Alignment.topCenter,
@@ -258,7 +258,7 @@ class HomeScreen extends StatelessWidget {
                             'assets/icons/money.svg',
                             width: 64,
                             height: 64,
-                            colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                            colorFilter: const ColorFilter.mode(Color.fromARGB(255, 83, 83, 83), BlendMode.srcIn),
                           ),
                         ),
                       ),
@@ -342,8 +342,8 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Column(
               children: [
-                BannerButton(icon: Icons.people, text: '장인 • 작가 목록 보기'),
                 BannerButton(icon: Icons.handyman, text: '전통 기술 목록 보기'),
+                BannerButton(icon: Icons.people, text: '장인 • 작가 목록 보기'),
               ],
             ),
           ),
