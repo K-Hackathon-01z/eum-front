@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/user/navigation.dart';
+
 class MyInfoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class MyInfoPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFF7F7F7),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.blueAccent),
+                //border: Border.all(color: Colors.blueAccent),
               ),
               padding: EdgeInsets.all(16),
               child: Row(
@@ -104,22 +106,13 @@ class MyInfoPage extends StatelessWidget {
         ],
       ),
       // 하단 네비게이션 바
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 4,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: ''),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.do_not_disturb_on),
-            label: '',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
-        ],
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey[400],
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+      bottomNavigationBar: CustomNavigationBar(
+        currentIndex: 3,
+        onTap: (index) {
+          // setState(() {
+          //   _currentIndex = index;
+          // });
+        },
       ),
     );
   }
