@@ -12,14 +12,14 @@ class OnedayClassCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      height: 300,
       decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(24)),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             width: double.infinity,
-            height: 200,
+            height: 180,
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: LayoutBuilder(
@@ -52,9 +52,9 @@ class OnedayClassCard extends StatelessWidget {
                   region,
                   style: const TextStyle(fontSize: 13, color: Colors.black54, fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 10),
                 Text(desc, style: const TextStyle(fontSize: 13, color: Colors.black, height: 1.3)),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Text(
                   price,
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),

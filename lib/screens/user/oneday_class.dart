@@ -30,8 +30,8 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.5,
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
@@ -43,10 +43,14 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, color: Colors.black),
+            icon: const Icon(Icons.search, color: Colors.black, size: 32),
             onPressed: () {},
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[500], height: 1.0),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +118,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 18,
                   crossAxisSpacing: 18,
-                  childAspectRatio: 0.5,
+                  childAspectRatio: 0.55,
                 ),
                 itemBuilder: (context, idx) {
                   final data = classData[idx];
