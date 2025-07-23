@@ -13,10 +13,10 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
   int selectedCategory = 0;
 
   final List<Map<String, String>> classData = [
-    {'region': '서울시 광진구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다.\n두 줄까지 입력 가능합니다.', 'price': '52,000원'},
-    {'region': '서울시 동대문구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다.\n두 줄까지 입력 가능합니다.', 'price': '30,000원'},
-    {'region': '서울시 송파구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다.\n두 줄까지 입력 가능합니다.', 'price': '100,000원'},
-    {'region': '서울시 서초구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다.\n두 줄까지 입력 가능합니다.', 'price': '97,000원'},
+    {'region': '서울시 광진구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '52,000원'},
+    {'region': '서울시 동대문구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '30,000원'},
+    {'region': '서울시 송파구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '100,000원'},
+    {'region': '서울시 서초구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '97,000원'},
   ];
 
   @override
@@ -44,7 +44,42 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.search, color: Colors.black, size: 32),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                barrierColor: Colors.black.withOpacity(0.2),
+                builder: (context) {
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 60, left: 20, right: 20),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8)],
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.search, color: Colors.black54),
+                            const SizedBox(width: 8),
+                            const Expanded(
+                              child: TextField(
+                                autofocus: true,
+                                decoration: InputDecoration(hintText: '검색어를 입력하세요', border: InputBorder.none),
+                              ),
+                            ),
+                            IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ],
         bottom: PreferredSize(
