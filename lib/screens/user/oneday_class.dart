@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/widgets/user/oneday_class_card.dart';
 
 class OnedayClassScreen extends StatefulWidget {
   const OnedayClassScreen({super.key});
@@ -117,67 +118,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                 ),
                 itemBuilder: (context, idx) {
                   final data = classData[idx];
-                  return Container(
-                    decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(24)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                LayoutBuilder(
-                                  builder: (context, constraints) {
-                                    final double size = constraints.maxWidth;
-                                    return Container(
-                                      width: size,
-                                      height: size,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFD9D9D9),
-                                        borderRadius: BorderRadius.circular(18),
-                                      ),
-                                      alignment: Alignment.center,
-                                      child: const Text(
-                                        'Photo',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(height: 7),
-                                Text(
-                                  data['region']!,
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  data['desc']!,
-                                  style: const TextStyle(fontSize: 13, color: Colors.black, height: 1.3),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                          child: Text(
-                            data['price']!,
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                  return OnedayClassCard(region: data['region']!, desc: data['desc']!, price: data['price']!);
                 },
               ),
             ),
