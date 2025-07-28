@@ -14,7 +14,7 @@ void main() {
     ),
   );
 }
-// 보고 싶은 위젯은 아래처럼 child에 직접 전달!
+//보고 싶은 위젯은 아래처럼 child에 직접 전달!
 
 // 전체 앱이 아니라, SINGLE 위젯만 centering/배경 등이 적용된 프리뷰 앱!
 class PreviewApp extends StatelessWidget {

@@ -16,17 +16,29 @@ class MyInfoPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.black),
+        elevation: 1,
+        //leading: Icon(Icons.arrow_back, color: Colors.black), // 뒤로가기
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Colors.black),
+        //   onPressed: () {
+        //     // 이전 페이지로 돌아가기
+        //
+        //   },
+        // ),
         title: Text(
           '내 정보',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
-          Icon(Icons.settings, color: Colors.black),
-          SizedBox(width: 16),
+          //Icon(Icons.settings, color: Colors.black),
+          //SizedBox(width: 16),
+          IconButton(icon: Icon(Icons.settings), onPressed: () {}),
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
+          child: Container(color: Colors.grey.shade300, height: 1.0),
+        ),
       ),
       body: Column(
         children: [
