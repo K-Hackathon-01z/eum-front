@@ -1,3 +1,4 @@
+import 'package:eum_demo/screens/user/settingpage.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/user/navigation.dart';
@@ -33,7 +34,16 @@ class MyInfoPage extends StatelessWidget {
         actions: [
           //Icon(Icons.settings, color: Colors.black),
           //SizedBox(width: 16),
-          IconButton(icon: Icon(Icons.settings), onPressed: () {}),
+          IconButton(
+            icon: Icon(Icons.settings, size: 32),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => settingpage()),
+              );
+            },
+          ),
+          SizedBox(width: 16),
         ],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
