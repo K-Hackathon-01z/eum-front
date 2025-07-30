@@ -32,7 +32,7 @@ class MyInfoPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Settings()),
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
               );
             },
           ),
