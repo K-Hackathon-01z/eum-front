@@ -4,8 +4,6 @@ import 'package:eum_demo/screens/user/my_info/settings.dart';
 import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
 
-import '../../../widgets/user/navigation.dart';
-
 class MyInfoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -147,12 +145,12 @@ class MyInfoPage extends StatelessWidget {
         ],
       ),
       // 하단 네비게이션 바
-      bottomNavigationBar: CustomNavigationBar(
-        currentIndex: 3,
-        onTap: (index) {
-          // 여기다가 다른데 누르면 넘어가지게 만들어야함!!
-        },
-      ),
+      // bottomNavigationBar: CustomNavigationBar(
+      //   currentIndex: 3,
+      //   onTap: (index) {
+      //     // 여기다가 다른데 누르면 넘어가지게 만들어야함!!
+      //   },
+      // ),
     );
   }
 }
