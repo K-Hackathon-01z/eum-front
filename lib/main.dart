@@ -1,4 +1,4 @@
-import 'package:eum_demo/screens/user/my_info_real.dart';
+import 'package:eum_demo/screens/user/my_info/my_info_real.dart';
 import 'package:flutter/material.dart';
 
 import 'routes.dart';

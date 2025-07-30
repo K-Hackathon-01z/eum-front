@@ -1,7 +1,10 @@
-import 'package:eum_demo/screens/user/settingpage.dart';
+import 'package:eum_demo/screens/user/my_info/favorite_classes.dart';
+import 'package:eum_demo/screens/user/my_info/matching_requests.dart';
+import 'package:eum_demo/screens/user/my_info/settings.dart';
+import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/user/navigation.dart';
+import '../../../widgets/user/navigation.dart';
 
 class MyInfoApp extends StatelessWidget {
   @override
@@ -18,14 +21,6 @@ class MyInfoPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
-        //leading: Icon(Icons.arrow_back, color: Colors.black), // 뒤로가기
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back, color: Colors.black),
-        //   onPressed: () {
-        //     // 이전 페이지로 돌아가기
-        //
-        //   },
-        // ),
         title: Text(
           '내 정보',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -39,7 +34,7 @@ class MyInfoPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => settingpage()),
+                MaterialPageRoute(builder: (context) => Settings()),
               );
             },
           ),
@@ -58,7 +53,7 @@ class MyInfoPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Color(0xFFF7F7F7),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(25),
                 //border: Border.all(color: Colors.blueAccent),
               ),
               padding: EdgeInsets.all(16),
@@ -85,7 +80,7 @@ class MyInfoPage extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '(25세)',
+                              '나이 여기다가 적으셈',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
@@ -95,7 +90,7 @@ class MyInfoPage extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          '주소 예시입니다. 한 줄로 입력됩니다.',
+                          '주소 여기다가 넣으면 됨.',
                           style: TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       ],
@@ -109,21 +104,45 @@ class MyInfoPage extends StatelessWidget {
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           // 메뉴 리스트
           ListTile(
-            title: Text('이용 내역'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {},
+            title: Text('이용내역'),
+            trailing: IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {
+                // 여기서 원하는 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UsageHistory()),
+                );
+              },
+            ),
           ),
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           ListTile(
             title: Text('매칭 신청 내역'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {},
+            trailing: IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {
+                // 여기서 원하는 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MatchingRequests()),
+                );
+              },
+            ),
           ),
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           ListTile(
             title: Text('나의 관심 등록 클래스'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {},
+            trailing: IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {
+                // 여기서 원하는 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FavoriteClasses()),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -131,9 +150,7 @@ class MyInfoPage extends StatelessWidget {
       bottomNavigationBar: CustomNavigationBar(
         currentIndex: 3,
         onTap: (index) {
-          // setState(() {
-          //   _currentIndex = index;
-          // });
+          // 여기다가 다른데 누르면 넘어가지게 만들어야함!!
         },
       ),
     );
