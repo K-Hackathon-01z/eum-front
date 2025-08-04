@@ -20,7 +20,7 @@ class _RootScreenState extends State<RootScreen> {
     HomeScreen(),
     MapScreen(),
     CareerTestScreen(),
-    MyInfoPage(),
+    MyInfoScreen(),
   ];
 
   @override

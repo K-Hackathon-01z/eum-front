@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 class MyInfoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyInfoPage(), debugShowCheckedModeBanner: false);
+    return MaterialApp(home: MyInfoScreen(), debugShowCheckedModeBanner: false);
   }
 }
 
-class MyInfoPage extends StatelessWidget {
+class MyInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
