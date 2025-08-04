@@ -1,6 +1,6 @@
 import 'package:eum_demo/screens/user/my_info/favorite_classes.dart';
 import 'package:eum_demo/screens/user/my_info/matching_requests.dart';
-import 'package:eum_demo/screens/user/my_info/settings.dart';
+import 'package:eum_demo/screens/user/my_info/setting/settings.dart';
 import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
 

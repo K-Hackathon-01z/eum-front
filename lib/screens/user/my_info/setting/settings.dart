@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'favorite_classes.dart';
-import 'matching_requests.dart';
+import '../favorite_classes.dart';
+import '../matching_requests.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class SettingsScreen extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 23,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,
