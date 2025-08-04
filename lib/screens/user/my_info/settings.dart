@@ -37,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
         color: Colors.white, // 배경색
         child: Column(
           children: [
-            // 사용자 정보 보여주기
+            // 이건 그냥 제목
             ListTile(
               title: Text(
                 '사용자 정보',
@@ -48,7 +48,8 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // 비번 변경 제목
+
+            // 비밀번호 변경 섹션
             ListTile(
               title: Text('비밀번호 변경하기'),
               trailing: IconButton(
@@ -64,6 +65,7 @@ class SettingsScreen extends StatelessWidget {
             ),
 
             Divider(height: 1, thickness: 1, color: Colors.grey[300]),
+            // 계정 탈퇴
             ListTile(
               title: Text('계정 탈퇴'),
               trailing: IconButton(
@@ -77,7 +79,9 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
             ),
+
             Divider(height: 1, thickness: 1, color: Colors.grey[300]),
+            // 로그아웃
             ListTile(
               title: Text('로그아웃'),
               trailing: IconButton(
