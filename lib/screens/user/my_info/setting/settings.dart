@@ -1,3 +1,4 @@
+import 'package:eum_demo/widgets/user/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 import '../favorite_classes.dart';
@@ -10,29 +11,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          '설정',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
-          child: Container(color: Colors.grey.shade300, height: 1.0),
-        ),
-      ),
+      appBar: CustomAppBar(title: '설정'),
       body: Container(
         color: Colors.white, // 배경색
         child: Column(
