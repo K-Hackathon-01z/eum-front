@@ -37,36 +37,32 @@ class SettingsScreen extends StatelessWidget {
         color: Colors.white, // 배경색
         child: Column(
           children: [
-            // 사용자 정보 섹션
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '사용자 정보',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  _buildMenuItem(
-                    title: '비밀번호 변경하기',
-                    onTap: () {
-                      // 비밀번호 변경 페이지로 이동
-                    },
-                  ),
-                ],
+            // 사용자 정보 보여주기
+            ListTile(
+              title: Text(
+                '사용자 정보',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            // 비번 변경 제목
+            ListTile(
+              title: Text('비밀번호 변경하기'),
+              trailing: IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  // 여기서 원하는 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MatchingRequests()),
+                  );
+                },
               ),
             ),
 
-            // 구분선
-            Divider(height: 1, thickness: 1, color: Colors.grey[300]),
-
-            // 계정 관리 섹션
             Divider(height: 1, thickness: 1, color: Colors.grey[300]),
             ListTile(
               title: Text('계정 탈퇴'),
@@ -95,23 +91,6 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMenuItem({required String title, required VoidCallback onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title, style: TextStyle(color: Colors.black, fontSize: 16)),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 16),
           ],
         ),
       ),
