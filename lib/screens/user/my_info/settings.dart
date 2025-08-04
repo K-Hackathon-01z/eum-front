@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'favorite_classes.dart';
+import 'matching_requests.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -9,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: () {
@@ -21,13 +24,17 @@ class SettingsScreen extends StatelessWidget {
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 23,
           ),
         ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
+          child: Container(color: Colors.grey.shade300, height: 1.0),
+        ),
       ),
       body: Container(
-        color: Color(0xFFF5F5F5), // 배경색
+        color: Colors.white, // 배경색
         child: Column(
           children: [
             // 사용자 정보 섹션
@@ -57,39 +64,35 @@ class SettingsScreen extends StatelessWidget {
             ),
 
             // 구분선
-            Container(
-              height: 1,
-              color: Colors.grey[300],
-              margin: EdgeInsets.symmetric(horizontal: 20),
-            ),
+            Divider(height: 1, thickness: 1, color: Colors.grey[300]),
 
             // 계정 관리 섹션
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  _buildMenuItem(
-                    title: '계정 탈퇴',
-                    onTap: () {
-                      // 계정 탈퇴 페이지로 이동
-                    },
-                  ),
-
-                  // 구분선
-                  Container(
-                    height: 1,
-                    color: Colors.grey[300],
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                  ),
-
-                  _buildMenuItem(
-                    title: '로그아웃',
-                    onTap: () {
-                      // 로그아웃 처리
-                    },
-                  ),
-                ],
+            Divider(height: 1, thickness: 1, color: Colors.grey[300]),
+            ListTile(
+              title: Text('계정 탈퇴'),
+              trailing: IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  // 여기서 원하는 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MatchingRequests()),
+                  );
+                },
+              ),
+            ),
+            Divider(height: 1, thickness: 1, color: Colors.grey[300]),
+            ListTile(
+              title: Text('로그아웃'),
+              trailing: IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  // 여기서 원하는 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavoriteClasses()),
+                  );
+                },
               ),
             ),
           ],

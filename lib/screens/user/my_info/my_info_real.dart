@@ -25,8 +25,6 @@ class MyInfoPage extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          //Icon(Icons.settings, color: Colors.black),
-          //SizedBox(width: 16),
           IconButton(
             icon: Icon(Icons.settings, size: 32),
             onPressed: () {
@@ -47,7 +45,7 @@ class MyInfoPage extends StatelessWidget {
         children: [
           // 프로필 카드
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
             child: Container(
               decoration: BoxDecoration(
                 color: Color(0xFFF7F7F7),
@@ -144,13 +142,6 @@ class MyInfoPage extends StatelessWidget {
           ),
         ],
       ),
-      // 하단 네비게이션 바
-      // bottomNavigationBar: CustomNavigationBar(
-      //   currentIndex: 3,
-      //   onTap: (index) {
-      //     // 여기다가 다른데 누르면 넘어가지게 만들어야함!!
-      //   },
-      // ),
     );
   }
 }
