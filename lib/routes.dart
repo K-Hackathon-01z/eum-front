@@ -14,4 +14,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/skill-list': (context) => const SkillListScreen(),
   '/creator-list': (context) => const CreatorListScreen(),
   '/oneday-class': (context) => const OnedayClassScreen(),
+  //'/card-detail': (context) => const CardDetailScreen(), 생성자 데이터가 필수이기에 라우팅에서 제외
 };

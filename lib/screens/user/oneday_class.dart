@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/user/oneday_class_card.dart';
+import 'card_detail.dart';
 
 class OnedayClassScreen extends StatefulWidget {
   const OnedayClassScreen({super.key});
@@ -157,7 +158,24 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                 ),
                 itemBuilder: (context, idx) {
                   final data = classData[idx];
-                  return OnedayClassCard(region: data['region']!, desc: data['desc']!, price: data['price']!);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => CardDetailScreen(
+                            imageUrl: 'https://placehold.co/450x240', // 예시 이미지
+                            desc: data['desc']!,
+                            price: data['price']!,
+                            region: data['region']!,
+                            capacity: 0, // 필요시 데이터 추가
+                            interest: 0, // 필요시 데이터 추가
+                          ),
+                        ),
+                      );
+                    },
+                    child: OnedayClassCard(region: data['region']!, desc: data['desc']!, price: data['price']!),
+                  );
                 },
               ),
             ),
