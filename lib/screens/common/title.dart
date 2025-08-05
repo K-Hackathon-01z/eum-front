@@ -49,7 +49,7 @@ class TitleScreen extends StatelessWidget {
                     text: '시작하기',
                     width: 350,
                     height: 48,
-                    color: Color(0xffDAD3E8),
+                    backgroundColor: Color(0xffDAD3E8),
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/home');
                     },

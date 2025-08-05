@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/user/button.dart';
+import '../../widgets/user/calendar.dart';
 
 class CardDetailScreen extends StatefulWidget {
   final String imageUrl;
@@ -140,8 +141,25 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                     text: '예약하기',
                     width: double.infinity,
                     height: 48,
-                    color: const Color(0xFFD9D9D9),
-                    onPressed: () {},
+                    backgroundColor: const Color(0xFFD9D9D9),
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                        ),
+                        builder: (context) => Padding(
+                          padding: MediaQuery.of(context).viewInsets,
+                          child: CalendarWidget(
+                            onSelected: (date, time) {
+                              // 예약 처리 로직 추가 가능
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
