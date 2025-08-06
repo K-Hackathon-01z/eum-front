@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class SkillList extends StatelessWidget {
   final String title;
-  final String category;
   final String photoLabel;
   final VoidCallback? onTap;
 
-  const SkillList({super.key, this.title = '기술명', this.category = '카테고리', this.photoLabel = 'Photo', this.onTap});
+  const SkillList({super.key, this.title = '기술명', this.photoLabel = 'Photo', this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +37,12 @@ class SkillList extends StatelessWidget {
             ),
             // 가운데 텍스트 영역
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    category,
-                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black38),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    title,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
-                ],
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               ),
             ),
             // 오른쪽 확장 아이콘

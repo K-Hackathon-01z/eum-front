@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/user/skill_list.dart';
 
 class SkillListScreen extends StatelessWidget {
   const SkillListScreen({super.key});
@@ -6,10 +7,10 @@ class SkillListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF1F1F1),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color(0xFFF1F1F1),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
@@ -65,7 +66,20 @@ class SkillListScreen extends StatelessWidget {
           child: Container(color: Colors.grey[500], height: 1.0),
         ),
       ),
-      body: const Center(child: Text('전통 기술 목록 페이지')),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        children: [
+          for (int i = 0; i < 3; i++) ...[
+            SkillList(title: '금속 공예', photoLabel: 'Photo'),
+            SkillList(title: '나전칠기', photoLabel: 'Photo'),
+            SkillList(title: '도자기', photoLabel: 'Photo'),
+            SkillList(title: '칠장 (옻칠)', photoLabel: 'Photo'),
+            SkillList(title: '칠장 (칠화)', photoLabel: 'Photo'),
+            SkillList(title: '칠장 (황칠)', photoLabel: 'Photo'),
+            SkillList(title: '칠장 (남태칠)', photoLabel: 'Photo'),
+          ],
+        ],
+      ),
     );
   }
 }

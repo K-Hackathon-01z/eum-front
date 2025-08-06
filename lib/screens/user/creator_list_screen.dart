@@ -6,10 +6,10 @@ class CreatorListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF1F1F1),
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color(0xFFF1F1F1),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
