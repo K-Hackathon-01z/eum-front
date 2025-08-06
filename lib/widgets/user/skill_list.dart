@@ -1,3 +1,4 @@
+import 'skill_detail.dart';
 import 'package:flutter/material.dart';
 
 class SkillList extends StatelessWidget {
@@ -10,7 +11,14 @@ class SkillList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap:
+          onTap ??
+          () {
+            showDialog(
+              context: context,
+              builder: (_) => SkillDetail(name: title, skill: '기술 예시', works: '주요작품 예시', bio: '약력 예시'),
+            );
+          },
       child: Container(
         height: 80,
         width: double.infinity,
