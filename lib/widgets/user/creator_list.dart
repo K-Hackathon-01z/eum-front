@@ -1,12 +1,12 @@
-import 'skill_detail.dart';
 import 'package:flutter/material.dart';
+import 'creator_detail.dart';
 
-class SkillList extends StatelessWidget {
+class CreatorList extends StatelessWidget {
   final String title;
   final String photoLabel;
   final VoidCallback? onTap;
 
-  const SkillList({super.key, this.title = '기술명', this.photoLabel = 'Photo', this.onTap});
+  const CreatorList({super.key, this.title = '이름', this.photoLabel = 'Photo', this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SkillList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => SkillDetail(name: title, skill: '기술 예시', works: '주요작품 예시', bio: '약력 예시'),
+              builder: (_) => CreatorDetail(name: title, skill: '기술 예시', works: '주요작품 예시', bio: '약력 예시'),
             );
           },
       child: Container(
