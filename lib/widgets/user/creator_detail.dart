@@ -1,4 +1,5 @@
 import 'button.dart';
+import 'request_note.dart';
 import 'package:flutter/material.dart';
 
 class CreatorDetail extends StatelessWidget {
@@ -109,7 +110,16 @@ class CreatorDetail extends StatelessWidget {
                 top: cardHeight * 0.86,
                 child: Button(
                   text: '매칭 신청하기',
-                  onPressed: onMatch,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        insetPadding: EdgeInsets.zero,
+                        child: RequestNote(nickname: '닉네임'),
+                      ),
+                    );
+                  },
                   width: cardWidth * 0.65,
                   height: 48,
                   backgroundColor: const Color(0xFFDAD3E8),
