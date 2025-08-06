@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/user/creator_list.dart';
 
 class CreatorListScreen extends StatelessWidget {
   const CreatorListScreen({super.key});
@@ -65,7 +66,26 @@ class CreatorListScreen extends StatelessWidget {
           child: Container(color: Colors.grey[500], height: 1.0),
         ),
       ),
-      body: const Center(child: Text('장인 목록 페이지')),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        children: [
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          // 7개 반복 × 3세트
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+        ],
+      ),
     );
   }
 }
