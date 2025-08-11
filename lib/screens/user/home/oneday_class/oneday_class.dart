@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/user/oneday_class_card.dart';
-import '../../widgets/user/sub_category.dart';
+import '../../../../widgets/user/sub_category.dart';
 import 'card_detail.dart';
 
 class OnedayClassScreen extends StatefulWidget {

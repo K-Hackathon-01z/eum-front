@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../widgets/user/creator_list.dart';
+import '../../../../widgets/user/skill_list.dart';
 
-class CreatorListScreen extends StatelessWidget {
-  const CreatorListScreen({super.key});
+class SkillListScreen extends StatelessWidget {
+  const SkillListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class CreatorListScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          '장인 목록',
+          '전통 기술 목록',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, letterSpacing: -1.2),
         ),
         centerTitle: true,
@@ -69,21 +69,25 @@ class CreatorListScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
         children: [
-          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
-          CreatorList(title: '작가 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
-          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
-          CreatorList(title: '작가 000', photoLabel: 'Photo'),
-          // 7개 반복 × 3세트
-          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
-          CreatorList(title: '작가 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
-          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
-          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
-          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          SkillList(title: '금속', photoLabel: 'Photo'),
+          SkillList(title: '나전 칠기', photoLabel: 'Photo'),
+          SkillList(title: '도자기', photoLabel: 'Photo'),
+          SkillList(title: '매듭장', photoLabel: 'Photo'),
+          SkillList(title: '칠장', photoLabel: 'Photo'),
+          SkillList(title: '한지', photoLabel: 'Photo'),
+          SkillList(title: '홍염장', photoLabel: 'Photo'),
+          SkillList(title: '한복장', photoLabel: 'Photo'),
+          SkillList(title: '자수', photoLabel: 'Photo'),
+          SkillList(title: '매듭', photoLabel: 'Photo'),
+          SkillList(title: '전통주', photoLabel: 'Photo'),
+          SkillList(title: '장', photoLabel: 'Photo'),
+          SkillList(title: '다과', photoLabel: 'Photo'),
+          SkillList(title: '판소리', photoLabel: 'Photo'),
+          SkillList(title: '민요', photoLabel: 'Photo'),
+          SkillList(title: '탈춤', photoLabel: 'Photo'),
+          SkillList(title: '무용', photoLabel: 'Photo'),
+          SkillList(title: '단청장', photoLabel: 'Photo'),
+          SkillList(title: '소목장', photoLabel: 'Photo'),
         ],
       ),
     );

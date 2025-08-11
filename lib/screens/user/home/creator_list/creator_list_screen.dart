@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../widgets/user/skill_list.dart';
+import '../../../../widgets/user/creator_list.dart';
 
-class SkillListScreen extends StatelessWidget {
-  const SkillListScreen({super.key});
+class CreatorListScreen extends StatelessWidget {
+  const CreatorListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SkillListScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          '전통 기술 목록',
+          '장인 목록',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, letterSpacing: -1.2),
         ),
         centerTitle: true,
@@ -69,15 +69,21 @@ class SkillListScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
         children: [
-          for (int i = 0; i < 3; i++) ...[
-            SkillList(title: '금속 공예', photoLabel: 'Photo'),
-            SkillList(title: '나전칠기', photoLabel: 'Photo'),
-            SkillList(title: '도자기', photoLabel: 'Photo'),
-            SkillList(title: '칠장 (옻칠)', photoLabel: 'Photo'),
-            SkillList(title: '칠장 (칠화)', photoLabel: 'Photo'),
-            SkillList(title: '칠장 (황칠)', photoLabel: 'Photo'),
-            SkillList(title: '칠장 (남태칠)', photoLabel: 'Photo'),
-          ],
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          // 7개 반복 × 3세트
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형문화재 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '무형유산 000', photoLabel: 'Photo'),
+          CreatorList(title: '전수 교육자 000', photoLabel: 'Photo'),
+          CreatorList(title: '작가 000', photoLabel: 'Photo'),
         ],
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:eum_demo/screens/user/my_info/my_info_real.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../widgets/user/navigation.dart';
-import 'career_test.dart';
-import 'map.dart';
+import '../../../widgets/user/navigation.dart';
+import '../career/career_test.dart';
+import '../map/map.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});

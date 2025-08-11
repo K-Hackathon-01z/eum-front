@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../widgets/user/button.dart';
-import '../../widgets/user/calendar.dart';
+import '../../../../widgets/user/button.dart';
+import '../../../../widgets/user/calendar.dart';
 
 class CardDetailScreen extends StatefulWidget {
   final String imageUrl;
