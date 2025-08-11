@@ -51,9 +51,6 @@ class PopularClassCard extends StatelessWidget {
             height: 100,
             width: double.infinity,
             decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(30)),
-            child: const Center(
-              child: Text('Photo', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-            ),
           ),
           const SizedBox(height: 8),
           Padding(

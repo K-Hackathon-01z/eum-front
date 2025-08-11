@@ -34,10 +34,6 @@ class OnedayClassCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18),
                         ),
                         alignment: Alignment.center,
-                        child: const Text(
-                          'Photo',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-                        ),
                       );
                 },
               ),

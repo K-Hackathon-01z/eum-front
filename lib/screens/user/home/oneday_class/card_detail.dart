@@ -80,20 +80,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
               children: [
                 // 이미지 (oneday_class 카드 썸네일 스타일)
                 ClipRRect(
-                  child: Container(
-                    height: 240,
-                    color: const Color(0xFFD9D9D9),
-                    alignment: Alignment.center,
-                    child: const Text(
-                      'Photo',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: -1.2,
-                      ),
-                    ),
-                  ),
+                  child: Container(height: 240, color: const Color(0xFFD9D9D9), alignment: Alignment.center),
                 ),
                 // 설명/가격/지역 등
                 Padding(

@@ -51,14 +51,7 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.8,
                   height: cardHeight * 0.29,
                   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(18)),
-                  child:
-                      image ??
-                      Center(
-                        child: Text(
-                          'Photo',
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-                        ),
-                      ),
+                  child: image ?? Center(),
                 ),
               ),
               // 이름
