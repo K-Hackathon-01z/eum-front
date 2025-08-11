@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 
 class SkillList extends StatelessWidget {
   final String title;
-  final String photoLabel;
   final VoidCallback? onTap;
 
-  const SkillList({super.key, this.title = '기술명', this.photoLabel = 'Photo', this.onTap});
+  const SkillList({super.key, this.title = '기술명', this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +35,7 @@ class SkillList extends StatelessWidget {
               height: 55,
               margin: const EdgeInsets.only(left: 17, right: 16),
               decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: Text(
-                  photoLabel,
-                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-              ),
             ),
-            // 가운데 텍스트 영역
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
