@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/widgets/user/oneday_class_card.dart';
+import '../../widgets/user/sub_category.dart';
 import 'card_detail.dart';
 
 class OnedayClassScreen extends StatefulWidget {
@@ -10,8 +11,18 @@ class OnedayClassScreen extends StatefulWidget {
 }
 
 class _OnedayClassScreenState extends State<OnedayClassScreen> {
-  final List<String> categories = ['인기', '공예', '식문화', '생활', '예술', '기타'];
+  final List<String> categories = ['인기', '공예', '섬유', '식문화', '예술', '기타'];
   int selectedCategory = 0;
+
+  // 세부 카테고리 맵으로 관리 (확장성)
+  final Map<String, List<String>> subCategoryMap = {
+    '공예': ['공예', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
+    '섬유': ['홍염장', '한복장', '자수', '매듭'],
+    '식문화': ['전통주', '장', '다과'],
+    '예술': ['판소리', '민요', '탈춤', '무용'],
+    '기타': ['단청장', '소목장'],
+  };
+  int selectedSubCategory = 0;
 
   final List<Map<String, String>> classData = [
     {'region': '서울시 광진구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '52,000원'},
@@ -106,7 +117,10 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
               itemBuilder: (context, idx) {
                 final selected = selectedCategory == idx;
                 return GestureDetector(
-                  onTap: () => setState(() => selectedCategory = idx),
+                  onTap: () => setState(() {
+                    selectedCategory = idx;
+                    selectedSubCategory = 0;
+                  }),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -133,6 +147,13 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
               },
             ),
           ),
+          // 공예/섬유 등 세부 카테고리 노출
+          if (subCategoryMap.containsKey(categories[selectedCategory]))
+            SubCategoryTab(
+              subCategories: subCategoryMap[categories[selectedCategory]]!,
+              selectedIndex: selectedSubCategory,
+              onSelected: (idx) => setState(() => selectedSubCategory = idx),
+            ),
           // 광고(AD) 배너
           Container(
             width: double.infinity,
