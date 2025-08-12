@@ -15,7 +15,7 @@ class MyInfoScreen extends StatefulWidget {
 
 class _MyInfoScreenState extends State<MyInfoScreen> {
   String? name;
-  String? age;
+  int? age;
   String? address;
 
   @override
@@ -28,8 +28,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     final data = await Api.getUserByEmail("daniel010203@naver.com");
     setState(() {
       name = data['name'];
-      age = data['age'];
       address = data['address'];
+      final rawAge = data['age'];
+      age = rawAge;
     });
   }
 
@@ -97,7 +98,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             Spacer(),
                             Text(
-                              age ?? "-",
+                              age?.toString() ?? "-",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
