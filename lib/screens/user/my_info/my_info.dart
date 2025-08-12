@@ -25,7 +25,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   }
 
   Future<void> _fetch() async {
-    final data = await Api.getUserByEmail("daniel010203@naver.com");
+    final data = await MyInfoService.getUserByEmail("daniel010203@naver.com");
     setState(() {
       name = data['name'];
       address = data['address'];
@@ -98,10 +98,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             Spacer(),
                             Text(
-                              age?.toString() ?? "-",
+                              '${age?.toString() ?? "-"}세',
                               style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ],
