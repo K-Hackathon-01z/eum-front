@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 final question = "전통 기술을 배우고 싶은 이유는 무엇인가요?";
 final options = ["취미", "취업", "창업", "멘토 만남", "기타"];
 // 이건 그냥 고정해두어도 됨 db쓸 필요 없음
-// final description = "목표에 맞는 맞춤 추천을 제공해요!";
 
 // 동적 위젯
 class CareerTestScreen extends StatefulWidget {
@@ -33,34 +32,34 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      body: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             // 진행률
-            const Align(
+            Align(
               alignment: Alignment.center,
               child: Text(
                 "20% 진행중...",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             // 질문
-            Text(
+            const Text(
               question,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             // 설명
-            Text(
+            const Text(
               '목표에 맞는 맞춤 추천을 제공해요!',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: 14),
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             // 선택지
             Expanded(
               child: GridView.count(
@@ -68,7 +67,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                 mainAxisSpacing: 16, // 열 사이 간격
                 crossAxisSpacing: 16, // 행 사이 간격
                 childAspectRatio: 2.3, // 가로, 세로 비율
-                children: List.generate(options.length, (index) {
+                children: const List.generate(options.length, (index) {
                   final isSelected = selectedIndex == index;
                   // 선택한 인덱스
                   return GestureDetector(
@@ -104,7 +103,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
               ),
             ),
             // 다음으로 버튼
-            Padding(
+            const Padding(
               padding: const EdgeInsets.only(bottom: 32.0, top: 8),
               child: SizedBox(
                 width: double.infinity,
