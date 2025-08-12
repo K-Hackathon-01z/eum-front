@@ -4,7 +4,9 @@ import '../../models/career_test/question.dart';
 
 Future<List<Question>> fetchQuestions() async {
   var http;
-  final response = await http.get(Uri.parse('https://your.api/survey'));
+  final response = await http.get(
+    Uri.parse('https://eum-back.onrender.com/api/matching/careerTest'),
+  );
 
   if (response.statusCode == 200) {
     final List data = json.decode(response.body);

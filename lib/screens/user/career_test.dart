@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final question = "전통 기술을 배우고 싶은 이유는 무엇인가요?";
 final options = ["취미", "취업", "창업", "멘토 만남", "기타"];
 // 이건 그냥 고정해두어도 됨 db쓸 필요 없음
-final description = "목표에 맞는 맞춤 추천을 제공해요!";
+// final description = "목표에 맞는 맞춤 추천을 제공해요!";
 
 // 동적 위젯
 class CareerTestScreen extends StatefulWidget {
@@ -27,18 +27,6 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        //leading: Icon(Icons.arrow_back, color: Colors.black),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            // 홈화면으로 이동 (네임드 라우트, 스택 초기화) 일단 이거 원래는 홈이 아닐텐데 임시로
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
-          },
-        ),
         title: Text(
           "성향 검사",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -49,9 +37,9 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           children: [
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // 진행률
-            Align(
+            const Align(
               alignment: Alignment.center,
               child: Text(
                 "20% 진행중...",
@@ -68,7 +56,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
             SizedBox(height: 12),
             // 설명
             Text(
-              description,
+              '목표에 맞는 맞춤 추천을 제공해요!',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey, fontSize: 14),
             ),

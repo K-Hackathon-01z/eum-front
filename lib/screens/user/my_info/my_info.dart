@@ -4,14 +4,35 @@ import 'package:eum_demo/screens/user/my_info/setting/settings.dart';
 import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
 
-class MyInfoApp extends StatelessWidget {
+import '../../../services/user/my_info_service.dart';
+
+class MyInfoScreen extends StatefulWidget {
+  const MyInfoScreen({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: MyInfoScreen(), debugShowCheckedModeBanner: false);
-  }
+  State<MyInfoScreen> createState() => _MyInfoScreenState();
 }
 
-class MyInfoScreen extends StatelessWidget {
+class _MyInfoScreenState extends State<MyInfoScreen> {
+  String? name;
+  String? age;
+  String? address;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetch(); // 라이프사이클 시작 시 한 번
+  }
+
+  Future<void> _fetch() async {
+    final data = await Api.getUserByEmail("daniel010203@naver.com");
+    setState(() {
+      name = data['name'];
+      age = data['age'];
+      address = data['address'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +71,6 @@ class MyInfoScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFF7F7F7),
                 borderRadius: BorderRadius.circular(25),
-                //border: Border.all(color: Colors.blueAccent),
               ),
               padding: EdgeInsets.all(16),
               child: Row(
@@ -66,9 +86,10 @@ class MyInfoScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+                          // 이름,나이, 주소 , 사진등
                           children: [
                             Text(
-                              '닉네임',
+                              name ?? "-",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
@@ -76,7 +97,7 @@ class MyInfoScreen extends StatelessWidget {
                             ),
                             Spacer(),
                             Text(
-                              '나이 여기다가 적으셈',
+                              age ?? "-",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
@@ -86,7 +107,7 @@ class MyInfoScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          '주소 여기다가 넣으면 됨.',
+                          address ?? "-",
                           style: TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       ],
@@ -143,5 +164,11 @@ class MyInfoScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // 컨트롤러/스트림 정리
+    super.dispose();
   }
 }
