@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class SkillDetail extends StatelessWidget {
   final String name;
-  final String skill;
-  final String works;
-  final String bio;
+  final String category;
+  final String description;
+  final String careerPath;
   final Widget? image;
 
   const SkillDetail({
     super.key,
     required this.name,
-    required this.skill,
-    required this.works,
-    required this.bio,
+    required this.category,
+    required this.description,
+    required this.careerPath,
     this.image,
   });
 
@@ -83,7 +83,7 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.23,
                   child: Text(
-                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio',
+                    '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
