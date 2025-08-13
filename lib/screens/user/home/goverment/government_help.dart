@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../services/user/government_service.dart';
 import '../../../../models/government/benefit_info.dart';
 
@@ -67,7 +68,7 @@ class GovernmentHelpScreen extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text('분류: ${policy.category}', style: const TextStyle(fontSize: 14)),
                             const SizedBox(height: 4),
-                            Text('대상연령: ${policy.targetAge}', style: const TextStyle(fontSize: 14)),
+                            Text('대상연령: ${policy.targetAge}세', style: const TextStyle(fontSize: 14)),
                             const SizedBox(height: 8),
                             Text(policy.description, style: const TextStyle(fontSize: 15, color: Colors.black87)),
                           ],
@@ -86,12 +87,14 @@ class GovernmentHelpScreen extends StatelessWidget {
                                   Text(policy.description),
                                   const SizedBox(height: 12),
                                   Text('분류: ${policy.category}'),
-                                  Text('대상연령: ${policy.targetAge}'),
+                                  Text('대상연령: ${policy.targetAge}세'),
                                   const SizedBox(height: 12),
                                   GestureDetector(
-                                    onTap: () {
-                                      // 실제 url로 이동 (웹뷰/브라우저 등)
-                                      // launch(policy.url); // url_launcher 사용 시
+                                    onTap: () async {
+                                      final url = policy.url;
+                                      if (await canLaunchUrl(Uri.parse(url))) {
+                                        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+                                      }
                                     },
                                     child: Text(
                                       policy.url,
