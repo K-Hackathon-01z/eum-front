@@ -16,7 +16,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
 
   // 세부 카테고리 맵으로 관리 (확장성)
   final Map<String, List<String>> subCategoryMap = {
-    '공예': ['공예', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
+    '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
     '섬유': ['홍염장', '한복장', '자수', '매듭'],
     '식문화': ['전통주', '장', '다과'],
     '예술': ['판소리', '민요', '탈춤', '무용'],

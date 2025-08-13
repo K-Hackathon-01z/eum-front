@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/skill_list.dart';
+import 'skill_detail_screen.dart';
 
 class SkillListScreen extends StatelessWidget {
   const SkillListScreen({super.key});
@@ -69,25 +70,55 @@ class SkillListScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
         children: [
-          SkillList(title: '금속'),
-          SkillList(title: '나전 칠기'),
-          SkillList(title: '도자기'),
-          SkillList(title: '매듭장'),
-          SkillList(title: '칠장'),
-          SkillList(title: '한지'),
-          SkillList(title: '홍염장'),
-          SkillList(title: '한복장'),
-          SkillList(title: '자수'),
-          SkillList(title: '매듭'),
-          SkillList(title: '전통주'),
-          SkillList(title: '장'),
-          SkillList(title: '다과'),
-          SkillList(title: '판소리'),
-          SkillList(title: '민요'),
-          SkillList(title: '탈춤'),
-          SkillList(title: '무용'),
-          SkillList(title: '단청장'),
-          SkillList(title: '소목장'),
+          SkillList(
+            title: '공예',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '공예')));
+            },
+          ),
+          SkillList(
+            title: '섬유',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '섬유')));
+            },
+          ),
+          SkillList(
+            title: '식문화',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '식문화')));
+            },
+          ),
+          SkillList(
+            title: '예술',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '예술')));
+            },
+          ),
+          SkillList(
+            title: '기타',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '기타')));
+            },
+          ),
+          // SkillList(title: '금속'),
+          // SkillList(title: '나전 칠기'),
+          // SkillList(title: '도자기'),
+          // SkillList(title: '매듭장'),
+          // SkillList(title: '칠장'),
+          // SkillList(title: '한지'),
+          // SkillList(title: '홍염장'),
+          // SkillList(title: '한복장'),
+          // SkillList(title: '자수'),
+          // SkillList(title: '매듭'),
+          // SkillList(title: '전통주'),
+          // SkillList(title: '장'),
+          // SkillList(title: '다과'),
+          // SkillList(title: '판소리'),
+          // SkillList(title: '민요'),
+          // SkillList(title: '탈춤'),
+          // SkillList(title: '무용'),
+          // SkillList(title: '단청장'),
+          // SkillList(title: '소목장'),
         ],
       ),
     );
