@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:eum_demo/models/skill_category.dart'; // SkillCategory 모델 임포트
 
 class SkillService {
   final http.Client _client;
@@ -26,15 +27,16 @@ class SkillService {
     }
   }
 
-  // 전체 기술 카테고리 조회
-  Future<List<dynamic>> fetchAllSkillCategories() async {
+  // 전체 기술 카테고리 조회 (모델 파싱)
+  Future<List<SkillCategory>> fetchAllSkillCategoriesParsed() async {
     final url = Uri.parse('https://eum-back.onrender.com/api/skill-category');
     try {
       final response = await _client.get(url);
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        // data가 리스트 형태라면 바로 반환, 아니면 가공 필요
-        return data is List ? data : [];
+        if (data is List) {
+          return data.map((e) => SkillCategory.fromJson(e)).toList();
+        }
       }
       return [];
     } catch (e) {
