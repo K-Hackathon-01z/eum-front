@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/skill_list.dart';
 import '../../../../widgets/user/skill_detail.dart';
-import 'package:eum_demo/models/skill_category.dart';
+import 'package:eum_demo/models/skill_list/skill_category.dart';
 import '../../../../services/user/skill_service.dart';
 
 class SkillDetailScreen extends StatelessWidget {
