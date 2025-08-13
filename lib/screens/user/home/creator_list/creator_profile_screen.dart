@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-
 import '../../../../widgets/user/creator_list.dart';
-import 'creator_profile_screen.dart';
 
-class CreatorDetailScreen extends StatelessWidget {
-  final String category;
-  final List<String>? items; // DB 연동 시 null 가능
-
-  const CreatorDetailScreen({Key? key, required this.category, this.items}) : super(key: key);
+class CreatorProfileScreen extends StatelessWidget {
+  final String subCategory;
+  const CreatorProfileScreen({Key? key, required this.subCategory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // 카테고리별 하위 크리에이터 리스트 정의
-    final Map<String, List<String>> subCreators = {
-      '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
-      '섬유': ['홍염장', '한복장', '자수', '매듭'],
-      '식문화': ['전통주', '장', '다과'],
-      '예술': ['판소리', '민요', '탈춤', '무용'],
-      '기타': ['단청장', '소목장'],
+    // 더미 데이터: 하위카테고리별 장인 리스트
+    final Map<String, List<String>> artisanMap = {
+      '금속': ['이철수', '박은영', '김금속', '최장인'],
+      '칠기장': ['정칠기', '이칠장'],
+      '도예가': ['한도예', '박도자'],
+      '매듭장': ['김매듭', '이매듭'],
+      '한지장': ['최한지', '박한지'],
+      // 기타 하위카테고리도 필요시 추가
     };
-    final List<String> creators = subCreators[category] ?? [];
+    final List<String> artisans = artisanMap[subCategory] ?? [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
@@ -31,7 +28,7 @@ class CreatorDetailScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          '$category',
+          '$subCategory 장인',
           style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, letterSpacing: -1.2),
         ),
         centerTitle: true,
@@ -83,16 +80,9 @@ class CreatorDetailScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        children: creators
-            .map(
-              (c) => CreatorList(
-                title: c,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorProfileScreen(subCategory: c)));
-                },
-              ),
-            )
-            .toList(),
+        children: artisans.isEmpty
+            ? [const Center(child: Text('해당 분야의 장인 정보가 없습니다', style: TextStyle(fontSize: 16)))]
+            : artisans.map((name) => CreatorList(title: name)).toList(),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/creator_list.dart';
+import 'creator_detail_screen.dart';
 
 class CreatorListScreen extends StatelessWidget {
   const CreatorListScreen({super.key});
@@ -69,25 +70,36 @@ class CreatorListScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
         children: [
-          CreatorList(title: '금속'),
-          CreatorList(title: '나전 칠기'),
-          CreatorList(title: '도자기'),
-          CreatorList(title: '매듭장'),
-          CreatorList(title: '칠장'),
-          CreatorList(title: '한지'),
-          CreatorList(title: '홍염장'),
-          CreatorList(title: '한복장'),
-          CreatorList(title: '자수'),
-          CreatorList(title: '매듭'),
-          CreatorList(title: '전통주'),
-          CreatorList(title: '장'),
-          CreatorList(title: '다과'),
-          CreatorList(title: '판소리'),
-          CreatorList(title: '민요'),
-          CreatorList(title: '탈춤'),
-          CreatorList(title: '무용'),
-          CreatorList(title: '단청장'),
-          CreatorList(title: '소목장'),
+          CreatorList(
+            title: '공예',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorDetailScreen(category: '공예')));
+            },
+          ),
+          CreatorList(
+            title: '섬유',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorDetailScreen(category: '섬유')));
+            },
+          ),
+          CreatorList(
+            title: '식문화',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorDetailScreen(category: '식문화')));
+            },
+          ),
+          CreatorList(
+            title: '예술',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorDetailScreen(category: '예술')));
+            },
+          ),
+          CreatorList(
+            title: '기타',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorDetailScreen(category: '기타')));
+            },
+          ),
         ],
       ),
     );
