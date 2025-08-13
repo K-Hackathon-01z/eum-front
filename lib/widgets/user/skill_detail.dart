@@ -4,7 +4,7 @@ class SkillDetail extends StatelessWidget {
   final String name;
   final String category;
   final String description;
-  final String career_path;
+  final String careerPath;
   final Widget? image;
 
   const SkillDetail({
@@ -12,7 +12,7 @@ class SkillDetail extends StatelessWidget {
     required this.name,
     required this.category,
     required this.description,
-    required this.career_path,
+    required this.careerPath,
     this.image,
   });
 
@@ -83,7 +83,7 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.23,
                   child: Text(
-                    '분류 : $category\n\n설명 : $description\n\n진로 : $career_path',
+                    '분류 : $category\n\n설명 : $description\n\n진로 : $careerPath',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
