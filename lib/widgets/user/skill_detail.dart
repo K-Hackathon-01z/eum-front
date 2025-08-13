@@ -83,7 +83,7 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.23,
                   child: Text(
-                    '분류 : $category\n\n설명 : $description\n\n진로 : $careerPath',
+                    '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,

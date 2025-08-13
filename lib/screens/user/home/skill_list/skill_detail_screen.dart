@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/skill_list.dart';
+import '../../../../widgets/user/skill_detail.dart';
+import 'package:eum_demo/models/skill_category.dart';
+import '../../../../services/user/skill_service.dart';
 
 class SkillDetailScreen extends StatelessWidget {
   final String category;
-  final List<String>? items; // DB 연동 시 null 가능
-
-  const SkillDetailScreen({Key? key, required this.category, this.items}) : super(key: key);
+  const SkillDetailScreen({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // 카테고리별 하위 리스트 정의
-    final Map<String, List<String>> subSkills = {
-      '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
-      '섬유': ['홍염장', '한복장', '자수', '매듭'],
-      '식문화': ['전통주', '장', '다과'],
-      '예술': ['판소리', '민요', '탈춤', '무용'],
-      '기타': ['단청장', '소목장'],
-    };
-    final List<String> skills = subSkills[category] ?? [];
-
+    final SkillService skillService = SkillService();
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
       appBar: AppBar(
@@ -79,9 +71,42 @@ class SkillDetailScreen extends StatelessWidget {
           child: Container(color: Colors.grey[500], height: 1.0),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        children: skills.map((s) => SkillList(title: s)).toList(),
+      body: FutureBuilder<List<SkillCategory>>(
+        future: skillService.fetchAllSkillCategoriesParsed(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('데이터를 불러올 수 없습니다'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('기술 정보가 없습니다'));
+          }
+          final skills = snapshot.data!.where((s) => s.category == category).toList();
+          if (skills.isEmpty) {
+            return const Center(child: Text('해당 카테고리의 기술이 없습니다'));
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+            itemCount: skills.length,
+            itemBuilder: (context, idx) {
+              final skill = skills[idx];
+              return SkillList(
+                title: skill.name,
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => SkillDetail(
+                      name: skill.name,
+                      category: skill.category,
+                      description: skill.description,
+                      careerPath: skill.careerPath ?? '',
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }
