@@ -8,13 +8,13 @@ class SubCategoryTab extends StatelessWidget {
   final double separatorWidth;
 
   const SubCategoryTab({
-    Key? key,
+    super.key,
     required this.subCategories,
     required this.selectedIndex,
     required this.onSelected,
     this.height = 48,
     this.separatorWidth = 24,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

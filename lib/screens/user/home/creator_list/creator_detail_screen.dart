@@ -7,7 +7,7 @@ class CreatorDetailScreen extends StatelessWidget {
   final String category;
   final List<String>? items; // DB 연동 시 null 가능
 
-  const CreatorDetailScreen({Key? key, required this.category, this.items}) : super(key: key);
+  const CreatorDetailScreen({super.key, required this.category, this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CreatorDetailScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          '$category',
+          category,
           style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, letterSpacing: -1.2),
         ),
         centerTitle: true,

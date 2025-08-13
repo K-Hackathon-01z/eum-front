@@ -6,7 +6,7 @@ import '../../../../services/user/skill_service.dart';
 
 class SkillDetailScreen extends StatelessWidget {
   final String category;
-  const SkillDetailScreen({Key? key, required this.category}) : super(key: key);
+  const SkillDetailScreen({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {

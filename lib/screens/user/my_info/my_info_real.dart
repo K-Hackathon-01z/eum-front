@@ -5,6 +5,8 @@ import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
 
 class MyInfoApp extends StatelessWidget {
+  const MyInfoApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: MyInfoScreen(), debugShowCheckedModeBanner: false);
@@ -12,6 +14,8 @@ class MyInfoApp extends StatelessWidget {
 }
 
 class MyInfoScreen extends StatelessWidget {
+  const MyInfoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +32,7 @@ class MyInfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.settings, size: 32),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
-              );
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
             },
           ),
           SizedBox(width: 16),
@@ -67,28 +68,13 @@ class MyInfoScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              '닉네임',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text('닉네임', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                             Spacer(),
-                            Text(
-                              '나이 여기다가 적으셈',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                            ),
+                            Text('나이 여기다가 적으셈', style: TextStyle(fontSize: 14, color: Colors.black54)),
                           ],
                         ),
                         SizedBox(height: 8),
-                        Text(
-                          '주소 여기다가 넣으면 됨.',
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
-                        ),
+                        Text('주소 여기다가 넣으면 됨.', style: TextStyle(fontSize: 14, color: Colors.black54)),
                       ],
                     ),
                   ),
@@ -105,10 +91,7 @@ class MyInfoScreen extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UsageHistory()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UsageHistory()));
               },
             ),
           ),
@@ -119,10 +102,7 @@ class MyInfoScreen extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatchingRequests()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingRequests()));
               },
             ),
           ),
@@ -133,10 +113,7 @@ class MyInfoScreen extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FavoriteClasses()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FavoriteClasses()));
               },
             ),
           ),

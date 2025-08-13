@@ -3,7 +3,7 @@ import '../../../../widgets/user/creator_list.dart';
 
 class CreatorProfileScreen extends StatelessWidget {
   final String subCategory;
-  const CreatorProfileScreen({Key? key, required this.subCategory}) : super(key: key);
+  const CreatorProfileScreen({super.key, required this.subCategory});
 
   @override
   Widget build(BuildContext context) {

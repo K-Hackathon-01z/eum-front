@@ -6,7 +6,7 @@ import '../services/user/career_test_service.dart';
 class TestController extends ChangeNotifier {
   List<Question> _questions = []; // 질문 리스트
   int _currentIndex = 0; // 현재 보고 있는 질문 번호
-  Map<int, int> _answers = {}; // [질문 번호]: [선택지 인덱스]
+  final Map<int, int> _answers = {}; // [질문 번호]: [선택지 인덱스]
 
   // getter로 외부에서 읽기만 하게
   Question get currentQuestion => _questions[_currentIndex];

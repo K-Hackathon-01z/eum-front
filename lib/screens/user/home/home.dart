@@ -130,7 +130,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 98,
                     height: 52,
                     child: Center(child: Image.asset('assets/logos/eum_logo_home.png', fit: BoxFit.contain)),
