@@ -73,7 +73,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
         child: Center(
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 24, horizontal: 8),
-            width: screenWidth < 420 ? screenWidth : 402,
+            width: screenWidth < 420 ? screenWidth : 420,
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
