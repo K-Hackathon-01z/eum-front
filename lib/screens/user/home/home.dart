@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../widgets/user/navigation.dart';
 import 'package:eum_demo/screens/user/career/career_test.dart';
 import 'package:eum_demo/screens/user/map/map.dart';
+import 'package:eum_demo/widgets/user/home_card.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -31,49 +32,6 @@ class _RootScreenState extends State<RootScreen> {
             _currentIndex = index;
           });
         },
-      ),
-    );
-  }
-}
-
-class PopularClassCard extends StatelessWidget {
-  const PopularClassCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 100,
-            width: double.infinity,
-            decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.circular(30)),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '원데이 클래스 상세 설명을 위한 공간입니다.',
-                  style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  '52,000원',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -174,11 +132,18 @@ class HomeScreen extends StatelessWidget {
                     height: 170,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16), // 좌우 여백 균일하게
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: 3,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
-                        return PopularClassCard();
+                        // 샘플 데이터, 실제로는 서버 데이터 등으로 대체 가능
+                        final classData = [
+                          {'image': 'assets/images/banners/banner1.png', 'desc': '전통 도자기 원데이 클래스', 'price': '52,000원'},
+                          {'image': 'assets/images/banners/banner2.png', 'desc': '한지 공예 체험', 'price': '45,000원'},
+                          {'image': 'assets/images/banners/banner3.png', 'desc': '목공예 입문', 'price': '60,000원'},
+                        ];
+                        final data = classData[index % classData.length];
+                        return HomeCard(imagePath: data['image']!, description: data['desc']!, price: data['price']!);
                       },
                     ),
                   ),
@@ -221,11 +186,17 @@ class HomeScreen extends StatelessWidget {
                     height: 170,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16), // 좌우 여백 균일하게
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: 3,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
-                        return PopularClassCard();
+                        final classData = [
+                          {'image': 'assets/images/banners/banner4.png', 'desc': '가죽 공예 클래스', 'price': '55,000원'},
+                          {'image': 'assets/images/banners/banner5.png', 'desc': '유리 공예 체험', 'price': '48,000원'},
+                          {'image': 'assets/images/banners/banner6.png', 'desc': '금속 세공 입문', 'price': '70,000원'},
+                        ];
+                        final data = classData[index % classData.length];
+                        return HomeCard(imagePath: data['image']!, description: data['desc']!, price: data['price']!);
                       },
                     ),
                   ),
