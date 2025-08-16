@@ -48,9 +48,9 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         'image': 'assets/images/oneday_class/hot03.png',
       },
       {
-        'title': '금속 공예 체험',
+        'title': '금속 공예 체험 준비',
         'region': '서울시 광진구',
-        'desc': '금속 공예를 직접 체험해봅니다.',
+        'desc': '금속 공예를 체험하기 전 준비 과정입니다.',
         'price': '30,000원',
         'image': 'assets/images/oneday_class/hot04.png',
       },
@@ -68,10 +68,27 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
       {'title': '홍염장 체험', 'region': '서울시 동작구', 'desc': '섬유 클래스 4 - 홍염장 체험', 'price': '50,000원'},
     ],
     '식문화': [
-      {'title': '전통주 만들기', 'region': '서울시 용산구', 'desc': '식문화 클래스 1 - 전통주 만들기', 'price': '70,000원'},
-      {'title': '장 담그기', 'region': '서울시 서대문구', 'desc': '식문화 클래스 2 - 장 담그기', 'price': '65,000원'},
-      {'title': '다과 체험', 'region': '서울시 노원구', 'desc': '식문화 클래스 3 - 다과 체험', 'price': '38,000원'},
-      {'title': '전통차 만들기', 'region': '서울시 중구', 'desc': '식문화 클래스 4 - 전통차 만들기', 'price': '42,000원'},
+      {
+        'title': '삼해주 만들기 1',
+        'region': '서울시 용산구',
+        'desc': '삼해주의 기초 제작 과정입니다.',
+        'price': '40,000원',
+        'image': 'assets/images/oneday_class/drink/drink01.png',
+      },
+      {
+        'title': '한국 전통주의 발효 과정',
+        'region': '서울시 서대문구',
+        'desc': '한국 전통주의 발효 과정을 배웁니다.',
+        'price': '16,000원',
+        'image': 'assets/images/oneday_class/drink/drink02.png',
+      },
+      {
+        'title': '송절주 만들기 1',
+        'region': '서울시 노원구',
+        'desc': '송절주의 기초 제작 과정입니다.',
+        'price': '38,000원',
+        'image': 'assets/images/oneday_class/drink/drink03.png',
+      },
     ],
     '예술': [
       {'title': '판소리 입문', 'region': '서울시 강북구', 'desc': '예술 클래스 1 - 판소리 입문', 'price': '90,000원'},

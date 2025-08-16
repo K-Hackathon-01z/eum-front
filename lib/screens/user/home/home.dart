@@ -192,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final classData = [
                           {'image': 'assets/images/home/home04.png', 'desc': '홍염장 입문', 'price': '25,000원'},
-                          {'image': 'assets/images/home/home05.png', 'desc': '금속 공예 체험', 'price': '30,000원'},
+                          {'image': 'assets/images/home/home05.png', 'desc': '금속 공예 체험 준비', 'price': '30,000원'},
                           {'image': 'assets/images/home/home06.png', 'desc': '도자기 기초 과정', 'price': '41,000원'},
                         ];
                         final data = classData[index % classData.length];

@@ -32,14 +32,14 @@ class HomeCard extends StatelessWidget {
               children: [
                 Text(
                   description,
-                  style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 2),
                 Text(
                   price,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   textAlign: TextAlign.left,
                 ),
               ],
