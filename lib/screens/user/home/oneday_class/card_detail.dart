@@ -16,8 +16,8 @@ class CardDetailScreen extends StatefulWidget {
     required this.desc,
     required this.price,
     required this.region,
-    this.capacity = 0,
-    this.interest = 0,
+    required this.capacity,
+    required this.interest,
   });
 
   @override
@@ -26,12 +26,14 @@ class CardDetailScreen extends StatefulWidget {
 
 class _CardDetailScreenState extends State<CardDetailScreen> {
   bool isLiked = false;
-  int interestCount = 0;
+  late int interestCount;
+  late int capacity;
 
   @override
   void initState() {
     super.initState();
     interestCount = widget.interest;
+    capacity = widget.capacity;
   }
 
   @override
@@ -78,10 +80,10 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 이미지 (oneday_class 카드 썸네일 스타일)
-                ClipRRect(
-                  child: Container(height: 240, color: const Color(0xFFD9D9D9), alignment: Alignment.center),
-                ),
+                // 이미지 (카드에서 전달된 asset 이미지가 있으면 표시)
+                (widget.imageUrl != null && widget.imageUrl!.isNotEmpty && widget.imageUrl!.endsWith('.png'))
+                    ? Image.asset(widget.imageUrl!, height: 240, width: double.infinity, fit: BoxFit.cover)
+                    : Container(height: 240, color: const Color(0xFFD9D9D9), alignment: Alignment.center),
                 // 설명/가격/지역 등
                 Padding(
                   padding: const EdgeInsets.all(24),
@@ -104,10 +106,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                         children: [
                           const Icon(Icons.people, size: 20, color: Colors.grey),
                           const SizedBox(width: 6),
-                          Text(
-                            '수용 인원 : ${widget.capacity} 명',
-                            style: const TextStyle(fontSize: 15, color: Colors.black54),
-                          ),
+                          Text('수용 인원 : $capacity 명', style: const TextStyle(fontSize: 15, color: Colors.black54)),
                         ],
                       ),
                       const SizedBox(height: 12),

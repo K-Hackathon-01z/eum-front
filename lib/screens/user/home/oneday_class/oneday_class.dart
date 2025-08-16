@@ -263,8 +263,8 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                             desc: data['desc']!,
                             price: data['price']!,
                             region: data['region']!,
-                            capacity: 0, // 필요시 데이터 추가
-                            interest: 0, // 필요시 데이터 추가
+                            capacity: 3, // 필요시 데이터 추가
+                            interest: 2, // 필요시 데이터 추가
                           ),
                         ),
                       );
