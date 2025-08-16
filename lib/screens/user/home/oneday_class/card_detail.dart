@@ -3,7 +3,7 @@ import '../../../../widgets/user/button.dart';
 import '../../../../widgets/user/calendar.dart';
 
 class CardDetailScreen extends StatefulWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final String desc;
   final String price;
   final String region;

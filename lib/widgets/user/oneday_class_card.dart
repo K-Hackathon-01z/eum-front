@@ -4,9 +4,9 @@ class OnedayClassCard extends StatelessWidget {
   final String region;
   final String desc;
   final String price;
-  final Widget? image;
+  final String? imagePath;
 
-  const OnedayClassCard({super.key, required this.region, required this.desc, required this.price, this.image});
+  const OnedayClassCard({super.key, required this.region, required this.desc, required this.price, this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +25,22 @@ class OnedayClassCard extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final double size = constraints.maxWidth;
-                  return image ??
-                      Container(
-                        width: size,
-                        height: size,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFD9D9D9),
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        alignment: Alignment.center,
-                      );
+                  if (imagePath != null && imagePath!.isNotEmpty) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(18),
+                      child: Image.asset(imagePath!, width: size, height: size, fit: BoxFit.cover),
+                    );
+                  } else {
+                    return Container(
+                      width: size,
+                      height: size,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD9D9D9),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      alignment: Alignment.center,
+                    );
+                  }
                 },
               ),
             ),

@@ -26,10 +26,10 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
 
   final Map<String, List<Map<String, String>>> classDataByCategory = {
     '인기': [
-      {'region': '서울시 광진구', 'desc': '인기 클래스 1 - 도자기 체험', 'price': '52,000원'},
-      {'region': '서울시 동대문구', 'desc': '인기 클래스 2 - 한지 공예', 'price': '30,000원'},
-      {'region': '서울시 송파구', 'desc': '인기 클래스 3 - 목공예 입문', 'price': '100,000원'},
-      {'region': '서울시 서초구', 'desc': '인기 클래스 4 - 금속 세공', 'price': '97,000원'},
+      {'region': '서울시 종로구', 'desc': '나전칠기의 기원', 'price': '15,000원', 'image': 'assets/images/oneday_class/hot01.png'},
+      {'region': '서울시 동대문구', 'desc': '전통 무용이란', 'price': '19,000원', 'image': 'assets/images/oneday_class/hot02.png'},
+      {'region': '서울시 송파구', 'desc': '장 담그기 종류', 'price': '13,000원', 'image': 'assets/images/oneday_class/hot03.png'},
+      {'region': '서울시 광진구', 'desc': '금속 공예 체험', 'price': '30,000원', 'image': 'assets/images/oneday_class/hot04.png'},
     ],
     '공예': [
       {'region': '서울시 강남구', 'desc': '공예 클래스 1 - 나전칠기', 'price': '60,000원'},
@@ -218,7 +218,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => CardDetailScreen(
-                            imageUrl: 'https://placehold.co/450x240', // 예시 이미지
+                            imageUrl: data['image'] ?? null,
                             desc: data['desc']!,
                             price: data['price']!,
                             region: data['region']!,
@@ -228,7 +228,12 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                         ),
                       );
                     },
-                    child: OnedayClassCard(region: data['region']!, desc: data['desc']!, price: data['price']!),
+                    child: OnedayClassCard(
+                      region: data['region']!,
+                      desc: data['desc']!,
+                      price: data['price']!,
+                      imagePath: data['image'],
+                    ),
                   );
                 },
               ),
