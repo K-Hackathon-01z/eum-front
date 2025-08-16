@@ -24,16 +24,44 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
   };
   int selectedSubCategory = 0;
 
-  final List<Map<String, String>> classData = [
-    {'region': '서울시 광진구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '52,000원'},
-    {'region': '서울시 동대문구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '30,000원'},
-    {'region': '서울시 송파구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '100,000원'},
-    {'region': '서울시 서초구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '97,000원'},
-    {'region': '서울시 광진구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '52,000원'},
-    {'region': '서울시 동대문구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '30,000원'},
-    {'region': '서울시 송파구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '100,000원'},
-    {'region': '서울시 서초구', 'desc': '원데이 클래스 상세 설명 최대 40자입니다. 세 줄까지 입력 가능합니다.', 'price': '97,000원'},
-  ];
+  final Map<String, List<Map<String, String>>> classDataByCategory = {
+    '인기': [
+      {'region': '서울시 광진구', 'desc': '인기 클래스 1 - 도자기 체험', 'price': '52,000원'},
+      {'region': '서울시 동대문구', 'desc': '인기 클래스 2 - 한지 공예', 'price': '30,000원'},
+      {'region': '서울시 송파구', 'desc': '인기 클래스 3 - 목공예 입문', 'price': '100,000원'},
+      {'region': '서울시 서초구', 'desc': '인기 클래스 4 - 금속 세공', 'price': '97,000원'},
+    ],
+    '공예': [
+      {'region': '서울시 강남구', 'desc': '공예 클래스 1 - 나전칠기', 'price': '60,000원'},
+      {'region': '서울시 마포구', 'desc': '공예 클래스 2 - 도자기 만들기', 'price': '55,000원'},
+      {'region': '서울시 종로구', 'desc': '공예 클래스 3 - 한지 등 만들기', 'price': '45,000원'},
+      {'region': '서울시 성동구', 'desc': '공예 클래스 4 - 목공예 체험', 'price': '80,000원'},
+    ],
+    '섬유': [
+      {'region': '서울시 강서구', 'desc': '섬유 클래스 1 - 자수 기초', 'price': '40,000원'},
+      {'region': '서울시 은평구', 'desc': '섬유 클래스 2 - 한복 만들기', 'price': '120,000원'},
+      {'region': '서울시 구로구', 'desc': '섬유 클래스 3 - 매듭 공예', 'price': '35,000원'},
+      {'region': '서울시 동작구', 'desc': '섬유 클래스 4 - 홍염장 체험', 'price': '50,000원'},
+    ],
+    '식문화': [
+      {'region': '서울시 용산구', 'desc': '식문화 클래스 1 - 전통주 만들기', 'price': '70,000원'},
+      {'region': '서울시 서대문구', 'desc': '식문화 클래스 2 - 장 담그기', 'price': '65,000원'},
+      {'region': '서울시 노원구', 'desc': '식문화 클래스 3 - 다과 체험', 'price': '38,000원'},
+      {'region': '서울시 중구', 'desc': '식문화 클래스 4 - 전통차 만들기', 'price': '42,000원'},
+    ],
+    '예술': [
+      {'region': '서울시 강북구', 'desc': '예술 클래스 1 - 판소리 입문', 'price': '90,000원'},
+      {'region': '서울시 관악구', 'desc': '예술 클래스 2 - 민요 배우기', 'price': '55,000원'},
+      {'region': '서울시 금천구', 'desc': '예술 클래스 3 - 탈춤 체험', 'price': '60,000원'},
+      {'region': '서울시 도봉구', 'desc': '예술 클래스 4 - 무용 워크숍', 'price': '110,000원'},
+    ],
+    '기타': [
+      {'region': '서울시 중랑구', 'desc': '기타 클래스 1 - 단청장 체험', 'price': '75,000원'},
+      {'region': '서울시 양천구', 'desc': '기타 클래스 2 - 소목장 입문', 'price': '85,000원'},
+      {'region': '서울시 강동구', 'desc': '기타 클래스 3 - 전통 공예', 'price': '60,000원'},
+      {'region': '서울시 서대문구', 'desc': '기타 클래스 4 - 창작 체험', 'price': '50,000원'},
+    ],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +71,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
     final double minTextWidth = 32; // 카테고리 텍스트의 최소 너비(더 넓은 간격)
     final double separatorWidth =
         (screenWidth - horizontalPadding - (categoryCount * minTextWidth)) / (categoryCount - 1);
+    final classData = classDataByCategory[categories[selectedCategory]] ?? [];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
