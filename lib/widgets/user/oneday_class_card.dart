@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 
 class OnedayClassCard extends StatelessWidget {
+  final String title;
   final String region;
   final String desc;
   final String price;
   final String? imagePath;
 
-  const OnedayClassCard({super.key, required this.region, required this.desc, required this.price, this.imagePath});
+  const OnedayClassCard({
+    super.key,
+    required this.title,
+    required this.region,
+    required this.desc,
+    required this.price,
+    this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 200,
-      decoration: BoxDecoration(color: const Color(0xFFFFFFFF), borderRadius: BorderRadius.circular(24)),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFFFF),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFFE0E0E0), width: 1.2),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))],
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +63,11 @@ class OnedayClassCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+                const SizedBox(height: 6),
                 Text(
                   region,
                   style: const TextStyle(fontSize: 13, color: Colors.black54, fontWeight: FontWeight.w600),
