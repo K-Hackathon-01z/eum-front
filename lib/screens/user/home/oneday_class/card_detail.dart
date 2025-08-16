@@ -4,6 +4,7 @@ import '../../../../widgets/user/calendar.dart';
 
 class CardDetailScreen extends StatefulWidget {
   final String? imageUrl;
+  final String title;
   final String desc;
   final String price;
   final String region;
@@ -13,6 +14,7 @@ class CardDetailScreen extends StatefulWidget {
   const CardDetailScreen({
     super.key,
     required this.imageUrl,
+    required this.title,
     required this.desc,
     required this.price,
     required this.region,
@@ -90,8 +92,10 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.desc, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                      const SizedBox(height: 16),
+                      Text(widget.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      Text(widget.desc, style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 10),
                       Text(widget.price, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 16),
                       Row(

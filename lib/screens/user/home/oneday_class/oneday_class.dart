@@ -260,6 +260,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                         MaterialPageRoute(
                           builder: (_) => CardDetailScreen(
                             imageUrl: data['image'] ?? null,
+                            title: data['title']!,
                             desc: data['desc']!,
                             price: data['price']!,
                             region: data['region']!,
