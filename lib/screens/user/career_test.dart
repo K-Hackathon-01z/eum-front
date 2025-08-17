@@ -127,7 +127,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                   q['text'].toString(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -167,7 +167,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                           child: Text(
                             optionTexts[index],
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               color: isSelected
                                   ? const Color(0xFF3B2D5B)
                                   : const Color(0xFFB9A6E7),
@@ -186,11 +186,26 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: OutlinedButton(
+                        child: ElevatedButton(
                           onPressed: current == 0
                               ? null
                               : () => setState(() => current--),
-                          child: const Text('이전'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFF2F2F2),
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            minimumSize: const Size(double.infinity, 48),
+                          ),
+                          child: const Text(
+                            '이전',
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 12),
