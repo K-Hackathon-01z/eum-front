@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:eum_demo/screens/user/career_test_result.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -219,27 +220,11 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                                   } else {
                                     await submitAnswers(questions, 3);
                                     if (!mounted) return;
-                                    showDialog(
-                                      context: context,
-                                      builder: (_) => AlertDialog(
-                                        title: const Text('제출 완료'),
-                                        content: Text(
-                                          '응답 ${questions.length}건 제출됨',
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context); // 다이얼로그 닫기
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => const CareerTestResultPage(),
-                                                ),
-                                              );
-                                            },
-                                            child: const Text('확인'),
-                                          ),
-                                        ],
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            const CareerTestResultPage(),
                                       ),
                                     );
                                   }
