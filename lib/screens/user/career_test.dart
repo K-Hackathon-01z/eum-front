@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:eum_demo/screens/user/career_test_result.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -228,8 +228,15 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                                         ),
                                         actions: [
                                           TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
+                                            onPressed: () {
+                                              Navigator.pop(context); // 다이얼로그 닫기
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => const CareerTestResultPage(),
+                                                ),
+                                              );
+                                            },
                                             child: const Text('확인'),
                                           ),
                                         ],
