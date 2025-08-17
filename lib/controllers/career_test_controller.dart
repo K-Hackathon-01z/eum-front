@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import '../models/career_test/question.dart';
-import '../services/user/career_test_service.dart';
 
 class TestController extends ChangeNotifier {
   List<Question> _questions = []; // 질문 리스트
@@ -14,10 +13,10 @@ class TestController extends ChangeNotifier {
 
   bool get isLast => _currentIndex == _questions.length - 1;
 
-  Future<void> loadQuestions() async {
-    _questions = await fetchQuestions();
-    notifyListeners(); // 화면 새로 그림
-  }
+  // Future<void> loadQuestions() async {
+  //   _questions = await fetchQuestions();
+  //   notifyListeners(); // 화면 새로 그림
+  // }
 
   void selectOption(int index) {
     _answers[_currentIndex] = index;

@@ -43,26 +43,26 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
 
   // ★ 2) 제출 (백엔드가 index만 받는다면 selectedIndex만 전송하면 됨)
   //    안전하게 optionId도 함께 넣어줌(백엔드가 더 좋아할 가능성↑).
-  Future<void> submitAnswers(List<Map<String, dynamic>> questions) async {
+  Future<void> submitAnswers(
+    List<Map<String, dynamic>> questions,
+    int userid,
+  ) async {
     final payload = {
-      "answers": List.generate(questions.length, (i) {
+      "optionIds": List.generate(questions.length, (i) {
         final q = questions[i];
         final sel = answers[i]!;
         final opts = (q['options'] as List)
             .map((e) => Map<String, dynamic>.from(e))
             .toList();
         final selectedOption = opts[sel];
-        return {
-          "questionId": q['questionId'],
-          "selectedIndex": sel, // 인덱스(요구사항대로)
-          "selectedOptionId":
-              selectedOption['optionId'], // 옵션 id(서버가 선호할 수 있어 추가)
-        };
+        return selectedOption['optionId'];
       }),
     };
 
     // TODO: 실제 제출 URL로 바꿔 주세요 (Swagger의 제출 엔드포인트)
-    final url = Uri.parse('https://eum-back.onrender.com/api/matching/submit');
+    final url = Uri.parse(
+      'https://eum-back.onrender.com/api/matching/submit/$userid',
+    );
     final res = await http.post(
       url,
       headers: {'Content-Type': 'application/json', 'accept': '*/*'},
@@ -217,7 +217,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                                   if (!isLast) {
                                     setState(() => current++);
                                   } else {
-                                    await submitAnswers(questions);
+                                    await submitAnswers(questions, 3);
                                     if (!mounted) return;
                                     showDialog(
                                       context: context,
