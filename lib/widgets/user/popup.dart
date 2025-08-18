@@ -26,7 +26,10 @@ class CommonPopup extends StatelessWidget {
     this.button2Text,
     this.onButtonSecondPressed,
     this.button2Color,
+    this.onClose,
   });
+
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class CommonPopup extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    onPressed: onButtonFirstPressed ?? () => Navigator.of(context).pop(),
+                    onPressed: onButtonFirstPressed,
                     child: Text(button1Text, style: const TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ),
@@ -70,7 +73,7 @@ class CommonPopup extends StatelessWidget {
                         side: BorderSide(color: button2Color ?? iconColor),
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
-                      onPressed: onButtonSecondPressed ?? () => Navigator.of(context).pop(),
+                      onPressed: onButtonSecondPressed,
                       child: Text(
                         button2Text!,
                         style: TextStyle(fontSize: 16, color: button2Color != null ? Colors.white : iconColor),
@@ -85,7 +88,7 @@ class CommonPopup extends StatelessWidget {
             top: 8,
             right: 8,
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
+              onTap: onClose,
               child: const Icon(Icons.close, size: 28, color: Colors.black38),
             ),
           ),
