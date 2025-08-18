@@ -14,10 +14,10 @@ class TestController extends ChangeNotifier {
 
   bool get isLast => _currentIndex == _questions.length - 1;
 
-  Future<void> loadQuestions() async {
-    _questions = await fetchQuestions();
-    notifyListeners(); // 화면 새로 그림
-  }
+  // Future<void> loadQuestions() async {
+  //   _questions = await fetchQuestions();
+  //   notifyListeners(); // 화면 새로 그림
+  // }
 
   void selectOption(int index) {
     _answers[_currentIndex] = index;
