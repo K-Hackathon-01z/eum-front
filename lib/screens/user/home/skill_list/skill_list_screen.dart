@@ -1,16 +1,13 @@
-import 'skill_detail_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/appbar.dart';
 import '../../../../widgets/user/skill_list.dart';
-import '../../../../services/user/skill_service.dart';
-import 'package:eum_demo/models/skill_list/skill_category.dart';
+import 'skill_detail_screen.dart';
 
 class SkillListScreen extends StatelessWidget {
   const SkillListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final SkillService skillService = SkillService();
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
       appBar: CustomAppBar(
@@ -55,34 +52,40 @@ class SkillListScreen extends StatelessWidget {
           );
         },
       ),
-      body: FutureBuilder<List<SkillCategory>>(
-        future: skillService.fetchAllSkillCategoriesParsed(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('데이터를 불러올 수 없습니다'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('기술 정보가 없습니다'));
-          }
-          final skills = snapshot.data!;
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-            itemCount: skills.length,
-            itemBuilder: (context, idx) {
-              final skill = skills[idx];
-              return SkillList(
-                title: skill.name,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => SkillDetailScreen(category: skill.category)),
-                  );
-                },
-              );
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        children: [
+          SkillList(
+            title: '공예',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '공예')));
             },
-          );
-        },
+          ),
+          SkillList(
+            title: '섬유',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '섬유')));
+            },
+          ),
+          SkillList(
+            title: '식문화',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '식문화')));
+            },
+          ),
+          SkillList(
+            title: '예술',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '예술')));
+            },
+          ),
+          SkillList(
+            title: '기타',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => SkillDetailScreen(category: '기타')));
+            },
+          ),
+        ],
       ),
     );
   }
