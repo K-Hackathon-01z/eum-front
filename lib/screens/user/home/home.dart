@@ -33,7 +33,7 @@ class _RootScreenState extends State<RootScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F1F1),
+      backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
         child: IndexedStack(index: _currentIndex, children: _pages),
       ),
@@ -65,7 +65,7 @@ class BannerButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 4)],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.20), blurRadius: 8, offset: const Offset(0, 3))],
         ),
         child: Row(
           children: [
@@ -114,7 +114,18 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Container(
               margin: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 16,
+                    spreadRadius: 2,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +179,18 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Container(
               margin: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.10),
+                    blurRadius: 16,
+                    spreadRadius: 2,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,16 +246,15 @@ class HomeScreen extends StatelessWidget {
               height: bannerHeight,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [
-                    Color(0xB3FFE082), // 파스텔 금빛 (밝은 노랑/금, 50% 불투명도)
-                    Color(0xB3FFF9C4), // 밝은 파스텔 노랑 (연노랑, 50% 불투명도)
-                  ],
+                  colors: [Color(0xB3FFE082), Color(0xB3FFF9C4)],
                   stops: [0.10, 0.95],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withOpacity(0.20), blurRadius: 12, offset: const Offset(0, 4)),
+                ],
               ),
               child: Row(
                 children: [
