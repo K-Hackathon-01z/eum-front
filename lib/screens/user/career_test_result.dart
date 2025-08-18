@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CareerTestResultPage extends StatelessWidget {
-  const CareerTestResultPage({Key? key, required List resultList}) : super(key: key);
+  final List<dynamic> resultList;
+  const CareerTestResultPage({Key? key, required this.resultList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class CareerTestResultPage extends StatelessWidget {
                 itemCount: recommendedSkills.length,
                 itemBuilder: (context, index) {
                   final skill = recommendedSkills[index];
+                  // 스킬들 인덱스별로 보여주기
                   return _SkillCard(
                     name: skill['name']!,
                     desc: skill['desc']!,
@@ -143,7 +145,23 @@ class _SkillCardState extends State<_SkillCard>
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(18),
-          onTap: () {},
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text(widget.name),
+                  content: Text(widget.desc),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('닫기'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(18),
             child: Column(
