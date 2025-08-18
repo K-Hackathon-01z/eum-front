@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 
 class CareerTestResultPage extends StatelessWidget {
   final List<dynamic> resultList;
-  const CareerTestResultPage({Key? key, required this.resultList}) : super(key: key);
+  const CareerTestResultPage({Key? key, required this.resultList})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FB),
       appBar: AppBar(
-        title: const Text('나에게 추천된 기술'),
+        title: const Align(
+          alignment: Alignment.center,
+          child: Text('나에게 추천된 기술'),
+        ),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black87,
@@ -91,11 +95,7 @@ class _SkillCard extends StatelessWidget {
         color: cardColor,
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
         ],
       ),
       child: InkWell(
@@ -109,11 +109,7 @@ class _SkillCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.star_rounded,
-                    color: Color(0xFF4F8CFF),
-                    size: 28,
-                  ),
+                  Icon(Icons.star_rounded, color: Color(0xFF4F8CFF), size: 28),
                   SizedBox(width: 8),
                   Flexible(
                     child: Text(
