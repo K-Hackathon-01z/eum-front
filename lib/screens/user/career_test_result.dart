@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CareerTestResultPage extends StatelessWidget {
-  const CareerTestResultPage({Key? key}) : super(key: key);
+  const CareerTestResultPage({Key? key, required List resultList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

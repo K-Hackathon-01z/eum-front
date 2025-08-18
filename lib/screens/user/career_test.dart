@@ -44,7 +44,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
 
   // ★ 2) 제출 (백엔드가 index만 받는다면 selectedIndex만 전송하면 됨)
   //    안전하게 optionId도 함께 넣어줌(백엔드가 더 좋아할 가능성↑).
-  Future<void> submitAnswers(
+  Future<List<dynamic>> submitAnswers(
     List<Map<String, dynamic>> questions,
     int userid,
   ) async {
@@ -60,7 +60,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
       }),
     };
 
-    // TODO: 실제 제출 URL로 바꿔 주세요 (Swagger의 제출 엔드포인트)
+    // TODO: 실제 제출 URL
     final url = Uri.parse(
       'https://eum-back.onrender.com/api/matching/submit/$userid',
     );
@@ -72,6 +72,8 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
     if (res.statusCode != 200) {
       throw Exception('제출 실패: ${res.statusCode} / ${res.body}');
     }
+
+    return jsonDecode(res.body) as List<dynamic>;
   }
 
   double _progress(int total) => total == 0 ? 0 : (current + 1) / total;
@@ -218,14 +220,14 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                                   if (!isLast) {
                                     setState(() => current++);
                                   } else {
-                                    await submitAnswers(questions, 3);
+                                    final resultList = await submitAnswers(questions, 3);
                                     if (!mounted) return;
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) =>
-                                            const CareerTestResultPage(),
-                                      ),
+                                            CareerTestResultPage(resultList: resultList),
+                                    ),
                                     );
                                   }
                                 },
