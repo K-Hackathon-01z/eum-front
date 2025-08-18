@@ -105,10 +105,10 @@ class _SkillCard extends StatelessWidget {
                     shaderCallback: (Rect bounds) {
                       return const LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 255, 237, 145), // 진한 노랑
-                          Color.fromARGB(255, 255, 201, 107), // 골드/오렌지
+                          Color.fromARGB(255, 250, 233, 147), // 진한 노랑
+                          Color.fromARGB(255, 255, 194, 97), // 골드/오렌지
                         ],
-                        stops: [0.0, 1.0],
+                        stops: [0.0, 0.95],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ).createShader(bounds);
