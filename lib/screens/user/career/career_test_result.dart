@@ -37,7 +37,10 @@ class CareerTestResultPage extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF222B45)),
             ),
             const SizedBox(height: 8),
-            const Text('아래 추천 기술을 기반으로 커리어를 설계해보세요.', style: TextStyle(fontSize: 15, color: Color(0xFF6B7684))),
+            const Text(
+              '아래 추천 기술을 기반으로 커리어를 설계해보세요.\n전통 기술을 클릭하면 장인의 목록을 확인할 수 있습니다.',
+              style: TextStyle(fontSize: 15, color: Color(0xFF6B7684)),
+            ),
             const SizedBox(height: 24),
             Expanded(
               child: GridView.builder(
@@ -98,7 +101,7 @@ class _SkillCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.star_rounded, color: Color(0xFF4F8CFF), size: 28),
+                  Icon(Icons.star_rounded, color: Color.fromARGB(255, 202, 188, 230), size: 28),
                   SizedBox(width: 8),
                   Flexible(
                     child: Text(
