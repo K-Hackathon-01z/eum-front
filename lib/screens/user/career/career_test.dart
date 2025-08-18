@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:eum_demo/screens/user/career_test_result.dart';
+import 'package:eum_demo/screens/user/career/career_test_result.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
