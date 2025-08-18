@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../home/creator_list/creator_profile_screen.dart';
 
 class CareerTestResultPage extends StatelessWidget {
   final List<dynamic> resultList;
@@ -58,7 +59,10 @@ class CareerTestResultPage extends StatelessWidget {
                     score: skill['totalScore']?.toString() ?? '',
                     index: index,
                     onTap: () {
-                      // 장인 매칭 페이지로 보여주는 동작을 해야함
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => CreatorProfileScreen(subCategory: skill['skillName'] ?? '')),
+                      );
                     },
                   );
                 },

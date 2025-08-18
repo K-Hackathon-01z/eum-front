@@ -13,7 +13,7 @@ class CreatorDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // 카테고리별 하위 크리에이터 리스트 정의
     final Map<String, List<String>> subCreators = {
-      '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
+      '공예': ['금속공예', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
       '섬유': ['홍염장', '한복장', '자수', '매듭'],
       '식문화': ['전통주', '장', '다과'],
       '예술': ['판소리', '민요', '탈춤', '무용'],
