@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/user/button.dart';
+import '../../widgets/user/popup.dart';
 
 /// Flutter 기본 제공 날짜/시간 선택 다이얼로그를 띄우는 위젯
 class CalendarWidget extends StatefulWidget {
@@ -114,8 +115,32 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     if (!mounted) return;
     if (result == true) {
       widget.onSelected?.call(date, time);
+      // 예약 성공 팝업 표시
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => CommonPopup(
+          icon: Icons.check_circle,
+          iconColor: const Color(0xFF9785BA),
+          title: '예약이 성공하였습니다!',
+          message: '예약 내역은 마이페이지에서 확인할 수 있습니다.',
+          button1Text: '홈 바로가기',
+          onButtonFirstPressed: () {
+            Navigator.of(context).pop(); // 팝업 닫기
+            Navigator.of(context).pop(); // calendar 닫기
+            // TODO: 홈으로 이동하는 네비게이션 추가
+          },
+          button2Text: '마이페이지 바로가기',
+          onButtonSecondPressed: () {
+            Navigator.of(context).pop(); // 팝업 닫기
+            Navigator.of(context).pop(); // calendar 닫기
+            // TODO: 매칭신청 내역으로 이동하는 네비게이션 추가
+          },
+        ),
+      );
+    } else {
+      Navigator.of(context).pop();
     }
-    Navigator.of(context).pop();
   }
 
   @override
