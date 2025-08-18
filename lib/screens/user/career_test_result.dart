@@ -58,7 +58,6 @@ class CareerTestResultPage extends StatelessWidget {
                 itemCount: recommendedSkills.length,
                 itemBuilder: (context, index) {
                   final skill = recommendedSkills[index];
-                  // 스킬들 인덱스별로 보여주기
                   return _SkillCard(
                     name: skill['name']!,
                     desc: skill['desc']!,
