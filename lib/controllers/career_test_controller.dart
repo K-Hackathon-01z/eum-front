@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
 import '../models/career_test/question.dart';
-import '../services/user/career_test_service.dart';
 
 class TestController extends ChangeNotifier {
   List<Question> _questions = []; // 질문 리스트
