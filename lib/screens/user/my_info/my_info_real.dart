@@ -22,8 +22,8 @@ class MyInfoScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
-        title: Text(
+        elevation: 0,
+        title: const Text(
           '내 정보',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -38,8 +38,8 @@ class MyInfoScreen extends StatelessWidget {
           SizedBox(width: 16),
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
-          child: Container(color: Colors.grey.shade300, height: 1.0),
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[300], height: 1.0),
         ),
       ),
       body: Column(
@@ -68,13 +68,16 @@ class MyInfoScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text('닉네임', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                            Text('JunHoKim', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                             Spacer(),
-                            Text('나이 여기다가 적으셈', style: TextStyle(fontSize: 14, color: Colors.black54)),
+                            Text(
+                              '',
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black54),
+                            ),
                           ],
                         ),
                         SizedBox(height: 8),
-                        Text('주소 여기다가 넣으면 됨.', style: TextStyle(fontSize: 14, color: Colors.black54)),
+                        Text('서울시 광진구', style: TextStyle(fontSize: 14, color: Colors.black54)),
                       ],
                     ),
                   ),
@@ -86,7 +89,7 @@ class MyInfoScreen extends StatelessWidget {
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           // 메뉴 리스트
           ListTile(
-            title: Text('이용내역'),
+            title: Text('클래스 예약 내역'),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right),
               onPressed: () {
