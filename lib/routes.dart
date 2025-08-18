@@ -6,6 +6,7 @@ import 'screens/user/home/oneday_class/oneday_class.dart';
 import 'screens/user/home/goverment/government_help.dart';
 import 'screens/user/home/home.dart';
 import 'screens/user/home/skill_list/skill_list_screen.dart';
+import 'screens/user/my_info/my_info_real.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => const TitleScreen(),
@@ -14,5 +15,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/skill-list': (context) => const SkillListScreen(),
   '/creator-list': (context) => const CreatorListScreen(),
   '/oneday-class': (context) => const OnedayClassScreen(),
-  //'/card-detail': (context) => const CardDetailScreen(), 생성자 데이터가 필수이기에 라우팅에서 제외
+  '/my-info': (context) => const MyInfoScreen(),
 };
