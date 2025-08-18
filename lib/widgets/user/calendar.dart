@@ -139,7 +139,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               navigator.pop(); // 팝업 닫기
               navigator.pop(); // calendar 닫기
               Future.microtask(() {
-                navigator.pushNamedAndRemoveUntil('/my-info', (route) => false);
+                navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
               });
             },
           );

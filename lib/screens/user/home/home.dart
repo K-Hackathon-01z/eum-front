@@ -15,8 +15,20 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
-
   final List<Widget> _pages = [HomeScreen(), MapScreen(), CareerTestScreen(), MyInfoScreen()];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is Map && args['tab'] is int) {
+      if (_currentIndex != args['tab']) {
+        setState(() {
+          _currentIndex = args['tab'];
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
