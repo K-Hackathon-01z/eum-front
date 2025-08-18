@@ -34,10 +34,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       Navigator.of(context).pop();
       return;
     }
+    // Material input 방식 시간 선택
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
+      initialEntryMode: TimePickerEntryMode.input,
     );
     if (!mounted) return;
     if (time == null) {
