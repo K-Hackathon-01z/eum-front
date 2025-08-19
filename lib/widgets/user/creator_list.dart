@@ -4,8 +4,9 @@ import 'creator_detail.dart';
 class CreatorList extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
+  final Color? color;
 
-  const CreatorList({super.key, this.title = '이름', this.onTap});
+  const CreatorList({super.key, this.title = '이름', this.onTap, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CreatorList extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color ?? Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 6, offset: const Offset(0, 2))],
         ),

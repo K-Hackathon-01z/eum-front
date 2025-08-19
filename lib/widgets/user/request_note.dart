@@ -49,7 +49,7 @@ class RequestNote extends StatelessWidget {
                           context: context,
                           barrierDismissible: false,
                           builder: (context) => CommonPopup(
-                            showCloseIcon: false,
+                            showCloseIcon: true,
                             icon: Icons.check_circle_outline,
                             iconColor: const Color(0xFF9785BA),
                             title: "매칭 신청 완료!",
