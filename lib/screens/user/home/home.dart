@@ -1,10 +1,10 @@
-import 'package:eum_demo/screens/user/my_info/my_info_real.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../widgets/user/navigation.dart';
+import 'package:eum_demo/widgets/user/navigation.dart';
 import 'package:eum_demo/screens/user/career/career_test.dart';
 import 'package:eum_demo/screens/user/map/map.dart';
 import 'package:eum_demo/widgets/user/home_card.dart';
+import 'package:eum_demo/screens/user/my_info/my_info_real.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
