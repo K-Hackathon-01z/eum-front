@@ -41,10 +41,32 @@ class RequestNote extends StatelessWidget {
                       message: "매칭 신청 후에는 삭제가 불가능합니다.",
                       button1Text: "전송",
                       onButtonFirstPressed: () {
-                        // 실제 전송 로직은 여기에
                         if (onSend != null) onSend!(controller.text);
-                        Navigator.of(context).pop(); // 팝업 닫기
+                        Navigator.of(context).pop(); // 첫 번째 팝업 닫기
                         Navigator.of(context).pop(); // RequestNote 닫기
+                        // 매칭 신청 완료 팝업 띄우기
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => CommonPopup(
+                            showCloseIcon: false,
+                            icon: Icons.check_circle_outline,
+                            iconColor: const Color(0xFF9785BA),
+                            title: "매칭 신청 완료!",
+                            message: "매칭 신청이 성공적으로 완료되었습니다.",
+                            button1Text: "홈 바로가기",
+                            onButtonFirstPressed: () {
+                              Navigator.of(context).pop(); // 완료 팝업 닫기
+                              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                            },
+                            button2Text: "마이페이지 바로가기",
+                            onButtonSecondPressed: () {
+                              Navigator.of(context).pop(); // 완료 팝업 닫기
+                              final navigator = Navigator.of(context);
+                              navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
+                            },
+                          ),
+                        );
                       },
                       button2Text: "취소",
                       onButtonSecondPressed: () {

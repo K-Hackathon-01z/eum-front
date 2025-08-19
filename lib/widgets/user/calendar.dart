@@ -116,7 +116,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     if (result == true) {
       widget.onSelected?.call(date, time);
       // 예약 성공 팝업 표시
-      await showDialog(
+      showDialog(
         context: context,
         barrierDismissible: false,
         builder: (_) {
