@@ -6,7 +6,7 @@ class RequestNote extends StatelessWidget {
   final String nickname;
   final ValueChanged<String>? onSend;
 
-  const RequestNote({super.key, this.nickname = 'JunHoKim', this.onSend});
+  const RequestNote({super.key, this.nickname = '닉네임', this.onSend});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:eum_demo/screens/common/title.dart';
 import 'package:flutter/material.dart';
 import 'routes.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // 위젯 파일들은 따로 dart 파일에 두고 import해도 됩니다. 지금은 예시.
 
@@ -15,7 +16,18 @@ class PreviewApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: '/', routes: appRoutes, debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      initialRoute: '/',
+      routes: appRoutes,
+      debugShowCheckedModeBanner: false,
+      locale: const Locale('ko', 'KR'),
+      supportedLocales: const [Locale('ko', 'KR'), Locale('en', 'US')],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+    );
   }
 }
 
