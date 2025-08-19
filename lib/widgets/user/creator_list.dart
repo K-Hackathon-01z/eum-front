@@ -16,7 +16,12 @@ class CreatorList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => CreatorDetail(name: title, skill: '기술 예시', works: '주요작품 예시', bio: '약력 예시'),
+              builder: (_) => CreatorDetail(
+                name: title,
+                skill: '한지',
+                works: '한지의 미학, 빛과 종이의 만남',
+                bio: '30년 경력 한지 장인. 대한민국 공예대전 대상, 한지문화제 초대작가 등 다양한 수상 및 전시 경력 보유.',
+              ),
             );
           },
       child: Container(

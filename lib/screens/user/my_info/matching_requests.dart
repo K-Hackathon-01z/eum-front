@@ -96,7 +96,7 @@ class MatchingMessageModal extends StatelessWidget {
                           readOnly: true,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                            hintText: '매칭 신청 부탁드립니다!',
+                            hintText: 'matching',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.zero,
                           ),
@@ -128,7 +128,7 @@ class MatchingRequests extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           CreatorList(
-            title: '홍길동',
+            title: '최한지',
             onTap: () {
               showDialog(context: context, barrierDismissible: true, builder: (_) => const MatchingMessageModal());
             },
