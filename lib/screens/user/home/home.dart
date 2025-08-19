@@ -16,16 +16,20 @@ class RootScreen extends StatefulWidget {
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
   final List<Widget> _pages = [HomeScreen(), MapScreen(), CareerTestScreen(), MyInfoScreen()];
+  bool _tabHandled = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args is Map && args['tab'] is int) {
-      if (_currentIndex != args['tab']) {
-        setState(() {
-          _currentIndex = args['tab'];
-        });
+    if (!_tabHandled) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args is Map && args['tab'] is int) {
+        if (_currentIndex != args['tab']) {
+          setState(() {
+            _currentIndex = args['tab'];
+          });
+        }
+        _tabHandled = true;
       }
     }
   }
