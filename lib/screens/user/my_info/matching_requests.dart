@@ -61,12 +61,18 @@ class MatchingMessageModal extends StatelessWidget {
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              child: const Center(
                                 child: TextField(
-                                  decoration: InputDecoration(hintText: '메시지를 입력하세요', border: InputBorder.none),
-                                  maxLines: 3,
-                                  style: TextStyle(fontSize: 14),
+                                  readOnly: true,
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: '매칭 신청 메세지 전송 완료',
+                                    hintStyle: TextStyle(color: Colors.purple),
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.zero,
+                                  ),
+                                  maxLines: 1,
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -84,6 +90,19 @@ class MatchingMessageModal extends StatelessWidget {
                       decoration: ShapeDecoration(
                         color: Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      ),
+                      child: const Center(
+                        child: TextField(
+                          readOnly: true,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                            hintText: '매칭 신청 부탁드립니다!',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          maxLines: null,
+                          style: TextStyle(fontSize: 15),
+                        ),
                       ),
                     ),
                   ),
