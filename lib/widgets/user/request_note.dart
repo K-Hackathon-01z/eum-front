@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'button.dart';
+import 'popup.dart';
 
 class RequestNote extends StatelessWidget {
   final String nickname;
   final ValueChanged<String>? onSend;
 
-  const RequestNote({super.key, this.nickname = '닉네임', this.onSend});
+  const RequestNote({super.key, this.nickname = 'JunHoKim', this.onSend});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,27 @@ class RequestNote extends StatelessWidget {
               child: Button(
                 text: '메세지 전송',
                 onPressed: () {
-                  if (onSend != null) onSend!(controller.text);
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  showDialog(
+                    context: context,
+                    builder: (context) => CommonPopup(
+                      showCloseIcon: false,
+                      icon: Icons.send,
+                      iconColor: const Color(0XFF9785BA),
+                      title: "매칭 신청할까요?",
+                      message: "매칭 신청 후에는 삭제가 불가능합니다.",
+                      button1Text: "전송",
+                      onButtonFirstPressed: () {
+                        // 실제 전송 로직은 여기에
+                        if (onSend != null) onSend!(controller.text);
+                        Navigator.of(context).pop(); // 팝업 닫기
+                        Navigator.of(context).pop(); // RequestNote 닫기
+                      },
+                      button2Text: "취소",
+                      onButtonSecondPressed: () {
+                        Navigator.of(context).pop(); // 팝업 닫기
+                      },
+                    ),
+                  );
                 },
                 width: cardWidth * 0.68,
                 height: 48,

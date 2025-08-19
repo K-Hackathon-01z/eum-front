@@ -13,6 +13,8 @@ class CommonPopup extends StatelessWidget {
   final String? button2Text;
   final VoidCallback? onButtonSecondPressed;
   final Color? button2Color;
+  final VoidCallback? onClose;
+  final bool showCloseIcon;
 
   const CommonPopup({
     super.key,
@@ -27,9 +29,8 @@ class CommonPopup extends StatelessWidget {
     this.onButtonSecondPressed,
     this.button2Color,
     this.onClose,
+    this.showCloseIcon = true,
   });
-
-  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +85,15 @@ class CommonPopup extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: GestureDetector(
-              onTap: onClose,
-              child: const Icon(Icons.close, size: 28, color: Colors.black38),
+          if (showCloseIcon)
+            Positioned(
+              top: 8,
+              right: 8,
+              child: GestureDetector(
+                onTap: onClose,
+                child: const Icon(Icons.close, size: 28, color: Colors.black38),
+              ),
             ),
-          ),
         ],
       ),
     );
