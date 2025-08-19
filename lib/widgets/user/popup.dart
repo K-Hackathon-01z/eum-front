@@ -90,7 +90,7 @@ class CommonPopup extends StatelessWidget {
               top: 8,
               right: 8,
               child: GestureDetector(
-                onTap: onClose,
+                onTap: onClose ?? () => Navigator.of(context).pop(),
                 child: const Icon(Icons.close, size: 28, color: Colors.black38),
               ),
             ),
