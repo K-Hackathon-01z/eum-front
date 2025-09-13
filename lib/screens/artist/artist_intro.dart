@@ -50,7 +50,7 @@ class ArtistIntroScreen extends StatelessWidget {
                     backgroundColor: const Color(0xFF6D5BD0),
                     textColor: Colors.white,
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/artist');
+                      Navigator.pushReplacementNamed(context, '/artist-home');
                     },
                   ),
                 ),

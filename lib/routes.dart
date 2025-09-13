@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/common/title.dart';
 import 'screens/artist/artist_intro.dart';
-import 'screens/artist/artist_home.dart';
+import 'screens/artist/artist_shell.dart';
 import 'screens/user/home/creator_list/creator_list_screen.dart';
 import 'screens/user/home/oneday_class/oneday_class.dart';
 import 'screens/user/home/goverment/government_help.dart';
@@ -20,5 +20,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/my-info': (context) => const MyInfoScreen(),
   // Artist mode
   '/artist-intro': (context) => const ArtistIntroScreen(),
-  '/artist': (context) => const ArtistHomeScreen(),
+  '/artist-home': (context) => const ArtistShellScreen(),
 };
