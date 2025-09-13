@@ -30,7 +30,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         'title': '나전칠기의 기원',
         'region': '서울시 종로구',
         'desc': '나전칠기의 기원과 역사에 대한 강의입니다.',
-        'price': '15,000원',
+        'price': '13,000원',
         'image': 'assets/images/oneday_class/hot01.png',
       },
       {
@@ -55,18 +55,8 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         'image': 'assets/images/oneday_class/hot04.png',
       },
     ],
-    '공예': [
-      {'title': '나전칠기 공예', 'region': '서울시 강남구', 'desc': '공예 클래스 1 - 나전칠기', 'price': '60,000원'},
-      {'title': '도자기 만들기', 'region': '서울시 마포구', 'desc': '공예 클래스 2 - 도자기 만들기', 'price': '55,000원'},
-      {'title': '한지 등 만들기', 'region': '서울시 종로구', 'desc': '공예 클래스 3 - 한지 등 만들기', 'price': '45,000원'},
-      {'title': '목공예 체험', 'region': '서울시 성동구', 'desc': '공예 클래스 4 - 목공예 체험', 'price': '80,000원'},
-    ],
-    '섬유': [
-      {'title': '자수 기초', 'region': '서울시 강서구', 'desc': '섬유 클래스 1 - 자수 기초', 'price': '40,000원'},
-      {'title': '한복 만들기', 'region': '서울시 은평구', 'desc': '섬유 클래스 2 - 한복 만들기', 'price': '120,000원'},
-      {'title': '매듭 공예', 'region': '서울시 구로구', 'desc': '섬유 클래스 3 - 매듭 공예', 'price': '35,000원'},
-      {'title': '홍염장 체험', 'region': '서울시 동작구', 'desc': '섬유 클래스 4 - 홍염장 체험', 'price': '50,000원'},
-    ],
+    '공예': [],
+    '섬유': [],
     '식문화': [
       {
         'title': '삼해주 만들기 1',
@@ -90,18 +80,8 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         'image': 'assets/images/oneday_class/drink/drink03.png',
       },
     ],
-    '예술': [
-      {'title': '판소리 입문', 'region': '서울시 강북구', 'desc': '예술 클래스 1 - 판소리 입문', 'price': '90,000원'},
-      {'title': '민요 배우기', 'region': '서울시 관악구', 'desc': '예술 클래스 2 - 민요 배우기', 'price': '55,000원'},
-      {'title': '탈춤 체험', 'region': '서울시 금천구', 'desc': '예술 클래스 3 - 탈춤 체험', 'price': '60,000원'},
-      {'title': '무용 워크숍', 'region': '서울시 도봉구', 'desc': '예술 클래스 4 - 무용 워크숍', 'price': '110,000원'},
-    ],
-    '기타': [
-      {'title': '단청장 체험', 'region': '서울시 중랑구', 'desc': '기타 클래스 1 - 단청장 체험', 'price': '75,000원'},
-      {'title': '소목장 입문', 'region': '서울시 양천구', 'desc': '기타 클래스 2 - 소목장 입문', 'price': '85,000원'},
-      {'title': '전통 공예', 'region': '서울시 강동구', 'desc': '기타 클래스 3 - 전통 공예', 'price': '60,000원'},
-      {'title': '창작 체험', 'region': '서울시 서대문구', 'desc': '기타 클래스 4 - 창작 체험', 'price': '50,000원'},
-    ],
+    '예술': [],
+    '기타': [],
   };
 
   @override
@@ -264,8 +244,8 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
                             desc: data['desc']!,
                             price: data['price']!,
                             region: data['region']!,
-                            capacity: 3, // 필요시 데이터 추가
-                            interest: 2, // 필요시 데이터 추가
+                            capacity: 0, // 필요시 데이터 추가
+                            interest: 0, // 필요시 데이터 추가
                           ),
                         ),
                       );
