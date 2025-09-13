@@ -5,9 +5,9 @@ class MessagesPage extends StatelessWidget {
 
   // TODO: API 연동 시 실제 메시지 스레드 목록으로 대체 (현재 더미 데이터)
   final List<_Thread> _threads = [
-    _Thread('고객A', '선반 제작 문의드립니다.', '어제'),
-    _Thread('고객B', '클래스 신청 관련 질문이 있어요.', '2일 전'),
-    _Thread('고객C', '견적 부탁드립니다.', '1주 전'),
+    _Thread('김준호', '선반 제작 문의드립니다.', '어제'),
+    _Thread('김준호우', '클래스 신청 관련 질문이 있어요.', '2일 전'),
+    _Thread('김준호호', '클래스 수업료 네고 부탁드립니다.', '1주 전'),
   ];
 
   @override
