@@ -1,9 +1,16 @@
+import 'package:provider/provider.dart';
+import 'package:eum_demo/providers/class_data_provider.dart';
 import 'package:eum_demo/screens/common/title.dart';
 import 'package:flutter/material.dart';
 import 'routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() => runApp(const PreviewApp(child: TitleScreen()));
+void main() => runApp(
+  MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_) => ClassDataProvider())],
+    child: const PreviewApp(child: TitleScreen()),
+  ),
+);
 
 class PreviewApp extends StatelessWidget {
   final Widget child;
