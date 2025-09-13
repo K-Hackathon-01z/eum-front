@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'screens/common/title.dart';
+import 'screens/artist/artist_intro.dart';
+import 'screens/artist/artist_shell.dart';
 import 'screens/user/home/creator_list/creator_list_screen.dart';
 import 'screens/user/home/oneday_class/oneday_class.dart';
 import 'screens/user/home/goverment/government_help.dart';
@@ -16,4 +18,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/creator-list': (context) => const CreatorListScreen(),
   '/oneday-class': (context) => const OnedayClassScreen(),
   '/my-info': (context) => const MyInfoScreen(),
+  // Artist mode
+  '/artist-intro': (context) => const ArtistIntroScreen(),
+  '/artist-home': (context) => const ArtistShellScreen(),
 };
