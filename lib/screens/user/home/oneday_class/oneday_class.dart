@@ -8,23 +8,8 @@ class OnedayClassScreen extends StatefulWidget {
 
   @override
   State<OnedayClassScreen> createState() => _OnedayClassScreenState();
-}
-
-class _OnedayClassScreenState extends State<OnedayClassScreen> {
-  final List<String> categories = ['인기', '공예', '섬유', '식문화', '예술', '기타'];
-  int selectedCategory = 0;
-
-  // 세부 카테고리 맵으로 관리 (확장성)
-  final Map<String, List<String>> subCategoryMap = {
-    '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
-    '섬유': ['홍염장', '한복장', '자수', '매듭'],
-    '식문화': ['전통주', '장', '다과'],
-    '예술': ['판소리', '민요', '탈춤', '무용'],
-    '기타': ['단청장', '소목장'],
-  };
-  int selectedSubCategory = 0;
-
-  final Map<String, List<Map<String, String>>> classDataByCategory = {
+  // 외부에서 접근 가능하도록 static 선언
+  static Map<String, List<Map<String, String>>> classDataByCategory = {
     '인기': [
       {
         'title': '나전칠기의 기원',
@@ -37,7 +22,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
         'title': '전통 무용이란',
         'region': '서울시 동대문구',
         'desc': '전통 무용이 무엇인지 기원과 개념에 대해 학습합니다.',
-        'price': '19,000원',
+        'price': '17,000원',
         'image': 'assets/images/oneday_class/hot02.png',
       },
       {
@@ -83,6 +68,21 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
     '예술': [],
     '기타': [],
   };
+}
+
+class _OnedayClassScreenState extends State<OnedayClassScreen> {
+  final List<String> categories = ['인기', '공예', '섬유', '식문화', '예술', '기타'];
+  int selectedCategory = 0;
+
+  // 세부 카테고리 맵으로 관리 (확장성)
+  final Map<String, List<String>> subCategoryMap = {
+    '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
+    '섬유': ['홍염장', '한복장', '자수', '매듭'],
+    '식문화': ['전통주', '장', '다과'],
+    '예술': ['판소리', '민요', '탈춤', '무용'],
+    '기타': ['단청장', '소목장'],
+  };
+  int selectedSubCategory = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
     final double minTextWidth = 32; // 카테고리 텍스트의 최소 너비(더 넓은 간격)
     final double separatorWidth =
         (screenWidth - horizontalPadding - (categoryCount * minTextWidth)) / (categoryCount - 1);
-    final classData = classDataByCategory[categories[selectedCategory]] ?? [];
+    final classData = OnedayClassScreen.classDataByCategory[categories[selectedCategory]] ?? [];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

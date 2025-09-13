@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
   final String imagePath;
-  final String description;
+  final String title;
   final String price;
 
-  const HomeCard({super.key, required this.imagePath, required this.description, required this.price});
+  const HomeCard({super.key, required this.imagePath, required this.title, required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HomeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  description,
+                  title,
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
