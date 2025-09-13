@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../services/user/government_service.dart';
-import '../../../../models/government/benefit_info.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/government_provider.dart';
 
 class GovernmentHelpScreen extends StatelessWidget {
   const GovernmentHelpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final GovernmentService governmentService = GovernmentService();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,17 +38,23 @@ class GovernmentHelpScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<BenefitInfo>>(
-              future: governmentService.fetchRecommendedBenefits('1'),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+            child: Consumer<GovernmentProvider>(
+              builder: (context, provider, _) {
+                // 최초 진입 시 데이터 fetch
+                if (!provider.isLoading && provider.benefits.isEmpty && provider.error == null) {
+                  provider.fetchRecommendedBenefits('1');
                   return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
+                }
+                if (provider.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (provider.error != null) {
                   return const Center(child: Text('데이터를 불러올 수 없습니다'));
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                }
+                if (provider.benefits.isEmpty) {
                   return const Center(child: Text('추천 정부 혜택이 없습니다'));
                 }
-                final policies = snapshot.data!;
+                final policies = provider.benefits;
                 return ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   itemCount: policies.length,

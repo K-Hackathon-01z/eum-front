@@ -1,5 +1,6 @@
 import 'package:eum_demo/providers/skill_category_provider.dart';
 import 'package:eum_demo/providers/career_test_provider.dart';
+import 'package:eum_demo/providers/government_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/class_data_provider.dart';
 import 'package:eum_demo/screens/common/title.dart';
@@ -13,6 +14,7 @@ void main() => runApp(
       ChangeNotifierProvider(create: (_) => ClassDataProvider()),
       ChangeNotifierProvider(create: (_) => SkillCategoryProvider()),
       ChangeNotifierProvider(create: (_) => CareerTestProvider()),
+      ChangeNotifierProvider(create: (_) => GovernmentProvider()),
     ],
     child: const PreviewApp(child: TitleScreen()),
   ),
