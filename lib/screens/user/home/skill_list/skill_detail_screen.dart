@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../widgets/user/appbar.dart';
 import '../../../../widgets/user/skill_list.dart';
 import '../../../../widgets/user/skill_detail.dart';
-import 'package:eum_demo/models/skill_list/skill_category.dart';
-import '../../../../services/user/skill_service.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/skill_category_provider.dart';
 
 class SkillDetailScreen extends StatelessWidget {
   final String category;
@@ -11,7 +11,6 @@ class SkillDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SkillService skillService = SkillService();
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
       appBar: CustomAppBar(
@@ -56,17 +55,20 @@ class SkillDetailScreen extends StatelessWidget {
           );
         },
       ),
-      body: FutureBuilder<List<SkillCategory>>(
-        future: skillService.fetchAllSkillCategoriesParsed(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      body: Consumer<SkillCategoryProvider>(
+        builder: (context, provider, _) {
+          // 최초 진입 시 데이터 fetch
+          if (!provider.isLoading && provider.categories.isEmpty && provider.error == null) {
+            provider.fetchCategories();
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('데이터를 불러올 수 없습니다'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('기술 정보가 없습니다'));
           }
-          final skills = snapshot.data!.where((s) => s.category == category).toList();
+          if (provider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (provider.error != null) {
+            return Center(child: Text('데이터를 불러올 수 없습니다'));
+          }
+          final skills = provider.categories.where((s) => s.category == category).toList();
           if (skills.isEmpty) {
             return const Center(child: Text('해당 카테고리의 기술이 없습니다'));
           }

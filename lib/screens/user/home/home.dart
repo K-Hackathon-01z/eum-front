@@ -1,4 +1,5 @@
-import 'package:eum_demo/screens/user/home/oneday_class/oneday_class.dart';
+import 'package:provider/provider.dart';
+import 'package:eum_demo/providers/class_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:eum_demo/widgets/user/navigation.dart';
@@ -93,6 +94,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double bannerHeight = 108;
 
+    final classDataByCategory = Provider.of<ClassDataProvider>(context).classDataByCategory;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -161,10 +163,10 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: OnedayClassScreen.classDataByCategory['인기']?.length ?? 3,
+                      itemCount: classDataByCategory['인기']?.length ?? 0,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
-                        final data = OnedayClassScreen.classDataByCategory['인기']![index];
+                        final data = classDataByCategory['인기']![index];
                         return HomeCard(
                           imagePath: data['image'] ?? '',
                           title: data['title'] ?? '',
