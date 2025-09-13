@@ -1,3 +1,4 @@
+import 'package:eum_demo/screens/user/home/oneday_class/oneday_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:eum_demo/widgets/user/navigation.dart';
@@ -160,17 +161,15 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: 3,
+                      itemCount: OnedayClassScreen.classDataByCategory['인기']?.length ?? 3,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
-                        // 샘플 데이터, 실제로는 서버 데이터 등으로 대체 가능
-                        final classData = [
-                          {'image': 'assets/images/home/home01.png', 'desc': '나전 칠기의 기원', 'price': '15,000원'},
-                          {'image': 'assets/images/home/home02.png', 'desc': '전통 무용이란', 'price': '19,000원'},
-                          {'image': 'assets/images/home/home03.png', 'desc': '장 담그기 종류', 'price': '13,000원'},
-                        ];
-                        final data = classData[index % classData.length];
-                        return HomeCard(imagePath: data['image']!, description: data['desc']!, price: data['price']!);
+                        final data = OnedayClassScreen.classDataByCategory['인기']![index];
+                        return HomeCard(
+                          imagePath: data['image'] ?? '',
+                          title: data['title'] ?? '',
+                          price: data['price'] ?? '',
+                        );
                       },
                     ),
                   ),
@@ -234,7 +233,7 @@ class HomeScreen extends StatelessWidget {
                           {'image': 'assets/images/home/home06.png', 'desc': '도자기 기초 과정', 'price': '41,000원'},
                         ];
                         final data = classData[index % classData.length];
-                        return HomeCard(imagePath: data['image']!, description: data['desc']!, price: data['price']!);
+                        return HomeCard(imagePath: data['image']!, title: data['desc']!, price: data['price']!);
                       },
                     ),
                   ),
