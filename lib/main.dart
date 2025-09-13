@@ -1,3 +1,4 @@
+import 'package:eum_demo/providers/skill_category_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/class_data_provider.dart';
 import 'package:eum_demo/screens/common/title.dart';
@@ -7,7 +8,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(
   MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => ClassDataProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => ClassDataProvider()),
+      ChangeNotifierProvider(create: (_) => SkillCategoryProvider()),
+    ],
     child: const PreviewApp(child: TitleScreen()),
   ),
 );
