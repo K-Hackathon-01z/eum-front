@@ -44,7 +44,7 @@ class TitleScreen extends StatelessWidget {
                 ),
                 const Spacer(flex: 3),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
+                  padding: const EdgeInsets.only(bottom: 30),
                   child: Button(
                     text: '시작하기',
                     width: 350,
@@ -61,7 +61,7 @@ class TitleScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // TODO: 이동 로직 구현
+                          Navigator.pushNamed(context, '/artist-intro');
                         },
                         child: const Text(
                           '장인·작가이신가요?',
