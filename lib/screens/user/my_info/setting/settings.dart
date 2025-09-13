@@ -88,7 +88,13 @@ class SettingsScreen extends StatelessWidget {
                               SizedBox(width: 30), // 숫자를 낮추면 가까워짐 (ex. 1~2)
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context).pop(); // 창 닫기
+                                  // 1) 모달 닫고
+                                  Navigator.of(context).pop();
+                                  // 2) 네비게이션 스택 초기화 후 홈으로 이동
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/',
+                                    (route) => false,
+                                  );
                                 },
                                 child: Text('로그아웃'),
                               ),
