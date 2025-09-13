@@ -109,7 +109,7 @@ class CreatorDetail extends StatelessWidget {
                       builder: (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         insetPadding: EdgeInsets.zero,
-                        child: RequestNote(nickname: 'JunHoKim'),
+                        child: RequestNote(nickname: 'UserName'),
                       ),
                     );
                   },

@@ -8,7 +8,7 @@ class CreatorProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 더미 데이터: 하위카테고리별 장인 리스트
+    // 하위 카테고리별 장인 리스트
     final Map<String, List<String>> artisanMap = {
       '금속공예': ['이철수', '박은영', '김금속', '최장인'],
       '나전 칠기': ['정칠기', '이칠장'],

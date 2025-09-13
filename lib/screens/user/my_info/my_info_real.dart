@@ -63,21 +63,8 @@ class MyInfoScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text('JunHoKim', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                            Spacer(),
-                            Text(
-                              '',
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Text('서울시 광진구', style: TextStyle(fontSize: 14, color: Colors.black54)),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+
                       ],
                     ),
                   ),
