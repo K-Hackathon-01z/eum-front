@@ -40,7 +40,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 1, // 그림자 강도 약간 증가
+        surfaceTintColor: Colors.transparent, // Material3 틴트 제거로 순수한 색/그림자 유지
+        shadowColor: Colors.black26, // 그림자 색상 명시
         title: Text(
           '내 정보',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -58,10 +60,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           ),
           SizedBox(width: 16),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(15.0), // 이상하면 나중에 수정!(수동으로 함)
-          child: Container(color: Colors.grey.shade300, height: 1.0),
-        ),
+        // 수동 보더 라인을 제거하여 AppBar의 elevation 그림자가 자연스럽게 보이도록 함
       ),
       body: Column(
         children: [
