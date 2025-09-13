@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
-import 'package:eum_demo/widgets/user/creator_list.dart';
 
 class MatchingMessageModal extends StatelessWidget {
   const MatchingMessageModal({super.key});
@@ -124,17 +123,7 @@ class MatchingRequests extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
       appBar: CustomAppBar(title: '매칭 신청 내역', showBack: true, showHome: true, showSearch: true),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          CreatorList(
-            title: '최한지',
-            onTap: () {
-              showDialog(context: context, barrierDismissible: true, builder: (_) => const MatchingMessageModal());
-            },
-          ),
-        ],
-      ),
+      body: ListView(padding: const EdgeInsets.all(16)),
     );
   }
 }
