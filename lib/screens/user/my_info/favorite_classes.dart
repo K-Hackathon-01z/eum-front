@@ -8,7 +8,7 @@ class FavoriteClasses extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: '관심 등록 클래스'),
+      appBar: CustomAppBar(title: '관심등록 클래스'),
       body: Container(),
     );
   }
