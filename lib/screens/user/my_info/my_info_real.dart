@@ -24,6 +24,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     _fetch(); // 라이프사이클 시작 시 한 번
   }
 
+
+  //나중에 뺴야함
   Future<void> _fetch() async {
     final data = await MyInfoService.getUserByEmail("daniel010203@naver.com");
     setState(() {
