@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 
-class EmailSignupScreen extends StatefulWidget {
-  const EmailSignupScreen({super.key});
+class BirthdaySignupScreen extends StatefulWidget {
+  const BirthdaySignupScreen({super.key});
 
   @override
-  State<EmailSignupScreen> createState() => _EmailSignupScreenState();
+  State<BirthdaySignupScreen> createState() => _BirthdaySignupScreenState();
 }
 
-class _EmailSignupScreenState extends State<EmailSignupScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _codeController = TextEditingController();
+class _BirthdaySignupScreenState extends State<BirthdaySignupScreen> {
+  final TextEditingController _birthdayController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _codeController.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
@@ -32,26 +30,18 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
-                  '이메일 주소와 코드를 입력해주세요',
+                  '생년월일을 입력해주세요',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
                   textAlign: TextAlign.center,
                 ),
               ),
               TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: '이메일', border: OutlineInputBorder()),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: 24),
-              TextField(
-                controller: _codeController,
-                decoration: const InputDecoration(labelText: '인증코드', border: OutlineInputBorder()),
+                controller: _birthdayController,
+                decoration: const InputDecoration(labelText: '생년월일 (YYYYMMDD)', border: OutlineInputBorder()),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
                 keyboardType: TextInputType.number,
-                maxLength: 6,
+                maxLength: 8,
               ),
               const Spacer(flex: 3),
               Padding(
@@ -65,7 +55,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/signup-birthday');
+                        // TODO: 다음 회원가입 단계로 이동
                       },
                     ),
                     const SizedBox(height: 16),
