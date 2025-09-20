@@ -30,19 +30,19 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 0, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              SignupStepIndicator(currentStep: 0, totalSteps: 4, stepLabels: ['이름', '이메일', '생년월일', '성별']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
-                  '사용할 닉네임을 입력해주세요',
+                  '이름을 입력해주세요',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
                   textAlign: TextAlign.center,
                 ),
               ),
               TextField(
                 controller: _nicknameController,
-                decoration: const InputDecoration(labelText: '닉네임', border: OutlineInputBorder()),
+                decoration: const InputDecoration(labelText: '이름', border: OutlineInputBorder()),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
               ),
@@ -64,7 +64,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                             builder: (_) => CommonPopup(
                               icon: Icons.warning_amber_rounded,
                               title: '입력 오류',
-                              message: '닉네임을 입력해주세요.',
+                              message: '이름을 입력해주세요.',
                               button1Text: '확인',
                               onButtonFirstPressed: () => Navigator.of(context).pop(),
                             ),

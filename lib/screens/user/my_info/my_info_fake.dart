@@ -56,7 +56,7 @@ class MyInfoFakeScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/signup-nickname');
+                          Navigator.pushNamed(context, '/signup-name');
                         },
                         child: const Text(
                           '계정이 없으신가요?',
