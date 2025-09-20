@@ -19,8 +19,14 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<CareerTestProvider>(context, listen: false);
-    provider.fetchQuestions();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = Provider.of<CareerTestProvider>(context, listen: false);
+      provider.fetchQuestions(1).then((_) {
+        setState(() {
+          answers = List<int?>.filled(provider.questions.length, null);
+        });
+      });
+    });
   }
 
   double _progress(int total) => total == 0 ? 0 : (current + 1) / total;
@@ -33,7 +39,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
         return q.options[sel].id;
       }),
     };
-    final url = Uri.parse('https://eum-back.onrender.com/api/matching/submit/$userid');
+    final url = Uri.parse('http://3.26.220.20:8080/api/matching/submit/$userid');
     final res = await http.post(
       url,
       headers: {'Content-Type': 'application/json', 'accept': '*/*'},
@@ -65,9 +71,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
             body: const Center(child: Text('질문 데이터가 없습니다')),
           );
         }
-        if (answers.length != questions.length) {
-          answers = List<int?>.filled(questions.length, null);
-        }
+        // answers 초기화는 initState에서만 수행
         final q = questions[current];
         final optionTexts = q.options.map((opt) => opt.text).toList();
         final selected = answers[current];
