@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
-import '../../../widgets/user/popup.dart';
-import 'email_signup_screen.dart';
 
-class NicknameSignupScreen extends StatefulWidget {
-  const NicknameSignupScreen({super.key});
+class EmailSignupScreen extends StatefulWidget {
+  const EmailSignupScreen({super.key});
 
   @override
-  State<NicknameSignupScreen> createState() => _NicknameSignupScreenState();
+  State<EmailSignupScreen> createState() => _EmailSignupScreenState();
 }
 
-class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
-  final TextEditingController _nicknameController = TextEditingController();
+class _EmailSignupScreenState extends State<EmailSignupScreen> {
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   void dispose() {
-    _nicknameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -32,16 +30,17 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
-                  '사용할 닉네임을 입력해주세요',
+                  '이메일 주소를 입력해주세요',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
                   textAlign: TextAlign.center,
                 ),
               ),
               TextField(
-                controller: _nicknameController,
-                decoration: const InputDecoration(labelText: '닉네임', border: OutlineInputBorder()),
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: '이메일', border: OutlineInputBorder()),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
+                keyboardType: TextInputType.emailAddress,
               ),
               const Spacer(flex: 3),
               Padding(
@@ -55,20 +54,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        if (_nicknameController.text.trim().isEmpty) {
-                          showDialog(
-                            context: context,
-                            builder: (_) => CommonPopup(
-                              icon: Icons.warning_amber_rounded,
-                              title: '입력 오류',
-                              message: '닉네임을 입력해주세요.',
-                              button1Text: '확인',
-                              onButtonFirstPressed: () => Navigator.of(context).pop(),
-                            ),
-                          );
-                          return;
-                        }
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const EmailSignupScreen()));
+                        // 다음 회원가입 단계로 이동 (추후 구현)
                       },
                     ),
                     const SizedBox(height: 16),
