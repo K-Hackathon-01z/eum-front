@@ -1,3 +1,4 @@
+import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 
@@ -28,7 +29,9 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              const Spacer(flex: 2),
+              const SizedBox(height: 32),
+              SignupStepIndicator(currentStep: 1, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(

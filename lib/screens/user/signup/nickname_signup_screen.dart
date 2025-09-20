@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
+import '../../../widgets/user/signup_step_indicator.dart';
 import 'email_signup_screen.dart';
 
 class NicknameSignupScreen extends StatefulWidget {
@@ -28,7 +29,9 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              const Spacer(flex: 2),
+              const SizedBox(height: 32),
+              SignupStepIndicator(currentStep: 0, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(

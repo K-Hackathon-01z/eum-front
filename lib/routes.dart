@@ -12,6 +12,7 @@ import 'screens/user/my_info/my_info_real.dart';
 import 'screens/user/signup/nickname_signup_screen.dart';
 import 'screens/user/signup/birthday_signup_screen.dart';
 import 'screens/user/signup/gender_signup_screen.dart';
+import 'screens/user/signup/signup_success_screen.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => const TitleScreen(),
@@ -24,6 +25,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/signup-nickname': (context) => const NicknameSignupScreen(),
   '/signup-birthday': (context) => const BirthdaySignupScreen(),
   '/signup-gender': (context) => const GenderSignupScreen(),
+  '/signup-success': (context) => const SignupSuccessScreen(),
   // Artist mode
   '/artist-intro': (context) => const ArtistIntroScreen(),
   '/artist-home': (context) => const ArtistShellScreen(),

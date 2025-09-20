@@ -1,3 +1,4 @@
+import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 
@@ -20,7 +21,9 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              const Spacer(flex: 2),
+              const SizedBox(height: 32),
+              SignupStepIndicator(currentStep: 3, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
@@ -93,7 +96,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        // TODO: 다음 회원가입 단계로 이동
+                        Navigator.pushNamed(context, '/signup-success');
                       },
                     ),
                     const SizedBox(height: 16),
