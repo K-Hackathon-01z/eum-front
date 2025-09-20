@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
+import '../../../widgets/user/popup.dart';
 
 class NicknameSignupScreen extends StatefulWidget {
   const NicknameSignupScreen({super.key});
@@ -53,6 +54,19 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
+                        if (_nicknameController.text.trim().isEmpty) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '입력 오류',
+                              message: '닉네임을 입력해주세요.',
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
                         // 다음 회원가입 단계로 이동 (추후 구현)
                       },
                     ),

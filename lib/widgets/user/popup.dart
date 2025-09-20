@@ -19,7 +19,7 @@ class CommonPopup extends StatelessWidget {
   const CommonPopup({
     super.key,
     required this.icon,
-    this.iconColor = const Color(0xFFC7B5EB),
+    this.iconColor = const Color(0xFF9785BA),
     required this.title,
     required this.message,
     this.button1Text = '확인',
