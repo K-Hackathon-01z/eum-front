@@ -1,4 +1,11 @@
 class Validators {
+  static String? validateGender(String? gender) {
+    if (gender == null || gender.trim().isEmpty) {
+      return '성별을 선택해주세요.';
+    }
+    return null;
+  }
+
   static String? validateName(String name) {
     if (name.trim().isEmpty) {
       return '이름을 입력해주세요.';
