@@ -10,7 +10,7 @@ import 'screens/user/home/home.dart';
 import 'screens/user/home/skill_list/skill_list_screen.dart';
 import 'screens/user/my_info/my_info_real.dart';
 import 'screens/user/signup/name_signup_screen.dart';
-import 'screens/user/signup/birthday_signup_screen.dart';
+import 'screens/user/signup/age_signup_screen.dart';
 import 'screens/user/signup/gender_signup_screen.dart';
 import 'screens/user/signup/signup_success_screen.dart';
 
@@ -23,7 +23,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/oneday-class': (context) => const OnedayClassScreen(),
   '/my-info': (context) => const MyInfoScreen(),
   '/signup-name': (context) => const NicknameSignupScreen(),
-  '/signup-birthday': (context) => const BirthdaySignupScreen(),
+  '/signup-age': (context) => const AgeSignupScreen(),
   '/signup-gender': (context) => const GenderSignupScreen(),
   '/signup-success': (context) => const SignupSuccessScreen(),
   // Artist mode

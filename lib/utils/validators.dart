@@ -23,4 +23,15 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateAge(String age) {
+    if (age.trim().isEmpty) {
+      return '나이를 입력해주세요.';
+    }
+    final num? ageNum = num.tryParse(age.trim());
+    if (ageNum == null || ageNum < 0 || ageNum > 120) {
+      return '나이는 0~120 사이의 숫자입니다.';
+    }
+    return null;
+  }
 }

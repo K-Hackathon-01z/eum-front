@@ -1,20 +1,22 @@
 import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
+import '../../../utils/validators.dart';
+import '../../../widgets/user/popup.dart';
 
-class BirthdaySignupScreen extends StatefulWidget {
-  const BirthdaySignupScreen({super.key});
+class AgeSignupScreen extends StatefulWidget {
+  const AgeSignupScreen({super.key});
 
   @override
-  State<BirthdaySignupScreen> createState() => _BirthdaySignupScreenState();
+  State<AgeSignupScreen> createState() => _AgeSignupScreenState();
 }
 
-class _BirthdaySignupScreenState extends State<BirthdaySignupScreen> {
-  final TextEditingController _birthdayController = TextEditingController();
+class _AgeSignupScreenState extends State<AgeSignupScreen> {
+  final TextEditingController _ageController = TextEditingController();
 
   @override
   void dispose() {
-    _birthdayController.dispose();
+    _ageController.dispose();
     super.dispose();
   }
 
@@ -28,23 +30,23 @@ class _BirthdaySignupScreenState extends State<BirthdaySignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 2, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              SignupStepIndicator(currentStep: 2, totalSteps: 4, stepLabels: ['닉네임', '이메일', '나이', '성별']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
-                  '생년월일을 입력해주세요',
+                  '나이를 입력해주세요 (만 나이 기준)',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
                   textAlign: TextAlign.center,
                 ),
               ),
               TextField(
-                controller: _birthdayController,
-                decoration: const InputDecoration(labelText: '생년월일 (YYYYMMDD)', border: OutlineInputBorder()),
+                controller: _ageController,
+                decoration: const InputDecoration(labelText: '나이', border: OutlineInputBorder()),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
                 keyboardType: TextInputType.number,
-                maxLength: 8,
+                maxLength: 3,
               ),
               const Spacer(flex: 3),
               Padding(
@@ -58,6 +60,20 @@ class _BirthdaySignupScreenState extends State<BirthdaySignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
+                        final ageError = Validators.validateAge(_ageController.text);
+                        if (ageError != null) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '입력 오류',
+                              message: ageError,
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
                         Navigator.pushNamed(context, '/signup-gender');
                       },
                     ),

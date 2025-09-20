@@ -98,7 +98,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                           );
                           return;
                         }
-                        Navigator.pushNamed(context, '/signup-birthday');
+                        Navigator.pushNamed(context, '/signup-age');
                       },
                     ),
                     const SizedBox(height: 16),
