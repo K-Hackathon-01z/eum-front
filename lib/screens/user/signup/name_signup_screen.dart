@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/validators.dart';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
 import '../../../widgets/user/signup_step_indicator.dart';
@@ -45,6 +46,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                 decoration: const InputDecoration(labelText: '이름', border: OutlineInputBorder()),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
+                maxLength: 10,
               ),
               const Spacer(flex: 3),
               Padding(
@@ -58,13 +60,14 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        if (_nicknameController.text.trim().isEmpty) {
+                        final error = Validators.validateName(_nicknameController.text);
+                        if (error != null) {
                           showDialog(
                             context: context,
                             builder: (_) => CommonPopup(
                               icon: Icons.warning_amber_rounded,
                               title: '입력 오류',
-                              message: '이름을 입력해주세요.',
+                              message: error,
                               button1Text: '확인',
                               onButtonFirstPressed: () => Navigator.of(context).pop(),
                             ),
