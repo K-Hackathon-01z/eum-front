@@ -55,7 +55,7 @@ class _BirthdaySignupScreenState extends State<BirthdaySignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        // TODO: 다음 회원가입 단계로 이동
+                        Navigator.pushNamed(context, '/signup-gender');
                       },
                     ),
                     const SizedBox(height: 16),
