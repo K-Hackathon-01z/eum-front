@@ -9,6 +9,7 @@ import 'screens/user/home/goverment/government_help.dart';
 import 'screens/user/home/home.dart';
 import 'screens/user/home/skill_list/skill_list_screen.dart';
 import 'screens/user/my_info/my_info_real.dart';
+import 'screens/user/signup/nickname_signup_screen.dart';
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => const TitleScreen(),
@@ -18,6 +19,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/creator-list': (context) => const CreatorListScreen(),
   '/oneday-class': (context) => const OnedayClassScreen(),
   '/my-info': (context) => const MyInfoScreen(),
+  '/signup-nickname': (context) => const NicknameSignupScreen(),
   // Artist mode
   '/artist-intro': (context) => const ArtistIntroScreen(),
   '/artist-home': (context) => const ArtistShellScreen(),

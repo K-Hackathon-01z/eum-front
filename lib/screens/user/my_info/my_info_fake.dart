@@ -45,7 +45,8 @@ class MyInfoFakeScreen extends StatelessWidget {
                     text: '로그인하기',
                     width: 350,
                     height: 48,
-                    backgroundColor: Color(0xffDAD3E8),
+                    textColor: Colors.white,
+                    backgroundColor: Color(0xFF9785BA),
                     onPressed: () {},
                   ),
                 ),
@@ -54,7 +55,9 @@ class MyInfoFakeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/signup-nickname');
+                        },
                         child: const Text(
                           '계정이 없으신가요?',
                           style: TextStyle(color: Color(0xFF868383), fontSize: 15, fontWeight: FontWeight.w500),

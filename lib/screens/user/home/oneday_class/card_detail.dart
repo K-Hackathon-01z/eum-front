@@ -131,7 +131,8 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                     text: '예약하기',
                     width: double.infinity,
                     height: 48,
-                    backgroundColor: const Color(0xFFDAD3E8),
+                    textColor: Colors.white,
+                    backgroundColor: const Color(0xFF9785BA),
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,
