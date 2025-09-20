@@ -1,6 +1,8 @@
 import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
+import '../../../utils/validators.dart';
+import '../../../widgets/user/popup.dart';
 
 class EmailSignupScreen extends StatefulWidget {
   const EmailSignupScreen({super.key});
@@ -68,6 +70,34 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
+                        final emailError = Validators.validateEmail(_emailController.text);
+                        final codeError = Validators.validateAuthCode(_codeController.text);
+                        if (emailError != null) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '입력 오류',
+                              message: emailError,
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
+                        if (codeError != null) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '입력 오류',
+                              message: codeError,
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
                         Navigator.pushNamed(context, '/signup-birthday');
                       },
                     ),
