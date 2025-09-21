@@ -39,7 +39,6 @@ class ProfilePage extends StatelessWidget {
           ),
           ListTile(
             title: const Text('글자 크기'),
-            subtitle: Text(textScale >= 1.3 ? '아주 크게' : (textScale >= 1.15 ? '크게' : '보통')),
             trailing: SegmentedButton<double>(
               segments: const [
                 ButtonSegment(value: 1.0, label: Text('보통')),
