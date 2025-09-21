@@ -93,6 +93,7 @@ class _ArtistShellScreenState extends State<ArtistShellScreen> {
         data: MediaQuery.of(context).copyWith(textScaleFactor: _textScale),
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false, 
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -124,7 +125,7 @@ class _ArtistShellScreenState extends State<ArtistShellScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.chat_bubble_rounded),
-                label: '메시지',
+                label: '쪽지함',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_rounded),
