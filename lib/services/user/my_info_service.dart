@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class MyInfoService {
-  static const base = 'https://eum-back.onrender.com';
+  static const base = 'http://3.26.220.20:8080';
 
   // 사용자 이메일로 정보 가져오기
   static Future<Map<String, dynamic>> getUserByEmail(String email) async {

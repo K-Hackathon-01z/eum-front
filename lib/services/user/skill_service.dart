@@ -9,7 +9,7 @@ class SkillService {
 
   // 전체 기술 카테고리 조회 (모델 파싱)
   Future<List<SkillCategory>> fetchAllSkillCategoriesParsed() async {
-    final url = Uri.parse('https://eum-back.onrender.com/api/skill-category');
+    final url = Uri.parse('http://3.26.220.20:8080/api/skill-category');
     try {
       final response = await _client.get(url);
       if (response.statusCode == 200) {

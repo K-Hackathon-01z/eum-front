@@ -8,7 +8,7 @@ class GovernmentService {
 
   // 정부 혜택 추천 API: GET /api/supports/recommend/{userId}
   Future<List<BenefitInfo>> fetchRecommendedBenefits(String userId) async {
-    final url = Uri.parse('https://eum-back.onrender.com/api/supports/recommend/$userId');
+    final url = Uri.parse('http://3.26.220.20:8080/api/supports/recommend/$userId');
     try {
       final response = await _client.get(url);
       if (response.statusCode == 200) {

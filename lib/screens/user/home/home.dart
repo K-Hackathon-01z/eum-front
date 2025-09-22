@@ -207,7 +207,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Text('사용자 위치 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            const Text('사용자 정보 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                             const SizedBox(width: 4),
                             Icon(Icons.place, size: 20),
                           ],
