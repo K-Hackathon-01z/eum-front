@@ -12,6 +12,7 @@ class EmailSignupScreen extends StatefulWidget {
 }
 
 class _EmailSignupScreenState extends State<EmailSignupScreen> {
+  bool _isCodeSent = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
 
@@ -42,12 +43,64 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: '이메일', border: OutlineInputBorder()),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-                keyboardType: TextInputType.emailAddress,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(labelText: '이메일', border: OutlineInputBorder()),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 18),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: 150,
+                        height: 40,
+                        child: Button(
+                          text: _isCodeSent ? '인증코드 재전송' : '인증코드 전송',
+                          width: 140,
+                          height: 40,
+                          textColor: Colors.white,
+                          backgroundColor: const Color(0xFF9785BA),
+                          onPressed: () {
+                            final emailError = Validators.validateEmail(_emailController.text);
+                            if (emailError != null) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => CommonPopup(
+                                  icon: Icons.warning_amber_rounded,
+                                  title: '입력 오류',
+                                  message: emailError,
+                                  button1Text: '확인',
+                                  onButtonFirstPressed: () => Navigator.of(context).pop(),
+                                ),
+                              );
+                              return;
+                            }
+                            // TODO: 인증코드 발송 API 연동
+                            setState(() {
+                              _isCodeSent = true;
+                            });
+                            showDialog(
+                              context: context,
+                              builder: (_) => CommonPopup(
+                                icon: Icons.check_circle_outline,
+                                title: '인증코드 발송',
+                                message: '이메일로 인증코드를 전송했습니다.',
+                                button1Text: '확인',
+                                onButtonFirstPressed: () => Navigator.of(context).pop(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 24),
               TextField(
