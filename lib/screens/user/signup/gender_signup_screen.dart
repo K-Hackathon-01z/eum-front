@@ -112,7 +112,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                           );
                           return;
                         }
-                        Navigator.pushNamed(context, '/signup-success');
+                        Navigator.pushNamed(context, '/signup-address');
                       },
                     ),
                     const SizedBox(height: 16),

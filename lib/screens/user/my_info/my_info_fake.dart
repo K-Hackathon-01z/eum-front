@@ -26,7 +26,7 @@ class MyInfoFakeScreen extends StatelessWidget {
                       child: Center(child: Image.asset('assets/logos/eum_logo_title.png', fit: BoxFit.contain)),
                     ),
                     SizedBox(
-                      width: 140,
+                      width: 150,
                       height: 100,
                       child: const Center(
                         child: Text(
@@ -42,29 +42,14 @@ class MyInfoFakeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Button(
-                    text: '로그인하기',
+                    text: '계정 생성하기',
                     width: 350,
                     height: 48,
                     textColor: Colors.white,
                     backgroundColor: Color(0xFF9785BA),
-                    onPressed: () {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/signup-name');
-                        },
-                        child: const Text(
-                          '계정이 없으신가요?',
-                          style: TextStyle(color: Color(0xFF868383), fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      Container(width: 120, height: 2, color: Color(0xFF868383)),
-                    ],
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup-name');
+                    },
                   ),
                 ),
               ],
