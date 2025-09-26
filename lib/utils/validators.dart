@@ -1,4 +1,12 @@
 class Validators {
+  static String? validateAddress(String address) {
+    if (address.trim().isEmpty) {
+      return '주소를 입력해주세요.';
+    }
+    // 추가 검증 로직 필요시 여기에 작성
+    return null;
+  }
+
   static String? validateGender(String? gender) {
     if (gender == null || gender.trim().isEmpty) {
       return '성별을 선택해주세요.';

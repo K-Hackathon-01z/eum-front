@@ -1,22 +1,39 @@
 import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../../widgets/user/button.dart';
-import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
+import '../../../utils/validators.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../../widgets/user/address_search_popup.dart';
 
-class AgeSignupScreen extends StatefulWidget {
-  const AgeSignupScreen({super.key});
+class AddressSignupScreen extends StatefulWidget {
+  const AddressSignupScreen({super.key});
 
   @override
-  State<AgeSignupScreen> createState() => _AgeSignupScreenState();
+  State<AddressSignupScreen> createState() => _AddressSignupScreenState();
 }
 
-class _AgeSignupScreenState extends State<AgeSignupScreen> {
-  final TextEditingController _ageController = TextEditingController();
+class _AddressSignupScreenState extends State<AddressSignupScreen> {
+  Future<List<String>> searchAddress(String query) async {
+    final apiKey = dotenv.env['KAKAO_API_KEY'] ?? '';
+    final url = Uri.parse('https://dapi.kakao.com/v2/local/search/address.json?query=$query');
+    final response = await http.get(url, headers: {'Authorization': 'KakaoAK $apiKey'});
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List docs = data['documents'];
+      return docs.map<String>((e) => e['address_name'] as String).toList();
+    } else {
+      return [];
+    }
+  }
+
+  final TextEditingController _addressController = TextEditingController();
 
   @override
   void dispose() {
-    _ageController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -30,23 +47,33 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 2, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
+              SignupStepIndicator(currentStep: 4, totalSteps: 5, stepLabels: ['닉네임', '이메일', '생년월일', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
                 child: Text(
-                  '나이를 입력해주세요 (만 나이 기준)',
+                  '주소를 입력해주세요',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
                   textAlign: TextAlign.center,
                 ),
               ),
-              TextField(
-                controller: _ageController,
-                decoration: const InputDecoration(labelText: '나이', border: OutlineInputBorder()),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-                keyboardType: TextInputType.number,
-                maxLength: 3,
+              GestureDetector(
+                onTap: () async {
+                  await showAddressSearchPopupV2(
+                    context,
+                    searchAddress,
+                    (selected) => setState(() => _addressController.text = selected),
+                  );
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    controller: _addressController,
+                    decoration: const InputDecoration(labelText: '주소', border: OutlineInputBorder()),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 18),
+                    maxLength: 50,
+                  ),
+                ),
               ),
               const Spacer(flex: 3),
               Padding(
@@ -60,21 +87,23 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        final ageError = Validators.validateAge(_ageController.text);
-                        if (ageError != null) {
+                        final address = _addressController.text.trim();
+                        final addressError = Validators.validateAddress(address);
+                        if (addressError != null) {
                           showDialog(
                             context: context,
                             builder: (_) => CommonPopup(
                               icon: Icons.warning_amber_rounded,
                               title: '입력 오류',
-                              message: ageError,
+                              message: addressError,
                               button1Text: '확인',
                               onButtonFirstPressed: () => Navigator.of(context).pop(),
                             ),
                           );
                           return;
                         }
-                        Navigator.pushNamed(context, '/signup-gender');
+                        // TODO: 주소 저장 로직 추가 가능
+                        Navigator.pushNamed(context, '/signup-success');
                       },
                     ),
                     const SizedBox(height: 16),

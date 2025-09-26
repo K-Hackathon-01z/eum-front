@@ -31,7 +31,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 0, totalSteps: 4, stepLabels: ['이름', '이메일', '생년월일', '성별']),
+              SignupStepIndicator(currentStep: 0, totalSteps: 5, stepLabels: ['이름', '이메일', '생년월일', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
