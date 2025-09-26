@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
+import '../../../widgets/user/address_search_popup.dart';
 
 class AddressSignupScreen extends StatefulWidget {
   const AddressSignupScreen({super.key});
@@ -84,35 +85,7 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                     return;
                   }
                   List<String> results = await searchAddress(keyword);
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('주소 선택'),
-                        content: SizedBox(
-                          width: 300,
-                          child: results.isEmpty
-                              ? const Text('검색 결과가 없습니다.')
-                              : SizedBox(
-                                  height: 200,
-                                  child: ListView.builder(
-                                    itemCount: results.length,
-                                    itemBuilder: (context, idx) {
-                                      return ListTile(
-                                        title: Text(results[idx]),
-                                        onTap: () {
-                                          _addressController.text = results[idx];
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                        ),
-                        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('취소'))],
-                      );
-                    },
-                  );
+                  await showAddressSearchPopup(context, results, (selected) => _addressController.text = selected);
                 },
               ),
               const Spacer(flex: 3),
