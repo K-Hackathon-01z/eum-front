@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
+import '../../../utils/validators.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../widgets/user/address_search_popup.dart';
 
@@ -75,13 +76,14 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                     textColor: Colors.white,
                     onPressed: () async {
                       final keyword = _addressController.text.trim();
-                      if (keyword.isEmpty) {
+                      final addressError = Validators.validateAddress(keyword);
+                      if (addressError != null) {
                         showDialog(
                           context: context,
                           builder: (_) => CommonPopup(
                             icon: Icons.warning_amber_rounded,
                             title: '입력 오류',
-                            message: '주소 검색어를 입력해주세요.',
+                            message: addressError,
                             button1Text: '확인',
                             onButtonFirstPressed: () => Navigator.of(context).pop(),
                           ),
@@ -107,13 +109,14 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                       backgroundColor: const Color(0xFF9785BA),
                       onPressed: () {
                         final address = _addressController.text.trim();
-                        if (address.isEmpty) {
+                        final addressError = Validators.validateAddress(address);
+                        if (addressError != null) {
                           showDialog(
                             context: context,
                             builder: (_) => CommonPopup(
                               icon: Icons.warning_amber_rounded,
                               title: '입력 오류',
-                              message: '주소를 입력해주세요.',
+                              message: addressError,
                               button1Text: '확인',
                               onButtonFirstPressed: () => Navigator.of(context).pop(),
                             ),
