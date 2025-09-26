@@ -7,7 +7,7 @@ class CareerTestService {
   static const base = 'http://3.26.220.20:8080';
 
   Future<List<Question>> fetchRecommendedSupports(int userId) async {
-    final response = await http.get(Uri.parse('$base/api/supports/recommend/$userId'));
+    final response = await http.get(Uri.parse('$base/api/matching/careerTest'));
 
     if (response.statusCode == 200) {
       final List data = json.decode(response.body);
