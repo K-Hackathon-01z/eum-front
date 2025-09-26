@@ -52,6 +52,7 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  // Build the map screen UI
   @override
   Widget build(BuildContext context) {
     final initial = _me ?? const LatLng(37.5665, 126.9780); // 서울 시청 fallback
