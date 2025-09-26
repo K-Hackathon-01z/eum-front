@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../widgets/user/address_search_popup.dart';
 
 class AddressSignupScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class AddressSignupScreen extends StatefulWidget {
 
 class _AddressSignupScreenState extends State<AddressSignupScreen> {
   Future<List<String>> searchAddress(String query) async {
-    final apiKey = '211654418f620b18c194cda089622673';
+    final apiKey = dotenv.env['KAKAO_API_KEY'] ?? '';
     final url = Uri.parse('https://dapi.kakao.com/v2/local/search/address.json?query=$query');
     final response = await http.get(url, headers: {'Authorization': 'KakaoAK $apiKey'});
     if (response.statusCode == 200) {
