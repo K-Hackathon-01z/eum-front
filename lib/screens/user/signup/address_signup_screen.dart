@@ -60,65 +60,56 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
                 maxLength: 50,
-                readOnly: true,
-                onTap: () async {
-                  String searchText = '';
-                  List<String> results = [];
+              ),
+              const SizedBox(height: 12),
+              Button(
+                text: '검색',
+                width: double.infinity,
+                height: 44,
+                backgroundColor: const Color(0xFF9785BA),
+                textColor: Colors.white,
+                onPressed: () async {
+                  final keyword = _addressController.text.trim();
+                  if (keyword.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (_) => CommonPopup(
+                        icon: Icons.warning_amber_rounded,
+                        title: '입력 오류',
+                        message: '주소 검색어를 입력해주세요.',
+                        button1Text: '확인',
+                        onButtonFirstPressed: () => Navigator.of(context).pop(),
+                      ),
+                    );
+                    return;
+                  }
+                  List<String> results = await searchAddress(keyword);
                   await showDialog(
                     context: context,
                     builder: (context) {
-                      return StatefulBuilder(
-                        builder: (context, setState) {
-                          return AlertDialog(
-                            title: const Text('주소 검색'),
-                            content: SingleChildScrollView(
-                              child: SizedBox(
-                                width: 300,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextField(
-                                      decoration: const InputDecoration(hintText: '검색어를 입력하세요'),
-                                      onChanged: (value) {
-                                        searchText = value;
-                                      },
-                                    ),
-                                    const SizedBox(height: 8),
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        final res = await searchAddress(searchText);
-                                        setState(() {
-                                          results = res;
-                                        });
-                                      },
-                                      child: const Text('검색'),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    if (results.isNotEmpty)
-                                      SizedBox(
-                                        height: 200,
-                                        child: ListView.builder(
-                                          itemCount: results.length,
-                                          itemBuilder: (context, idx) {
-                                            return ListTile(
-                                              title: Text(results[idx]),
-                                              onTap: () {
-                                                _addressController.text = results[idx];
-                                                Navigator.of(context).pop();
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                  ],
+                      return AlertDialog(
+                        title: const Text('주소 선택'),
+                        content: SizedBox(
+                          width: 300,
+                          child: results.isEmpty
+                              ? const Text('검색 결과가 없습니다.')
+                              : SizedBox(
+                                  height: 200,
+                                  child: ListView.builder(
+                                    itemCount: results.length,
+                                    itemBuilder: (context, idx) {
+                                      return ListTile(
+                                        title: Text(results[idx]),
+                                        onTap: () {
+                                          _addressController.text = results[idx];
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ),
-                            actions: [
-                              TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('취소')),
-                            ],
-                          );
-                        },
+                        ),
+                        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('취소'))],
                       );
                     },
                   );
