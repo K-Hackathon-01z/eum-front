@@ -64,30 +64,35 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                 maxLength: 50,
               ),
               const SizedBox(height: 12),
-              Button(
-                text: '검색',
-                width: double.infinity,
-                height: 44,
-                backgroundColor: const Color(0xFF9785BA),
-                textColor: Colors.white,
-                onPressed: () async {
-                  final keyword = _addressController.text.trim();
-                  if (keyword.isEmpty) {
-                    showDialog(
-                      context: context,
-                      builder: (_) => CommonPopup(
-                        icon: Icons.warning_amber_rounded,
-                        title: '입력 오류',
-                        message: '주소 검색어를 입력해주세요.',
-                        button1Text: '확인',
-                        onButtonFirstPressed: () => Navigator.of(context).pop(),
-                      ),
-                    );
-                    return;
-                  }
-                  List<String> results = await searchAddress(keyword);
-                  await showAddressSearchPopup(context, results, (selected) => _addressController.text = selected);
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Button(
+                    text: '검색',
+                    width: 150,
+                    height: 40,
+                    backgroundColor: const Color(0xFF9785BA),
+                    textColor: Colors.white,
+                    onPressed: () async {
+                      final keyword = _addressController.text.trim();
+                      if (keyword.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (_) => CommonPopup(
+                            icon: Icons.warning_amber_rounded,
+                            title: '입력 오류',
+                            message: '주소 검색어를 입력해주세요.',
+                            button1Text: '확인',
+                            onButtonFirstPressed: () => Navigator.of(context).pop(),
+                          ),
+                        );
+                        return;
+                      }
+                      List<String> results = await searchAddress(keyword);
+                      await showAddressSearchPopup(context, results, (selected) => _addressController.text = selected);
+                    },
+                  ),
+                ],
               ),
               const Spacer(flex: 3),
               Padding(
