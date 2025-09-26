@@ -14,7 +14,7 @@ class AddressSignupScreen extends StatefulWidget {
 
 class _AddressSignupScreenState extends State<AddressSignupScreen> {
   Future<List<String>> searchAddress(String query) async {
-    final apiKey = '8421b5632435394d6d8b853d6c95682d';
+    final apiKey = '211654418f620b18c194cda089622673';
     final url = Uri.parse('https://dapi.kakao.com/v2/local/search/address.json?query=$query');
     final response = await http.get(url, headers: {'Authorization': 'KakaoAK $apiKey'});
     if (response.statusCode == 200) {
@@ -71,43 +71,48 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                         builder: (context, setState) {
                           return AlertDialog(
                             title: const Text('주소 검색'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                TextField(
-                                  decoration: const InputDecoration(hintText: '검색어를 입력하세요'),
-                                  onChanged: (value) {
-                                    searchText = value;
-                                  },
-                                ),
-                                const SizedBox(height: 8),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    final res = await searchAddress(searchText);
-                                    setState(() {
-                                      results = res;
-                                    });
-                                  },
-                                  child: const Text('검색'),
-                                ),
-                                const SizedBox(height: 8),
-                                if (results.isNotEmpty)
-                                  SizedBox(
-                                    height: 200,
-                                    child: ListView.builder(
-                                      itemCount: results.length,
-                                      itemBuilder: (context, idx) {
-                                        return ListTile(
-                                          title: Text(results[idx]),
-                                          onTap: () {
-                                            _addressController.text = results[idx];
-                                            Navigator.of(context).pop();
-                                          },
-                                        );
+                            content: SingleChildScrollView(
+                              child: SizedBox(
+                                width: 300,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextField(
+                                      decoration: const InputDecoration(hintText: '검색어를 입력하세요'),
+                                      onChanged: (value) {
+                                        searchText = value;
                                       },
                                     ),
-                                  ),
-                              ],
+                                    const SizedBox(height: 8),
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        final res = await searchAddress(searchText);
+                                        setState(() {
+                                          results = res;
+                                        });
+                                      },
+                                      child: const Text('검색'),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    if (results.isNotEmpty)
+                                      SizedBox(
+                                        height: 200,
+                                        child: ListView.builder(
+                                          itemCount: results.length,
+                                          itemBuilder: (context, idx) {
+                                            return ListTile(
+                                              title: Text(results[idx]),
+                                              onTap: () {
+                                                _addressController.text = results[idx];
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
                             ),
                             actions: [
                               TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('취소')),

@@ -48,7 +48,7 @@ class MyInfoFakeScreen extends StatelessWidget {
                     textColor: Colors.white,
                     backgroundColor: Color(0xFF9785BA),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup-name');
+                      Navigator.pushNamed(context, '/signup-address');
                     },
                   ),
                 ),
