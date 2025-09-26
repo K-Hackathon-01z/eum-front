@@ -1,5 +1,7 @@
 import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
 
@@ -11,6 +13,19 @@ class AddressSignupScreen extends StatefulWidget {
 }
 
 class _AddressSignupScreenState extends State<AddressSignupScreen> {
+  Future<List<String>> searchAddress(String query) async {
+    final apiKey = '8421b5632435394d6d8b853d6c95682d';
+    final url = Uri.parse('https://dapi.kakao.com/v2/local/search/address.json?query=$query');
+    final response = await http.get(url, headers: {'Authorization': 'KakaoAK $apiKey'});
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final List docs = data['documents'];
+      return docs.map<String>((e) => e['address_name'] as String).toList();
+    } else {
+      return [];
+    }
+  }
+
   final TextEditingController _addressController = TextEditingController();
 
   @override
@@ -45,6 +60,64 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 18),
                 maxLength: 50,
+                readOnly: true,
+                onTap: () async {
+                  String searchText = '';
+                  List<String> results = [];
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(
+                        builder: (context, setState) {
+                          return AlertDialog(
+                            title: const Text('주소 검색'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextField(
+                                  decoration: const InputDecoration(hintText: '검색어를 입력하세요'),
+                                  onChanged: (value) {
+                                    searchText = value;
+                                  },
+                                ),
+                                const SizedBox(height: 8),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    final res = await searchAddress(searchText);
+                                    setState(() {
+                                      results = res;
+                                    });
+                                  },
+                                  child: const Text('검색'),
+                                ),
+                                const SizedBox(height: 8),
+                                if (results.isNotEmpty)
+                                  SizedBox(
+                                    height: 200,
+                                    child: ListView.builder(
+                                      itemCount: results.length,
+                                      itemBuilder: (context, idx) {
+                                        return ListTile(
+                                          title: Text(results[idx]),
+                                          onTap: () {
+                                            _addressController.text = results[idx];
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            actions: [
+                              TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('취소')),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
               ),
               const Spacer(flex: 3),
               Padding(
