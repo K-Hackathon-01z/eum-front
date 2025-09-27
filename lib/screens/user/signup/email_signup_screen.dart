@@ -87,7 +87,9 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                             // 이메일 중복 체크
                             final userProvider = Provider.of<UserProvider>(context, listen: false);
                             await userProvider.fetchAllUsers();
-                            final isDuplicate = userProvider.users.any((user) => user.email == _emailController.text);
+                            final isDuplicate = userProvider.users.any(
+                              (user) => user['email'] == _emailController.text,
+                            );
                             if (isDuplicate) {
                               showDialog(
                                 context: context,

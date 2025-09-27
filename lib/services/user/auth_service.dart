@@ -29,7 +29,7 @@ class AuthService {
   Future<bool> signup(UserSignupRequest request) async {
     final url = Uri.parse('$base/api/user/signup');
     final res = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(request.toJson()));
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200 || res.statusCode == 201) {
       return true;
     } else {
       throw Exception('회원가입 실패: ${res.statusCode} / ${res.body}');
