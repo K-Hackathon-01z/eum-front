@@ -5,7 +5,6 @@ import '../../../widgets/user/popup.dart';
 import '../../../widgets/user/signup_step_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
-import 'email_signup_screen.dart';
 
 class NicknameSignupScreen extends StatefulWidget {
   const NicknameSignupScreen({super.key});
@@ -78,7 +77,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                         }
                         // 닉네임을 AuthProvider에 저장
                         Provider.of<AuthProvider>(context, listen: false).setName(_nicknameController.text);
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const EmailSignupScreen()));
+                        Navigator.pushNamed(context, '/signup-email');
                       },
                     ),
                     const SizedBox(height: 16),
