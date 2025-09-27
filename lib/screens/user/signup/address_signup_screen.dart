@@ -88,7 +88,7 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                       height: 48,
                       textColor: Colors.white,
                       backgroundColor: const Color(0xFF9785BA),
-                      onPressed: () {
+                      onPressed: () async {
                         final address = _addressController.text.trim();
                         final addressError = Validators.validateAddress(address);
                         if (addressError != null) {
@@ -105,7 +105,24 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                           return;
                         }
                         // 주소를 AuthProvider에 저장
-                        Provider.of<AuthProvider>(context, listen: false).setAddress(address);
+                        final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                        authProvider.setAddress(address);
+                        // 회원가입 요청
+                        final signupRequest = authProvider.toSignupRequest();
+                        await authProvider.signup(signupRequest);
+                        if (authProvider.error != null) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '회원가입 실패',
+                              message: authProvider.error!,
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
                         Navigator.pushNamed(context, '/signup-success');
                       },
                     ),
