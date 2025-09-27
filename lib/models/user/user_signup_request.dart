@@ -3,15 +3,15 @@ class UserSignupRequest {
   final String name;
   final int age;
   final String address;
-  final String password;
+  final String gender;
 
   UserSignupRequest({
     required this.email,
     required this.name,
     required this.age,
     required this.address,
-    required this.password,
+    required this.gender,
   });
 
-  Map<String, dynamic> toJson() => {'email': email, 'name': name, 'age': age, 'address': address, 'password': password};
+  Map<String, dynamic> toJson() => {'email': email, 'name': name, 'age': age, 'address': address, 'gender': gender};
 }
