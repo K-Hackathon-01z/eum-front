@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class GenderSignupScreen extends StatefulWidget {
   const GenderSignupScreen({super.key});
@@ -52,6 +54,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       setState(() {
                         _selectedGender = 'male';
                       });
+                      Provider.of<AuthProvider>(context, listen: false).setGender('male');
                     },
                     selectedColor: const Color(0xFF9785BA),
                     backgroundColor: Colors.white,
@@ -78,6 +81,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       setState(() {
                         _selectedGender = 'female';
                       });
+                      Provider.of<AuthProvider>(context, listen: false).setGender('female');
                     },
                     selectedColor: const Color(0xFF9785BA),
                     backgroundColor: Colors.white,
@@ -111,6 +115,10 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                             ),
                           );
                           return;
+                        }
+                        // 혹시나 선택 후 저장이 안된 경우를 위해 한 번 더 저장
+                        if (_selectedGender != null) {
+                          Provider.of<AuthProvider>(context, listen: false).setGender(_selectedGender!);
                         }
                         Navigator.pushNamed(context, '/signup-address');
                       },

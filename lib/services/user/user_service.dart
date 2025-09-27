@@ -1,17 +1,17 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../models/user/user_signup_request.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:convert';
 
 class UserService {
-  static const base = 'http://3.26.220.20:8080';
+  static final String base = dotenv.env['API_BASE_URL'] ?? '';
 
-  Future<bool> signup(UserSignupRequest request) async {
-    final url = Uri.parse('$base/api/user/signup');
-    final res = await http.post(url, headers: {'Content-Type': 'application/json'}, body: jsonEncode(request.toJson()));
-    if (res.statusCode == 200) {
-      return true;
+  Future<List<dynamic>> fetchAllUsers() async {
+    final url = Uri.parse('$base/api/user/all');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      return json.decode(response.body) as List<dynamic>;
     } else {
-      throw Exception('회원가입 실패: ${res.statusCode} / ${res.body}');
+      throw Exception('전체 회원 조회 실패');
     }
   }
 }

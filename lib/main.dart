@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'providers/user_provider.dart';
+import 'providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CareerTestProvider()),
         ChangeNotifierProvider(create: (_) => GovernmentProvider()),
         ChangeNotifierProvider(create: (_) => MyInfoProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: const PreviewApp(child: TitleScreen()),
     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../models/user/user_signup_request.dart';
 import '../services/user/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -7,23 +6,22 @@ class UserProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   String? _error;
-  bool _success = false;
+  List<dynamic> _users = [];
 
   bool get isLoading => _isLoading;
   String? get error => _error;
-  bool get success => _success;
+  List<dynamic> get users => _users;
 
-  Future<void> signup(UserSignupRequest request) async {
+  Future<void> fetchAllUsers() async {
     _isLoading = true;
     _error = null;
-    _success = false;
     notifyListeners();
     try {
-      final result = await _service.signup(request);
-      _success = result;
+      final result = await _service.fetchAllUsers();
+      _users = result;
     } catch (e) {
       _error = e.toString();
-      _success = false;
+      _users = [];
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -33,7 +31,7 @@ class UserProvider extends ChangeNotifier {
   void reset() {
     _isLoading = false;
     _error = null;
-    _success = false;
+    _users = [];
     notifyListeners();
   }
 }

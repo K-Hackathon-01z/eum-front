@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../models/career_test/question.dart';
 
 class CareerTestService {
-  static const base = 'http://3.26.220.20:8080';
+  static final String base = dotenv.env['API_BASE_URL'] ?? '';
 
   Future<List<Question>> fetchRecommendedSupports(int userId) async {
     final response = await http.get(Uri.parse('$base/api/matching/careerTest'));
