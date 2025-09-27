@@ -3,6 +3,54 @@ import '../models/user/user_signup_request.dart';
 import '../services/user/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
+  // 회원가입 단계별 입력값 저장
+  String? _email;
+  String? _name;
+  int? _age;
+  String? _address;
+  String? _gender;
+
+  String? get email => _email;
+  String? get name => _name;
+  int? get age => _age;
+  String? get address => _address;
+  String? get gender => _gender;
+
+  void setEmail(String value) {
+    _email = value;
+    notifyListeners();
+  }
+
+  void setName(String value) {
+    _name = value;
+    notifyListeners();
+  }
+
+  void setAge(int value) {
+    _age = value;
+    notifyListeners();
+  }
+
+  void setAddress(String value) {
+    _address = value;
+    notifyListeners();
+  }
+
+  void setGender(String value) {
+    _gender = value;
+    notifyListeners();
+  }
+
+  UserSignupRequest toSignupRequest() {
+    return UserSignupRequest(
+      email: _email ?? '',
+      name: _name ?? '',
+      age: _age ?? 0,
+      address: _address ?? '',
+      gender: _gender ?? '',
+    );
+  }
+
   final UserService _service = UserService();
 
   bool _isLoading = false;
@@ -34,6 +82,11 @@ class UserProvider extends ChangeNotifier {
     _isLoading = false;
     _error = null;
     _success = false;
+    _email = null;
+    _name = null;
+    _age = null;
+    _address = null;
+    _gender = null;
     notifyListeners();
   }
 }

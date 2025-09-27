@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/user_provider.dart';
 
 class AgeSignupScreen extends StatefulWidget {
   const AgeSignupScreen({super.key});
@@ -74,6 +76,8 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
                           );
                           return;
                         }
+                        // 나이를 UserProvider에 저장
+                        Provider.of<UserProvider>(context, listen: false).setAge(int.parse(_ageController.text));
                         Navigator.pushNamed(context, '/signup-gender');
                       },
                     ),

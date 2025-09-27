@@ -1,4 +1,6 @@
 import '../../../widgets/user/signup_step_indicator.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -102,7 +104,8 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                           );
                           return;
                         }
-                        // TODO: 주소 저장 로직 추가 가능
+                        // 주소를 UserProvider에 저장
+                        Provider.of<UserProvider>(context, listen: false).setAddress(address);
                         Navigator.pushNamed(context, '/signup-success');
                       },
                     ),
