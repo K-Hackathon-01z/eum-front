@@ -3,6 +3,52 @@ import '../models/user/user_signup_request.dart';
 import '../services/user/auth_service.dart';
 
 class AuthProvider extends ChangeNotifier {
+  bool _emailRequested = false;
+  bool _emailConfirmed = false;
+
+  bool get emailRequested => _emailRequested;
+  bool get emailConfirmed => _emailConfirmed;
+
+  Future<void> requestEmailCode(String email) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+    try {
+      final result = await _service.requestEmailCode(email);
+      _emailRequested = result;
+      if (!result) _error = '이메일 인증코드 요청에 실패했습니다.';
+    } catch (e) {
+      _error = e.toString();
+      _emailRequested = false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> confirmEmailCode(String email, String code) async {
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+    try {
+      final result = await _service.confirmEmailCode(email, code);
+      _emailConfirmed = result;
+      if (!result) _error = '인증코드 확인에 실패했습니다.';
+    } catch (e) {
+      _error = e.toString();
+      _emailConfirmed = false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  void resetEmailAuth() {
+    _emailRequested = false;
+    _emailConfirmed = false;
+    notifyListeners();
+  }
+
   // 회원가입 단계별 입력값 저장
   String? _email;
   String? _name;
