@@ -4,7 +4,7 @@ import '../../../widgets/user/button.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
 import 'package:provider/provider.dart';
-import '../../../providers/user_provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class EmailSignupScreen extends StatefulWidget {
   const EmailSignupScreen({super.key});
@@ -153,8 +153,8 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                           );
                           return;
                         }
-                        // 이메일을 UserProvider에 저장
-                        Provider.of<UserProvider>(context, listen: false).setEmail(_emailController.text);
+                        // 이메일을 AuthProvider에 저장
+                        Provider.of<AuthProvider>(context, listen: false).setEmail(_emailController.text);
                         Navigator.pushNamed(context, '/signup-age');
                       },
                     ),

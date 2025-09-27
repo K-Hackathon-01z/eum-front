@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../models/user/user_signup_request.dart';
 
-class UserService {
+class AuthService {
   static const base = 'http://3.26.220.20:8080';
 
   Future<bool> signup(UserSignupRequest request) async {

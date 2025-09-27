@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/user/user_signup_request.dart';
-import '../services/user/user_service.dart';
+import '../services/user/auth_service.dart';
 
-class UserProvider extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   // 회원가입 단계별 입력값 저장
   String? _email;
   String? _name;
@@ -51,7 +51,7 @@ class UserProvider extends ChangeNotifier {
     );
   }
 
-  final UserService _service = UserService();
+  final AuthService _service = AuthService();
 
   bool _isLoading = false;
   String? _error;
