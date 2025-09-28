@@ -1,6 +1,8 @@
 import 'button.dart';
 import 'request_note.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class CreatorDetail extends StatelessWidget {
   final String name;
@@ -104,12 +106,13 @@ class CreatorDetail extends StatelessWidget {
                 child: Button(
                   text: '매칭 신청하기',
                   onPressed: () {
+                    final nickname = Provider.of<AuthProvider>(context, listen: false).name ?? '닉네임';
                     showDialog(
                       context: context,
                       builder: (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         insetPadding: EdgeInsets.zero,
-                        child: RequestNote(nickname: 'UserName'),
+                        child: RequestNote(nickname: nickname),
                       ),
                     );
                   },
