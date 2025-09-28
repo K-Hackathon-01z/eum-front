@@ -38,7 +38,21 @@ class MyInfoFakeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(flex: 3),
+
+                const Spacer(flex: 2),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Button(
+                    text: '로그인',
+                    width: 350,
+                    height: 48,
+                    textColor: Colors.white,
+                    backgroundColor: Color(0xFF9785BA),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/login-email');
+                    },
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Button(
