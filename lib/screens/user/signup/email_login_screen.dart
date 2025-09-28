@@ -55,7 +55,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 child: Column(
                   children: [
                     Button(
-                      text: '다음으로',
+                      text: '로그인',
                       width: double.infinity,
                       height: 48,
                       backgroundColor: Colors.white,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
 import './change_profile.dart';
 import 'package:eum_demo/widgets/user/popup.dart';
+import 'package:provider/provider.dart';
+import 'package:eum_demo/providers/auth_provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -57,13 +59,15 @@ class SettingsScreen extends StatelessWidget {
                       icon: Icons.logout,
                       title: '로그아웃',
                       message: '정말 로그아웃 하시겠습니까?',
-                      button2Text: '닫기',
                       button1Text: '로그아웃',
-                      onButtonFirstPressed: () => Navigator.of(context).pop(),
-                      onButtonSecondPressed: () {
+                      button2Text: '돌아가기',
+                      onButtonFirstPressed: () {
                         Navigator.of(context).pop();
+                        // Provider의 모든 사용자 데이터 초기화
+                        Provider.of<AuthProvider>(context, listen: false).reset();
                         Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                       },
+                      onButtonSecondPressed: () => Navigator.of(context).pop(),
                     ),
                   );
                 },
