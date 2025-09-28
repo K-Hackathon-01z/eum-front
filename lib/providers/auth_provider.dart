@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user/user_signup_request.dart';
 import '../services/user/auth_service.dart';
+import '../services/user/user_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _emailRequested = false;
@@ -9,12 +10,14 @@ class AuthProvider extends ChangeNotifier {
   bool get emailRequested => _emailRequested;
   bool get emailConfirmed => _emailConfirmed;
 
+  final AuthService _authService = AuthService();
+
   Future<void> requestEmailCode(String email) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
     try {
-      final result = await _service.requestEmailCode(email);
+      final result = await _authService.requestEmailCode(email);
       _emailRequested = result;
       if (!result) _error = '이메일 인증코드 요청에 실패했습니다.';
     } catch (e) {
@@ -31,7 +34,7 @@ class AuthProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      final result = await _service.confirmEmailCode(email, code);
+      final result = await _authService.confirmEmailCode(email, code);
       _emailConfirmed = result;
       if (!result) _error = '인증코드 확인에 실패했습니다.';
     } catch (e) {
@@ -97,8 +100,6 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  final AuthService _service = AuthService();
-
   bool _isLoading = false;
   String? _error;
   bool _success = false;
@@ -113,9 +114,8 @@ class AuthProvider extends ChangeNotifier {
     _success = false;
     notifyListeners();
     try {
-      final result = await _service.signup(request);
+      final result = await _authService.signup(request);
       _success = result;
-      // 회원가입 성공 시 이메일 저장 (shared_preferences 제거)
     } catch (e) {
       _error = e.toString();
       _success = false;
@@ -131,9 +131,11 @@ class AuthProvider extends ChangeNotifier {
     _success = false;
     notifyListeners();
     try {
-      // 실제 서비스에서는 인증 API 호출 필요. 여기서는 이메일 존재만 확인한다고 가정.
-      if (email.isNotEmpty) {
+      // 실제 서비스에서는 사용자 정보 조회 API 호출 필요
+      final userData = await UserService.getUserByEmail(email); // 예시
+      if (userData['email'] == email) {
         _email = email;
+        _name = userData['name']; // ← name 세팅 추가
         _success = true;
       } else {
         _success = false;

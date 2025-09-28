@@ -5,7 +5,7 @@ import 'dart:convert';
 class UserService {
   static final String base = dotenv.env['API_BASE_URL'] ?? '';
 
-  Future<List<dynamic>> fetchAllUsers() async {
+  static Future<List<dynamic>> fetchAllUsers() async {
     final url = Uri.parse('$base/api/user/all');
     final response = await http.get(url);
     if (response.statusCode == 200) {
