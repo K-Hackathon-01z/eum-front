@@ -116,6 +116,19 @@ class AuthProvider extends ChangeNotifier {
     try {
       final result = await _authService.signup(request);
       _success = result;
+      if (result) {
+        // 회원가입 성공 시 사용자 정보 조회 및 세팅
+        try {
+          final userData = await UserService.getUserByEmail(request.email);
+          _email = userData['email'];
+          _name = userData['name'];
+          _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
+          _address = userData['address'];
+          _gender = userData['gender'];
+        } catch (e) {
+          // 사용자 정보 조회 실패 시 무시 (에러는 _error에 남기지 않음)
+        }
+      }
     } catch (e) {
       _error = e.toString();
       _success = false;
@@ -132,10 +145,13 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     try {
       // 실제 서비스에서는 사용자 정보 조회 API 호출 필요
-      final userData = await UserService.getUserByEmail(email); // 예시
+      final userData = await UserService.getUserByEmail(email);
       if (userData['email'] == email) {
-        _email = email;
-        _name = userData['name']; // ← name 세팅 추가
+        _email = userData['email'];
+        _name = userData['name'];
+        _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
+        _address = userData['address'];
+        _gender = userData['gender'];
         _success = true;
       } else {
         _success = false;
