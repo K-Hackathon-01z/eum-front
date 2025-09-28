@@ -58,8 +58,9 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       text: '다음으로',
                       width: double.infinity,
                       height: 48,
-                      textColor: Colors.white,
-                      backgroundColor: const Color(0xFF9785BA),
+                      backgroundColor: Colors.white,
+                      textColor: const Color(0xFF9785BA),
+                      borderColor: const Color(0xFF9785BA),
                       onPressed: () async {
                         final email = _emailController.text.trim();
                         if (email.isEmpty) {
@@ -115,11 +116,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       text: '돌아가기',
                       width: double.infinity,
                       height: 48,
-                      backgroundColor: Colors.white,
-                      textColor: const Color(0xFF9785BA),
-                      borderColor: const Color(0xFF9785BA),
+                      backgroundColor: const Color(0xFF9785BA),
+                      textColor: Colors.white,
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],
