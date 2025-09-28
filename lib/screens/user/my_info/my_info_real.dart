@@ -3,7 +3,7 @@ import 'package:eum_demo/screens/user/my_info/matching_requests.dart';
 import 'package:eum_demo/screens/user/my_info/setting/settings.dart';
 import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
-import '../../../services/user/my_info_service.dart';
+import '../../../services/user/user_service.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
@@ -32,7 +32,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   Future<void> _fetchUserInfo() async {
     final email = Provider.of<AuthProvider>(context, listen: false).email;
     if (email == null || email.isEmpty) return;
-    final data = await MyInfoService.getUserByEmail(email);
+    final data = await UserService.getUserByEmail(email);
     setState(() {
       name = data['name'];
       address = data['address'];
@@ -106,7 +106,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           // 메뉴 리스트
           ListTile(
-            title: Text('이용내역'),
+            title: Text('예약 내역'),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right),
               onPressed: () {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:eum_demo/services/user/my_info_service.dart';
+import 'package:eum_demo/services/user/user_service.dart';
 
 class MyInfoProvider extends ChangeNotifier {
   Map<String, dynamic>? _userInfo;
@@ -15,7 +15,7 @@ class MyInfoProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      final data = await MyInfoService.getUserByEmail(email);
+      final data = await UserService.getUserByEmail(email);
       _userInfo = data;
     } catch (e) {
       _error = e.toString();

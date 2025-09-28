@@ -1,10 +1,10 @@
-import 'package:eum_demo/screens/user/my_info/setting/delete_account.dart';
 import 'package:flutter/material.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
 import './change_profile.dart';
 import 'package:eum_demo/widgets/user/popup.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/auth_provider.dart';
+import 'package:eum_demo/services/user/user_service.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -40,8 +40,51 @@ class SettingsScreen extends StatelessWidget {
               trailing: IconButton(
                 icon: Icon(Icons.chevron_right),
                 onPressed: () {
-                  // 여기서 원하는 페이지로 이동
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DeleteAccount()));
+                  showDialog(
+                    context: context,
+                    builder: (_) => CommonPopup(
+                      icon: Icons.delete_forever,
+                      title: '계정 탈퇴',
+                      message: '정말 회원 탈퇴하시겠습니까?\n모든 정보가 삭제됩니다.',
+                      button1Text: '탈퇴',
+                      button2Text: '취소',
+                      onButtonFirstPressed: () async {
+                        Navigator.of(context).pop();
+                        final email = Provider.of<AuthProvider>(context, listen: false).email;
+                        if (email == null || email.isEmpty) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '오류',
+                              message: '계정 정보가 없습니다.',
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
+                        // 회원 삭제 API 호출
+                        final result = await UserService.deleteUserByEmail(email);
+                        if (result) {
+                          Provider.of<AuthProvider>(context, listen: false).reset();
+                          Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '오류',
+                              message: '회원 탈퇴에 실패했습니다.',
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                        }
+                      },
+                      onButtonSecondPressed: () => Navigator.of(context).pop(),
+                    ),
+                  );
                 },
               ),
             ),

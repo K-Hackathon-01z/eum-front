@@ -4,7 +4,7 @@ import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
-import '../../../services/user/my_info_service.dart';
+import '../../../services/user/user_service.dart';
 
 class EmailLoginScreen extends StatefulWidget {
   const EmailLoginScreen({super.key});
@@ -62,21 +62,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () async {
-                        final email = _emailController.text.trim();
-                        if (email.isEmpty) {
-                          showDialog(
-                            context: context,
-                            builder: (_) => CommonPopup(
-                              icon: Icons.warning_amber_rounded,
-                              title: '입력 오류',
-                              message: '이메일을 입력해주세요.',
-                              button1Text: '확인',
-                              onButtonFirstPressed: () => Navigator.of(context).pop(),
-                            ),
-                          );
-                          return;
-                        }
-                        final emailError = Validators.validateEmail(email);
+                        final emailError = Validators.validateEmail(_emailController.text.trim());
                         if (emailError != null) {
                           showDialog(
                             context: context,
@@ -90,25 +76,28 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                           );
                           return;
                         }
-                        final userData = await MyInfoService.getUserByEmail(email);
-                        if (userData.isNotEmpty && userData['email'] == email) {
-                          final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                          await authProvider.login(email);
-                          if (authProvider.success) {
-                            Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        final email = _emailController.text.trim();
+                        try {
+                          final userData = await UserService.getUserByEmail(email);
+                          if (userData.isNotEmpty && userData['email'] == email) {
+                            final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                            await authProvider.login(email);
+                            if (authProvider.success) {
+                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                            }
                           }
-                          return;
+                        } catch (e) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => CommonPopup(
+                              icon: Icons.warning_amber_rounded,
+                              title: '로그인 실패',
+                              message: '존재하지 않는 이메일입니다.',
+                              button1Text: '확인',
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
                         }
-                        showDialog(
-                          context: context,
-                          builder: (_) => CommonPopup(
-                            icon: Icons.warning_amber_rounded,
-                            title: '로그인 실패',
-                            message: '존재하지 않는 이메일입니다.',
-                            button1Text: '확인',
-                            onButtonFirstPressed: () => Navigator.of(context).pop(),
-                          ),
-                        );
                       },
                     ),
                     const SizedBox(height: 16),
