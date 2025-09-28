@@ -53,17 +53,24 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // 회원가입 단계별 입력값 저장
+  int? _id;
   String? _email;
   String? _name;
   int? _age;
   String? _address;
   String? _gender;
 
+  int? get id => _id;
   String? get email => _email;
   String? get name => _name;
   int? get age => _age;
   String? get address => _address;
   String? get gender => _gender;
+
+  void setId(int value) {
+    _id = value;
+    notifyListeners();
+  }
 
   void setEmail(String value) {
     _email = value;
@@ -97,6 +104,7 @@ class AuthProvider extends ChangeNotifier {
       age: _age ?? 0,
       address: _address ?? '',
       gender: _gender ?? '',
+      // id는 회원가입 요청에는 포함하지 않음 (DB에서 자동 생성)
     );
   }
 
@@ -120,6 +128,7 @@ class AuthProvider extends ChangeNotifier {
         // 회원가입 성공 시 사용자 정보 조회 및 세팅
         try {
           final userData = await UserService.getUserByEmail(request.email);
+          _id = userData['id'] is int ? userData['id'] : int.tryParse(userData['id'].toString());
           _email = userData['email'];
           _name = userData['name'];
           _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
@@ -147,6 +156,7 @@ class AuthProvider extends ChangeNotifier {
       // 실제 서비스에서는 사용자 정보 조회 API 호출 필요
       final userData = await UserService.getUserByEmail(email);
       if (userData['email'] == email) {
+        _id = userData['id'] is int ? userData['id'] : int.tryParse(userData['id'].toString());
         _email = userData['email'];
         _name = userData['name'];
         _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
@@ -170,6 +180,7 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = false;
     _error = null;
     _success = false;
+    _id = null;
     _email = null;
     _name = null;
     _age = null;
