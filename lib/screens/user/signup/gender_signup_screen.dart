@@ -26,7 +26,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 3, totalSteps: 5, stepLabels: ['닉네임', '이메일', '생년월일', '성별', '주소']),
+              SignupStepIndicator(currentStep: 3, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
@@ -132,7 +132,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],

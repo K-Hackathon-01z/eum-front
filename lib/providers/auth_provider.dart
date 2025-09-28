@@ -115,6 +115,30 @@ class AuthProvider extends ChangeNotifier {
     try {
       final result = await _service.signup(request);
       _success = result;
+      // 회원가입 성공 시 이메일 저장 (shared_preferences 제거)
+    } catch (e) {
+      _error = e.toString();
+      _success = false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> login(String email) async {
+    _isLoading = true;
+    _error = null;
+    _success = false;
+    notifyListeners();
+    try {
+      // 실제 서비스에서는 인증 API 호출 필요. 여기서는 이메일 존재만 확인한다고 가정.
+      if (email.isNotEmpty) {
+        _email = email;
+        _success = true;
+      } else {
+        _success = false;
+        _error = '이메일이 비어있습니다.';
+      }
     } catch (e) {
       _error = e.toString();
       _success = false;

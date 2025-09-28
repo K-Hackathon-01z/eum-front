@@ -90,7 +90,7 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],
