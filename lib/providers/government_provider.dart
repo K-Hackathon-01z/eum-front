@@ -14,7 +14,7 @@ class GovernmentProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> fetchRecommendedBenefits(String userId) async {
+  Future<void> fetchRecommendedBenefits(int userId) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
