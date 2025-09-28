@@ -51,7 +51,7 @@ class TitleScreen extends StatelessWidget {
                     height: 48,
                     backgroundColor: Color(0xffDAD3E8),
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/my-info-fake');
                     },
                   ),
                 ),

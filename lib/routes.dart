@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'screens/common/title.dart';
 import 'screens/artist/artist_intro.dart';
 import 'screens/artist/artist_shell.dart';
@@ -9,6 +8,7 @@ import 'screens/user/home/goverment/government_help.dart';
 import 'screens/user/home/home.dart';
 import 'screens/user/home/skill_list/skill_list_screen.dart';
 import 'screens/user/my_info/my_info_real.dart';
+import 'screens/user/my_info/my_info_fake.dart';
 import 'screens/user/signup/name_signup_screen.dart';
 import 'screens/user/signup/email_signup_screen.dart';
 import 'screens/user/signup/age_signup_screen.dart';
@@ -25,6 +25,7 @@ final Map<String, WidgetBuilder> appRoutes = {
   '/creator-list': (context) => const CreatorListScreen(),
   '/oneday-class': (context) => const OnedayClassScreen(),
   '/my-info': (context) => const MyInfoScreen(),
+  '/my-info-fake': (context) => const MyInfoFakeScreen(),
   '/login-email': (context) => const EmailLoginScreen(),
   '/signup-name': (context) => const NicknameSignupScreen(),
   '/signup-email': (context) => const EmailSignupScreen(),
