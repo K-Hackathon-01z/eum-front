@@ -1,7 +1,7 @@
 import 'package:eum_demo/screens/user/my_info/setting/change_password.dart';
 import 'package:eum_demo/screens/user/my_info/setting/delete_account.dart';
-import 'package:eum_demo/widgets/user/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:eum_demo/widgets/user/appbar.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -10,7 +10,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: '설정'),
+      appBar: CustomAppBar(
+        title: '설정',
+        // 수동 보더 라인을 제거하여 AppBar의 elevation 그림자가 자연스럽게 보이도록 함
+      ),
       body: Container(
         color: Colors.white, // 배경색
         child: Column(
@@ -19,11 +22,7 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               title: Text(
                 '사용자 정보',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
 
@@ -34,10 +33,7 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icon(Icons.chevron_right),
                 onPressed: () {
                   // 여기서 원하는 페이지로 이동
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ChangePassword()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword()));
                 },
               ),
             ),
@@ -50,10 +46,7 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icon(Icons.chevron_right),
                 onPressed: () {
                   // 여기서 원하는 페이지로 이동
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DeleteAccount()),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DeleteAccount()));
                 },
               ),
             ),
@@ -71,10 +64,7 @@ class SettingsScreen extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('로그아웃', textAlign: TextAlign.center),
-                        content: Text(
-                          '정말 로그아웃 하시겠습니까?',
-                          textAlign: TextAlign.center,
-                        ),
+                        content: Text('정말 로그아웃 하시겠습니까?', textAlign: TextAlign.center),
                         actions: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,10 +81,7 @@ class SettingsScreen extends StatelessWidget {
                                   // 1) 모달 닫고
                                   Navigator.of(context).pop();
                                   // 2) 네비게이션 스택 초기화 후 홈으로 이동
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/',
-                                    (route) => false,
-                                  );
+                                  Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                                 },
                                 child: Text('로그아웃'),
                               ),

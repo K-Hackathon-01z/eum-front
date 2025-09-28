@@ -9,9 +9,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBack;
   final bool showHome;
   final bool showSearch;
+  final bool showSettings;
   final VoidCallback? onBack;
   final VoidCallback? onHome;
   final VoidCallback? onSearch;
+  final VoidCallback? onSettings;
 
   const CustomAppBar({
     Key? key,
@@ -19,9 +21,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showBack = false,
     this.showHome = false,
     this.showSearch = false,
+    this.showSettings = false,
     this.onBack,
     this.onHome,
     this.onSearch,
+    this.onSettings,
   }) : super(key: key);
 
   @override
@@ -41,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20, letterSpacing: -1.2),
+        style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 23, letterSpacing: -1.2),
       ),
       centerTitle: true,
       actions: [
@@ -59,10 +63,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.search, color: Colors.black, size: 32),
             onPressed: onSearch,
           ),
+        if (showSettings)
+          IconButton(
+            icon: const Icon(Icons.settings, color: Colors.black, size: 32),
+            onPressed: onSettings,
+          ),
       ],
       bottom: const PreferredSize(
         preferredSize: Size.fromHeight(1.0),
-        child: Divider(height: 1, thickness: 1, color: Color(0xFFE0E0E0)),
+        child: Divider(height: 1, thickness: 1, color: Color.fromARGB(255, 98, 98, 98)),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../services/user/my_info_service.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
+import 'package:eum_demo/widgets/user/appbar.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
@@ -44,26 +45,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1, // 그림자 강도 약간 증가
-        surfaceTintColor: Colors.transparent, // Material3 틴트 제거로 순수한 색/그림자 유지
-        shadowColor: Colors.black26, // 그림자 색상 명시
-        title: Text(
-          '내 정보',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, size: 32),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
-            },
-          ),
-          SizedBox(width: 16),
-        ],
-        // 수동 보더 라인을 제거하여 AppBar의 elevation 그림자가 자연스럽게 보이도록 함
+      appBar: CustomAppBar(
+        title: '내 정보',
+        showSettings: true,
+        onSettings: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+        },
       ),
       body: Column(
         children: [
