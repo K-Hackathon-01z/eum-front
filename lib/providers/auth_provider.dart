@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user/user_signup_request.dart';
 import '../services/user/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _emailRequested = false;
@@ -115,6 +116,11 @@ class AuthProvider extends ChangeNotifier {
     try {
       final result = await _service.signup(request);
       _success = result;
+      // 회원가입 성공 시 이메일 저장
+      if (_success && _email != null && _email!.isNotEmpty) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('user_email', _email!);
+      }
     } catch (e) {
       _error = e.toString();
       _success = false;
