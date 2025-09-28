@@ -85,7 +85,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         SizedBox(height: 8),
                         Row(
                           children: [
-                            Text(address ?? "-", style: TextStyle(fontSize: 14, color: Colors.black54)),
+                            Text(
+                              (address != null)
+                                  ? (address!.length > 16 ? address!.substring(0, 16) + '...' : address!)
+                                  : "-",
+                              style: TextStyle(fontSize: 14, color: Colors.black54),
+                            ),
                             Spacer(),
                             Text(gender ?? "-", style: TextStyle(fontSize: 14, color: Colors.black54)),
                           ],

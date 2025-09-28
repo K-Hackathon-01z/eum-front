@@ -72,6 +72,10 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
             },
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[500], height: 1.0),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(

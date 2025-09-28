@@ -1,7 +1,7 @@
-import 'package:eum_demo/screens/user/my_info/setting/change_password.dart';
 import 'package:eum_demo/screens/user/my_info/setting/delete_account.dart';
 import 'package:flutter/material.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
+import './change_profile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -18,22 +18,14 @@ class SettingsScreen extends StatelessWidget {
         color: Colors.white, // 배경색
         child: Column(
           children: [
-            // 이건 그냥 제목
-            ListTile(
-              title: Text(
-                '사용자 정보',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ),
-
             // 비밀번호 변경 섹션
             ListTile(
-              title: Text('비밀번호 변경하기'),
+              title: Text('사용자 정보 변경하기'),
               trailing: IconButton(
                 icon: Icon(Icons.chevron_right),
                 onPressed: () {
                   // 여기서 원하는 페이지로 이동
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangePassword()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeProfile()));
                 },
               ),
             ),
