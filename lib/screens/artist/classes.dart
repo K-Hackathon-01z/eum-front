@@ -1,4 +1,6 @@
+import 'package:eum_demo/services/artist/class_schedule.dart';
 import 'package:flutter/material.dart';
+
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({super.key});
@@ -14,9 +16,13 @@ class _ClassesPageState extends State<ClassesPage> {
     _ClassItem('도마 만들기', DateTime.now().add(const Duration(days: 7)), 8, 5),
   ];
 
+  final _service = ClassScheduleService();
+
   Future<void> _addClassDialog() async {
     final titleCtl = TextEditingController();
+    final classIdCtl = TextEditingController(text: '1');
     DateTime? date;
+    TimeOfDay? time;
     int capacity = 6;
 
     await showDialog(
@@ -31,6 +37,15 @@ class _ClassesPageState extends State<ClassesPage> {
                   controller: titleCtl,
                   decoration: const InputDecoration(
                     labelText: '제목',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: classIdCtl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: '클래스 ID',
                     border: OutlineInputBorder(),
                   ),
                 ),
@@ -62,6 +77,31 @@ class _ClassesPageState extends State<ClassesPage> {
                     ),
                     const SizedBox(width: 8),
                     Expanded(
+                      child: OutlinedButton(
+                        onPressed: () async {
+                          final picked = await showTimePicker(
+                            context: context,
+                            initialTime: const TimeOfDay(hour: 14, minute: 0),
+                          );
+                          if (picked != null) {
+                            time = picked;
+                            // ignore: use_build_context_synchronously
+                            (context as Element).markNeedsBuild();
+                          }
+                        },
+                        child: Text(
+                          time == null
+                              ? '시간 선택'
+                              : '${time!.hour.toString().padLeft(2, '0')}:${time!.minute.toString().padLeft(2, '0')}',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
                       child: DropdownButtonFormField<int>(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -90,14 +130,48 @@ class _ClassesPageState extends State<ClassesPage> {
               child: const Text('취소'),
             ),
             ElevatedButton(
-              onPressed: () {
-                if (titleCtl.text.trim().isEmpty || date == null) return;
-                setState(() {
-                  _classes.add(
-                    _ClassItem(titleCtl.text.trim(), date!, capacity, 0),
+              onPressed: () async {
+                final title = titleCtl.text.trim();
+                final cid = int.tryParse(classIdCtl.text.trim());
+                if (title.isEmpty ||
+                    date == null ||
+                    time == null ||
+                    cid == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('제목/클래스ID/날짜/시간을 확인하세요.')),
                   );
-                });
-                Navigator.pop(context);
+                  return;
+                }
+                try {
+                  final res = await _service.createSchedule(
+                    classId: cid,
+                    date: date!,
+                    time: time!,
+                    capacity: capacity,
+                    currentCount: 0,
+                  );
+                  if (!mounted) return;
+                  setState(() {
+                    final dt = DateTime(
+                      date!.year,
+                      date!.month,
+                      date!.day,
+                      time!.hour,
+                      time!.minute,
+                    );
+                    final enrolled = (res['currentCount'] as int?) ?? 0;
+                    _classes.add(_ClassItem(title, dt, capacity, enrolled));
+                  });
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('클래스를 추가했습니다.')));
+                } catch (e) {
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('추가 실패: $e')));
+                }
               },
               child: const Text('추가'),
             ),
