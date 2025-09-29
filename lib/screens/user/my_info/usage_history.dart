@@ -8,7 +8,7 @@ class UsageHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: '이용내역'),
+      appBar: CustomAppBar(title: '예약 내역'),
       body: Container(),
     );
   }

@@ -14,11 +14,11 @@ class CareerTestProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> fetchQuestions(int userId) async {
+  Future<void> fetchQuestions() async {
     _isLoading = true;
     _error = null;
     try {
-      final data = await _service.fetchRecommendedSupports(userId);
+      final data = await _service.fetchCareerTestQuestions();
       _questions = data;
     } catch (e) {
       _error = e.toString();

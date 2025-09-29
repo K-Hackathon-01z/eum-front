@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/user/user_signup_request.dart';
 import '../services/user/auth_service.dart';
+import '../services/user/user_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool _emailRequested = false;
@@ -9,12 +10,14 @@ class AuthProvider extends ChangeNotifier {
   bool get emailRequested => _emailRequested;
   bool get emailConfirmed => _emailConfirmed;
 
+  final AuthService _authService = AuthService();
+
   Future<void> requestEmailCode(String email) async {
     _isLoading = true;
     _error = null;
     notifyListeners();
     try {
-      final result = await _service.requestEmailCode(email);
+      final result = await _authService.requestEmailCode(email);
       _emailRequested = result;
       if (!result) _error = '이메일 인증코드 요청에 실패했습니다.';
     } catch (e) {
@@ -31,7 +34,7 @@ class AuthProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      final result = await _service.confirmEmailCode(email, code);
+      final result = await _authService.confirmEmailCode(email, code);
       _emailConfirmed = result;
       if (!result) _error = '인증코드 확인에 실패했습니다.';
     } catch (e) {
@@ -50,17 +53,24 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // 회원가입 단계별 입력값 저장
+  int? _id;
   String? _email;
   String? _name;
   int? _age;
   String? _address;
   String? _gender;
 
+  int? get id => _id;
   String? get email => _email;
   String? get name => _name;
   int? get age => _age;
   String? get address => _address;
   String? get gender => _gender;
+
+  void setId(int value) {
+    _id = value;
+    notifyListeners();
+  }
 
   void setEmail(String value) {
     _email = value;
@@ -94,10 +104,9 @@ class AuthProvider extends ChangeNotifier {
       age: _age ?? 0,
       address: _address ?? '',
       gender: _gender ?? '',
+      // id는 회원가입 요청에는 포함하지 않음 (DB에서 자동 생성)
     );
   }
-
-  final AuthService _service = AuthService();
 
   bool _isLoading = false;
   String? _error;
@@ -113,9 +122,22 @@ class AuthProvider extends ChangeNotifier {
     _success = false;
     notifyListeners();
     try {
-      final result = await _service.signup(request);
+      final result = await _authService.signup(request);
       _success = result;
-      // 회원가입 성공 시 이메일 저장 (shared_preferences 제거)
+      if (result) {
+        // 회원가입 성공 시 사용자 정보 조회 및 세팅
+        try {
+          final userData = await UserService.getUserByEmail(request.email);
+          _id = userData['id'] is int ? userData['id'] : int.tryParse(userData['id'].toString());
+          _email = userData['email'];
+          _name = userData['name'];
+          _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
+          _address = userData['address'];
+          _gender = userData['gender'];
+        } catch (e) {
+          // 사용자 정보 조회 실패 시 무시 (에러는 _error에 남기지 않음)
+        }
+      }
     } catch (e) {
       _error = e.toString();
       _success = false;
@@ -131,9 +153,15 @@ class AuthProvider extends ChangeNotifier {
     _success = false;
     notifyListeners();
     try {
-      // 실제 서비스에서는 인증 API 호출 필요. 여기서는 이메일 존재만 확인한다고 가정.
-      if (email.isNotEmpty) {
-        _email = email;
+      // 실제 서비스에서는 사용자 정보 조회 API 호출 필요
+      final userData = await UserService.getUserByEmail(email);
+      if (userData['email'] == email) {
+        _id = userData['id'] is int ? userData['id'] : int.tryParse(userData['id'].toString());
+        _email = userData['email'];
+        _name = userData['name'];
+        _age = userData['age'] is int ? userData['age'] : int.tryParse(userData['age'].toString());
+        _address = userData['address'];
+        _gender = userData['gender'];
         _success = true;
       } else {
         _success = false;
@@ -152,6 +180,7 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = false;
     _error = null;
     _success = false;
+    _id = null;
     _email = null;
     _name = null;
     _age = null;

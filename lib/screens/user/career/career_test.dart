@@ -1,10 +1,9 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:eum_demo/screens/user/career/career_test_result.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/career_test_provider.dart';
 import 'package:eum_demo/models/career_test/question.dart';
+import 'package:eum_demo/services/user/career_test_service.dart';
 
 // 동적 위젯
 class CareerTestScreen extends StatefulWidget {
@@ -15,13 +14,14 @@ class CareerTestScreen extends StatefulWidget {
 class _CareerTestScreenState extends State<CareerTestScreen> {
   int current = 0;
   List<int?> answers = [];
+  final CareerTestService _service = CareerTestService();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = Provider.of<CareerTestProvider>(context, listen: false);
-      provider.fetchQuestions(1).then((_) {
+      provider.fetchQuestions().then((_) {
         setState(() {
           answers = List<int?>.filled(provider.questions.length, null);
         });
@@ -31,24 +31,17 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
 
   double _progress(int total) => total == 0 ? 0 : (current + 1) / total;
 
-  Future<List<dynamic>> submitAnswers(List<Question> questions, int userid) async {
-    final payload = {
-      "optionIds": List.generate(questions.length, (i) {
-        final q = questions[i];
-        final sel = answers[i]!;
-        return q.options[sel].id;
-      }),
-    };
-    final url = Uri.parse('http://3.26.220.20:8080/api/matching/submit/$userid');
-    final res = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json', 'accept': '*/*'},
-      body: jsonEncode(payload),
-    );
-    if (res.statusCode != 200) {
-      throw Exception('제출 실패: ${res.statusCode} / ${res.body}');
+  Future<List<dynamic>> submitAnswers(List<Question> questions, int userId) async {
+    try {
+      final optionIds = List.generate(questions.length, (i) {
+        final sel = answers[i];
+        if (sel == null) throw Exception('모든 질문에 답변해주세요.');
+        return questions[i].options[sel].optionId;
+      });
+      return await _service.submitAnswers(userId, optionIds);
+    } catch (e) {
+      throw Exception('제출 실패: $e');
     }
-    return jsonDecode(res.body) as List<dynamic>;
   }
 
   @override
@@ -71,9 +64,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
             body: const Center(child: Text('질문 데이터가 없습니다')),
           );
         }
-        // answers 초기화는 initState에서만 수행
         final q = questions[current];
-        final optionTexts = q.options.map((opt) => opt.text).toList();
         final selected = answers[current];
         final total = questions.length;
         final isLast = current == total - 1;
@@ -95,7 +86,7 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  q.questionText,
+                  q.text,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -112,7 +103,8 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,
                     childAspectRatio: 2.3,
-                    children: List.generate(optionTexts.length, (index) {
+                    children: List.generate(q.options.length, (index) {
+                      final opt = q.options[index];
                       final isSelected = selected == index;
                       return GestureDetector(
                         onTap: () => setState(() => answers[current] = index),
@@ -120,11 +112,14 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                           decoration: BoxDecoration(
                             color: isSelected ? const Color(0xFFB9A6E7) : const Color(0xFFF2EDFB),
                             borderRadius: BorderRadius.circular(20),
-                            border: isSelected ? Border.all(color: const Color(0xFF3B2D5B), width: 3) : null,
+                            border: isSelected
+                                ? Border.all(color: const Color(0xFF3B2D5B), width: 3)
+                                : Border.all(color: const Color(0xFF9785BA), width: 1),
                           ),
                           alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                           child: Text(
-                            optionTexts[index],
+                            opt.text,
                             style: TextStyle(
                               fontSize: 15,
                               color: isSelected ? const Color(0xFF3B2D5B) : const Color(0xFFB9A6E7),
@@ -164,12 +159,16 @@ class _CareerTestScreenState extends State<CareerTestScreen> {
                                   if (!isLast) {
                                     setState(() => current++);
                                   } else {
-                                    final resultList = await submitAnswers(questions, 3);
-                                    if (!mounted) return;
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (_) => CareerTestResultPage(resultList: resultList)),
-                                    );
+                                    try {
+                                      final resultList = await submitAnswers(questions, 3);
+                                      if (!mounted) return;
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (_) => CareerTestResultPage(resultList: resultList)),
+                                      );
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('제출 오류: $e')));
+                                    }
                                   }
                                 },
                           style: ElevatedButton.styleFrom(

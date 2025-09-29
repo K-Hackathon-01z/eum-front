@@ -10,7 +10,7 @@ class GovernmentService {
   GovernmentService({http.Client? client}) : _client = client ?? http.Client();
 
   // 정부 혜택 추천 API: GET /api/supports/recommend/{userId}
-  Future<List<BenefitInfo>> fetchRecommendedBenefits(String userId) async {
+  Future<List<BenefitInfo>> fetchRecommendedBenefits(int userId) async {
     final url = Uri.parse('$base/api/supports/recommend/$userId');
     try {
       final response = await _client.get(url);

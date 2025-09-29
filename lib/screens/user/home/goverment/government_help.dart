@@ -2,9 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/government_provider.dart';
+import '../../../../providers/auth_provider.dart';
 
-class GovernmentHelpScreen extends StatelessWidget {
+class GovernmentHelpScreen extends StatefulWidget {
   const GovernmentHelpScreen({super.key});
+
+  @override
+  State<GovernmentHelpScreen> createState() => _GovernmentHelpScreenState();
+}
+
+class _GovernmentHelpScreenState extends State<GovernmentHelpScreen> {
+  bool _fetched = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_fetched) {
+      final int userId = Provider.of<AuthProvider>(context, listen: false).id ?? 0;
+      Future.microtask(() {
+        Provider.of<GovernmentProvider>(context, listen: false).fetchRecommendedBenefits(userId);
+      });
+      _fetched = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +60,6 @@ class GovernmentHelpScreen extends StatelessWidget {
           Expanded(
             child: Consumer<GovernmentProvider>(
               builder: (context, provider, _) {
-                // 최초 진입 시 데이터 fetch
-                if (!provider.isLoading && provider.benefits.isEmpty && provider.error == null) {
-                  provider.fetchRecommendedBenefits('1');
-                  return const Center(child: CircularProgressIndicator());
-                }
                 if (provider.isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }

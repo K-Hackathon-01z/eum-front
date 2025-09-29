@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../services/user/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
-  final UserService _service = UserService();
-
   bool _isLoading = false;
   String? _error;
   List<dynamic> _users = [];
@@ -17,7 +15,7 @@ class UserProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      final result = await _service.fetchAllUsers();
+      final result = await UserService.fetchAllUsers();
       _users = result;
     } catch (e) {
       _error = e.toString();
