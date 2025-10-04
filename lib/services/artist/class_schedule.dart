@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class ClassScheduleService {
   static const _base = 'http://3.26.220.20:8080';
-  // 실제 엔드포인트 경로로 교체
   static const _path = '/api/class-schedule';
 
   final http.Client _client;
