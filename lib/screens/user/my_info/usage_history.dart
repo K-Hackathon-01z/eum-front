@@ -1,4 +1,4 @@
-import 'package:eum_demo/widgets/user/custom_appbar.dart';
+import 'package:eum_demo/widgets/user/appbar.dart';
 import 'package:flutter/material.dart';
 
 class UsageHistory extends StatelessWidget {
@@ -8,7 +8,7 @@ class UsageHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: '이용내역'),
+      appBar: CustomAppBar(title: '예약 내역'),
       body: Container(),
     );
   }

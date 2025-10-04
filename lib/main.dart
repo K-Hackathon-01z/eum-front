@@ -6,21 +6,30 @@ import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/class_data_provider.dart';
 import 'package:eum_demo/screens/common/title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'providers/user_provider.dart';
+import 'providers/auth_provider.dart';
 
-void main() => runApp(
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => ClassDataProvider()),
-      ChangeNotifierProvider(create: (_) => SkillCategoryProvider()),
-      ChangeNotifierProvider(create: (_) => CareerTestProvider()),
-      ChangeNotifierProvider(create: (_) => GovernmentProvider()),
-      ChangeNotifierProvider(create: (_) => MyInfoProvider()),
-    ],
-    child: const PreviewApp(child: TitleScreen()),
-  ),
-);
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ClassDataProvider()),
+        ChangeNotifierProvider(create: (_) => SkillCategoryProvider()),
+        ChangeNotifierProvider(create: (_) => CareerTestProvider()),
+        ChangeNotifierProvider(create: (_) => GovernmentProvider()),
+        ChangeNotifierProvider(create: (_) => MyInfoProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: const PreviewApp(child: TitleScreen()),
+    ),
+  );
+}
 
 class PreviewApp extends StatelessWidget {
   final Widget child;

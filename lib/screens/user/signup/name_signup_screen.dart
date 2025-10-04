@@ -3,7 +3,8 @@ import '../../../utils/validators.dart';
 import '../../../widgets/user/button.dart';
 import '../../../widgets/user/popup.dart';
 import '../../../widgets/user/signup_step_indicator.dart';
-import 'email_signup_screen.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class NicknameSignupScreen extends StatefulWidget {
   const NicknameSignupScreen({super.key});
@@ -31,7 +32,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 0, totalSteps: 4, stepLabels: ['이름', '이메일', '생년월일', '성별']),
+              SignupStepIndicator(currentStep: 0, totalSteps: 5, stepLabels: ['이름', '이메일', '나이', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
@@ -74,7 +75,9 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                           );
                           return;
                         }
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => const EmailSignupScreen()));
+                        // 닉네임을 AuthProvider에 저장
+                        Provider.of<AuthProvider>(context, listen: false).setName(_nicknameController.text);
+                        Navigator.pushNamed(context, '/signup-email');
                       },
                     ),
                     const SizedBox(height: 16),
@@ -86,7 +89,7 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],

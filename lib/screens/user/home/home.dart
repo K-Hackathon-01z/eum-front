@@ -7,6 +7,8 @@ import 'package:eum_demo/screens/user/career/career_test.dart';
 import 'package:eum_demo/screens/user/map/map.dart';
 import 'package:eum_demo/widgets/user/home_card.dart';
 import 'package:eum_demo/screens/user/my_info/my_info_fake.dart';
+import 'package:eum_demo/screens/user/my_info/my_info_real.dart';
+import '../../../providers/auth_provider.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
@@ -17,7 +19,11 @@ class RootScreen extends StatefulWidget {
 
 class _RootScreenState extends State<RootScreen> {
   int _currentIndex = 0;
-  final List<Widget> _pages = [HomeScreen(), MapScreen(), CareerTestScreen(), MyInfoFakeScreen()];
+  List<Widget> get _pages {
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
+    return [HomeScreen(), MapScreen(), CareerTestScreen(), authProvider.success ? MyInfoScreen() : MyInfoFakeScreen()];
+  }
+
   bool _tabHandled = false;
 
   @override

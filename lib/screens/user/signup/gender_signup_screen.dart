@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class GenderSignupScreen extends StatefulWidget {
   const GenderSignupScreen({super.key});
@@ -24,7 +26,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 3, totalSteps: 4, stepLabels: ['닉네임', '이메일', '생년월일', '성별']),
+              SignupStepIndicator(currentStep: 3, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
@@ -52,6 +54,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       setState(() {
                         _selectedGender = 'male';
                       });
+                      Provider.of<AuthProvider>(context, listen: false).setGender('male');
                     },
                     selectedColor: const Color(0xFF9785BA),
                     backgroundColor: Colors.white,
@@ -78,6 +81,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       setState(() {
                         _selectedGender = 'female';
                       });
+                      Provider.of<AuthProvider>(context, listen: false).setGender('female');
                     },
                     selectedColor: const Color(0xFF9785BA),
                     backgroundColor: Colors.white,
@@ -112,7 +116,11 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                           );
                           return;
                         }
-                        Navigator.pushNamed(context, '/signup-success');
+                        // 혹시나 선택 후 저장이 안된 경우를 위해 한 번 더 저장
+                        if (_selectedGender != null) {
+                          Provider.of<AuthProvider>(context, listen: false).setGender(_selectedGender!);
+                        }
+                        Navigator.pushNamed(context, '/signup-address');
                       },
                     ),
                     const SizedBox(height: 16),
@@ -124,7 +132,7 @@ class _GenderSignupScreenState extends State<GenderSignupScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],

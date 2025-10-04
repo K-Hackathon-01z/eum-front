@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:eum_demo/models/skill_list/skill_category.dart'; // SkillCategory 모델 임포트
 
 class SkillService {
+  static final String base = dotenv.env['API_BASE_URL'] ?? '';
   final http.Client _client;
 
   SkillService({http.Client? client}) : _client = client ?? http.Client();

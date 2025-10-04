@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../widgets/user/button.dart';
 import '../../../utils/validators.dart';
 import '../../../widgets/user/popup.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
 
 class AgeSignupScreen extends StatefulWidget {
   const AgeSignupScreen({super.key});
@@ -30,7 +32,7 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
           child: Column(
             children: [
               const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 2, totalSteps: 4, stepLabels: ['닉네임', '이메일', '나이', '성별']),
+              SignupStepIndicator(currentStep: 2, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
               const Spacer(flex: 1),
               const Padding(
                 padding: EdgeInsets.only(bottom: 24),
@@ -74,6 +76,8 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
                           );
                           return;
                         }
+                        // 나이를 AuthProvider에 저장
+                        Provider.of<AuthProvider>(context, listen: false).setAge(int.parse(_ageController.text));
                         Navigator.pushNamed(context, '/signup-gender');
                       },
                     ),
@@ -86,7 +90,7 @@ class _AgeSignupScreenState extends State<AgeSignupScreen> {
                       textColor: const Color(0xFF9785BA),
                       borderColor: const Color(0xFF9785BA),
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
                       },
                     ),
                   ],

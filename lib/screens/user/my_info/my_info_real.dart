@@ -3,8 +3,10 @@ import 'package:eum_demo/screens/user/my_info/matching_requests.dart';
 import 'package:eum_demo/screens/user/my_info/setting/settings.dart';
 import 'package:eum_demo/screens/user/my_info/usage_history.dart';
 import 'package:flutter/material.dart';
-
-import '../../../services/user/my_info_service.dart';
+import '../../../services/user/user_service.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/auth_provider.dart';
+import 'package:eum_demo/widgets/user/appbar.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
@@ -17,22 +19,25 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   String? name;
   int? age;
   String? address;
+  String? gender;
 
   @override
   void initState() {
     super.initState();
-    _fetch(); // 라이프사이클 시작 시 한 번
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchUserInfo();
+    });
   }
 
-
-  //나중에 뺴야함
-  Future<void> _fetch() async {
-    final data = await MyInfoService.getUserByEmail("daniel010203@naver.com");
+  Future<void> _fetchUserInfo() async {
+    final email = Provider.of<AuthProvider>(context, listen: false).email;
+    if (email == null || email.isEmpty) return;
+    final data = await UserService.getUserByEmail(email);
     setState(() {
       name = data['name'];
       address = data['address'];
-      final rawAge = data['age'];
-      age = rawAge;
+      age = data['age'];
+      gender = data['gender'];
     });
   }
 
@@ -40,29 +45,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1, // 그림자 강도 약간 증가
-        surfaceTintColor: Colors.transparent, // Material3 틴트 제거로 순수한 색/그림자 유지
-        shadowColor: Colors.black26, // 그림자 색상 명시
-        title: Text(
-          '내 정보',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, size: 32),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
-              );
-            },
-          ),
-          SizedBox(width: 16),
-        ],
-        // 수동 보더 라인을 제거하여 AppBar의 elevation 그림자가 자연스럽게 보이도록 함
+      appBar: CustomAppBar(
+        title: '내 정보',
+        showSettings: true,
+        onSettings: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
+        },
       ),
       body: Column(
         children: [
@@ -70,10 +58,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xFFF7F7F7),
-                borderRadius: BorderRadius.circular(25),
-              ),
+              decoration: BoxDecoration(color: Color(0xFFF7F7F7), borderRadius: BorderRadius.circular(25)),
               padding: EdgeInsets.all(16),
               child: Row(
                 children: [
@@ -88,29 +73,27 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          // 이름,나이, 주소 , 사진등
                           children: [
-                            Text(
-                              name ?? "-",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            Text(name ?? "-", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                             Spacer(),
                             Text(
                               '${age?.toString() ?? "-"}세',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                             ),
                           ],
                         ),
                         SizedBox(height: 8),
-                        Text(
-                          address ?? "-",
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
+                        Row(
+                          children: [
+                            Text(
+                              (address != null)
+                                  ? (address!.length > 16 ? address!.substring(0, 16) + '...' : address!)
+                                  : "-",
+                              style: TextStyle(fontSize: 14, color: Colors.black54),
+                            ),
+                            Spacer(),
+                            Text(gender ?? "-", style: TextStyle(fontSize: 14, color: Colors.black54)),
+                          ],
                         ),
                       ],
                     ),
@@ -123,15 +106,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           // 메뉴 리스트
           ListTile(
-            title: Text('이용내역'),
+            title: Text('예약 내역'),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UsageHistory()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UsageHistory()));
               },
             ),
           ),
@@ -142,10 +122,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MatchingRequests()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingRequests()));
               },
             ),
           ),
@@ -156,10 +133,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               icon: Icon(Icons.chevron_right),
               onPressed: () {
                 // 여기서 원하는 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FavoriteClasses()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FavoriteClasses()));
               },
             ),
           ),

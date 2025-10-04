@@ -26,7 +26,7 @@ class MyInfoFakeScreen extends StatelessWidget {
                       child: Center(child: Image.asset('assets/logos/eum_logo_title.png', fit: BoxFit.contain)),
                     ),
                     SizedBox(
-                      width: 140,
+                      width: 150,
                       height: 100,
                       child: const Center(
                         child: Text(
@@ -38,32 +38,51 @@ class MyInfoFakeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(flex: 3),
+
+                const Spacer(flex: 2),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: Button(
-                    text: '로그인하기',
-                    width: 350,
-                    height: 48,
-                    textColor: Colors.white,
-                    backgroundColor: Color(0xFF9785BA),
-                    onPressed: () {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/signup-name');
-                        },
-                        child: const Text(
-                          '계정이 없으신가요?',
-                          style: TextStyle(color: Color(0xFF868383), fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Button(
+                            text: '로그인',
+                            width: 150,
+                            height: 48,
+                            backgroundColor: Colors.white,
+                            textColor: Color(0xFF9785BA),
+                            borderColor: Color(0xFF9785BA),
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/login-email');
+                            },
+                          ),
+                          SizedBox(width: 16),
+                          Button(
+                            text: '계정 생성하기',
+                            width: 150,
+                            height: 48,
+                            backgroundColor: Colors.white,
+                            textColor: Color(0xFF9785BA),
+                            borderColor: Color(0xFF9785BA),
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/signup-name');
+                            },
+                          ),
+                        ],
                       ),
-                      Container(width: 120, height: 2, color: Color(0xFF868383)),
+                      SizedBox(height: 20),
+                      Button(
+                        text: '뒤로 가기',
+                        width: 320,
+                        height: 44,
+                        backgroundColor: Color(0xFF9785BA),
+                        textColor: Colors.white,
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                        },
+                      ),
                     ],
                   ),
                 ),
