@@ -8,16 +8,8 @@ class CreatorProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 하위 카테고리별 장인 리스트
-    final Map<String, List<String>> artisanMap = {
-      '금속공예': ['이철수', '박은영', '김금속', '최장인'],
-      '나전 칠기': ['정칠기', '이칠장'],
-      '도자기': ['한도예', '박도자'],
-      '매듭장': ['김매듭', '이매듭'],
-      '칠장': ['최칠장', '박칠장'],
-      '한지': ['최한지', '박한지'],
-    };
-    final List<String> artisans = artisanMap[subCategory] ?? [];
+    // TODO: API에서 artisan 리스트를 받아와서 사용하세요.
+    final List<String> artisans = [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
