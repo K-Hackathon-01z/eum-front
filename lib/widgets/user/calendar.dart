@@ -13,6 +13,8 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
+  DateTime focusedDay = DateTime.now();
+  DateTime? selectedDay;
   bool _dialogShown = false;
 
   @override
@@ -20,23 +22,96 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     super.didChangeDependencies();
     if (!_dialogShown) {
       _dialogShown = true;
-      Future.microtask(_pickDateTime);
+      Future.microtask(_showCalendarDialog);
     }
   }
 
-  Future<void> _pickDateTime() async {
-    final date = await showDatePicker(
+  Future<void> _showCalendarDialog() async {
+    final result = await showDialog<DateTime>(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              insetPadding: const EdgeInsets.all(16),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  width: 350,
+                  height: 420,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TableCalendar(
+                        firstDay: DateTime.now(),
+                        lastDay: DateTime.now().add(const Duration(days: 365)),
+                        focusedDay: focusedDay,
+                        selectedDayPredicate: (day) =>
+                            selectedDay != null &&
+                            day.year == selectedDay!.year &&
+                            day.month == selectedDay!.month &&
+                            day.day == selectedDay!.day,
+                        onDaySelected: (day, focus) {
+                          setState(() {
+                            selectedDay = day;
+                            focusedDay = focus;
+                          });
+                        },
+                        calendarStyle: CalendarStyle(
+                          todayDecoration: BoxDecoration(
+                            color: const Color(0xFF9785BA).withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          selectedDecoration: BoxDecoration(color: const Color(0xFF9785BA), shape: BoxShape.circle),
+                          selectedTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          todayTextStyle: const TextStyle(color: Color(0xFF9785BA), fontWeight: FontWeight.bold),
+                        ),
+                        headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF9785BA),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: selectedDay != null ? () => Navigator.of(context).pop(selectedDay) : null,
+                              child: const Text('확인', style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Color(0xFF9785BA)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('닫기', style: TextStyle(color: Color(0xFF9785BA))),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
     if (!mounted) return;
-    if (date == null) {
+    if (result == null) {
       Navigator.of(context).pop();
       return;
     }
-    await _showConfirmDialog(date);
+    await _showConfirmDialog(result);
   }
 
   Future<void> _showConfirmDialog(DateTime date) async {
