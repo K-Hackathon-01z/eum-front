@@ -3,7 +3,6 @@ import '../../widgets/user/button.dart';
 import '../../widgets/user/popup.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-/// Flutter 기본 제공 날짜/시간 선택 다이얼로그를 띄우는 위젯
 class CalendarWidget extends StatefulWidget {
   final void Function(DateTime? date)? onSelected;
   const CalendarWidget({super.key, this.onSelected});
@@ -41,9 +40,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 padding: const EdgeInsets.all(16.0),
                 child: SizedBox(
                   width: 350,
-                  height: 420,
+                  height: 460,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       TableCalendar(
                         firstDay: DateTime.now(),
@@ -72,12 +71,13 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
                       ),
                       const SizedBox(height: 16),
+                      Spacer(),
                       Row(
                         children: [
                           Expanded(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF9785BA),
+                                backgroundColor: selectedDay != null ? const Color(0xFF9785BA) : Colors.grey.shade300,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
                               onPressed: selectedDay != null ? () => Navigator.of(context).pop(selectedDay) : null,
