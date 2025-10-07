@@ -45,9 +45,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# ios
-ios/Flutter/Generated.xcconfig
+# Flutter/iOS auto-generated files
 ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_lldb_helper.py
+ios/Flutter/ephemeral/
+ios/Flutter/GeneratedPluginRegistrant.*
+ios/Runner/GeneratedPluginRegistrant.*
 
 # 그 밖의 여러 추천 제외 항목들
 Thumbs.db
