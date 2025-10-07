@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../widgets/user/button.dart';
 import '../../widgets/user/popup.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
-/// Flutter 기본 제공 날짜/시간 선택 다이얼로그를 띄우는 위젯
 class CalendarWidget extends StatefulWidget {
-  final void Function(DateTime? date, TimeOfDay? time)? onSelected;
+  final void Function(DateTime? date)? onSelected;
   const CalendarWidget({super.key, this.onSelected});
 
   @override
@@ -12,6 +13,9 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
+  DateTime focusedDay = DateTime.now();
+  DateTime? selectedDay;
+  DateTime? selectedTime;
   bool _dialogShown = false;
 
   @override
@@ -19,48 +23,226 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     super.didChangeDependencies();
     if (!_dialogShown) {
       _dialogShown = true;
-      Future.microtask(_pickDateTime);
+      Future.microtask(_showCalendarDialog);
     }
   }
 
-  Future<void> _pickDateTime() async {
-    final date = await showDatePicker(
+  Future<void> _showCalendarDialog() async {
+    final result = await showDialog<DateTime>(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              insetPadding: const EdgeInsets.all(16),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SizedBox(
+                  width: 350,
+                  height: 460,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      TableCalendar(
+                        locale: 'ko_KR',
+                        firstDay: DateTime.now(),
+                        lastDay: DateTime.now().add(const Duration(days: 365)),
+                        focusedDay: focusedDay,
+                        selectedDayPredicate: (day) =>
+                            selectedDay != null &&
+                            day.year == selectedDay!.year &&
+                            day.month == selectedDay!.month &&
+                            day.day == selectedDay!.day,
+                        onDaySelected: (day, focus) {
+                          setState(() {
+                            selectedDay = day;
+                            focusedDay = focus;
+                          });
+                        },
+                        calendarStyle: CalendarStyle(
+                          todayDecoration: BoxDecoration(
+                            color: const Color(0xFF9785BA).withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          selectedDecoration: BoxDecoration(color: const Color(0xFF9785BA), shape: BoxShape.circle),
+                          selectedTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          todayTextStyle: const TextStyle(color: Color(0xFF9785BA), fontWeight: FontWeight.bold),
+                        ),
+                        headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: selectedDay != null ? const Color(0xFF9785BA) : Colors.grey.shade300,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: selectedDay != null
+                                  ? () async {
+                                      // 시간 선택 모달 오픈
+                                      DateTime pickedTime = DateTime.now();
+                                      final selectedDateTime = await showDialog<DateTime>(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) {
+                                          return StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return Dialog(
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                                insetPadding: const EdgeInsets.all(16),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child: SizedBox(
+                                                    width: 320,
+                                                    height: 280,
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      children: [
+                                                        const Text(
+                                                          '시간 선택',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 24,
+                                                            color: Color(0xFF9785BA),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(height: 8),
+                                                        if (selectedDay != null)
+                                                          Text(
+                                                            '${selectedDay!.year}년 ${selectedDay!.month}월 ${selectedDay!.day}일',
+                                                            style: const TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors.black87,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        const SizedBox(height: 8),
+                                                        TimePickerSpinner(
+                                                          is24HourMode: false,
+                                                          normalTextStyle: const TextStyle(
+                                                            fontSize: 20,
+                                                            color: Colors.black87,
+                                                          ),
+                                                          highlightedTextStyle: const TextStyle(
+                                                            fontSize: 28,
+                                                            color: Color(0xFF9785BA),
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                          spacing: 60,
+                                                          itemHeight: 50,
+                                                          isShowSeconds: false,
+                                                          onTimeChange: (time) {
+                                                            setState(() {
+                                                              pickedTime = time;
+                                                            });
+                                                          },
+                                                        ),
+                                                        const Spacer(),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: const Color(0xFF9785BA),
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(8),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  final resultDateTime = DateTime(
+                                                                    selectedDay!.year,
+                                                                    selectedDay!.month,
+                                                                    selectedDay!.day,
+                                                                    pickedTime.hour,
+                                                                    pickedTime.minute,
+                                                                  );
+                                                                  Navigator.of(context).pop(resultDateTime);
+                                                                },
+                                                                child: const Text(
+                                                                  '확인',
+                                                                  style: TextStyle(color: Colors.white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(width: 16),
+                                                            Expanded(
+                                                              child: OutlinedButton(
+                                                                style: OutlinedButton.styleFrom(
+                                                                  side: const BorderSide(color: Color(0xFF9785BA)),
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(8),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () => Navigator.of(context).pop(),
+                                                                child: const Text(
+                                                                  '닫기',
+                                                                  style: TextStyle(color: Color(0xFF9785BA)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                      if (selectedDateTime != null) {
+                                        Navigator.of(context).pop(selectedDateTime);
+                                      }
+                                    }
+                                  : null,
+                              child: const Text('확인', style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Color(0xFF9785BA)),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('닫기', style: TextStyle(color: Color(0xFF9785BA))),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
     if (!mounted) return;
-    if (date == null) {
+    if (result != null) {
+      await _showConfirmDialog(result);
+    } else {
       Navigator.of(context).pop();
-      return;
     }
-    // Material input 방식 시간 선택
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
-    );
-    if (!mounted) return;
-    if (time == null) {
-      Navigator.of(context).pop();
-      return;
-    }
-    // 30분 단위로 반올림
-    final roundedMinute = (time.minute < 15) ? 0 : (time.minute < 45 ? 30 : 0);
-    final roundedHour = (time.minute < 45) ? time.hour : (time.hour + 1) % 24;
-    final roundedTime = TimeOfDay(hour: roundedHour, minute: roundedMinute);
-    await _showConfirmDialog(date, roundedTime);
   }
 
-  Future<void> _showConfirmDialog(DateTime date, TimeOfDay time) async {
+  Future<void> _showConfirmDialog(DateTime date) async {
     final result = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         final dateStr = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
-        final timeStr = time.format(context);
         return AlertDialog(
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('예약 정보 확인', style: TextStyle(fontWeight: FontWeight.bold)),
           content: Column(
@@ -74,12 +256,15 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   Text(dateStr, style: const TextStyle(fontSize: 16)),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   const Icon(Icons.access_time, size: 20, color: Colors.deepPurple),
                   const SizedBox(width: 8),
-                  Text(timeStr, style: const TextStyle(fontSize: 16)),
+                  Text(
+                    '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} ${date.hour < 12 ? 'AM' : 'PM'}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
                 ],
               ),
             ],
@@ -114,7 +299,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     );
     if (!mounted) return;
     if (result == true) {
-      widget.onSelected?.call(date, time);
+      widget.onSelected?.call(date);
       // 예약 성공 팝업 표시
       showDialog(
         context: context,

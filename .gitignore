@@ -45,6 +45,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# ios
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+
 # 그 밖의 여러 추천 제외 항목들
 Thumbs.db
 .idea/libraries/
