@@ -12,12 +12,7 @@ class ClassesPage extends StatefulWidget {
 class _ClassesPageState extends State<ClassesPage> {
   final List<_ClassItem> _classes = [
     // TODO: API 연동 시 실제 클래스 목록 데이터로 대체 (현재 더미 데이터)
-    _ClassItem(
-      '목공 기초 — 선반 만들기',
-      DateTime.now().add(const Duration(days: 2)),
-      6,
-      2,
-    ),
+    _ClassItem('목공 기초 — 선반 만들기',DateTime.now().add(const Duration(days: 2)),6,2,),
     _ClassItem('도마 만들기', DateTime.now().add(const Duration(days: 7)), 8, 5),
   ];
 
