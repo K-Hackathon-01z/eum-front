@@ -156,9 +156,7 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
       skillId: 1,
       email: _emailCtl.text.trim(),
       name: _nameCtl.text.trim(),
-      photoUrl: _photoUrlCtl.text.trim().isEmpty
-          ? 'string'
-          : _photoUrlCtl.text.trim(),
+      photoUrl: 'string',
       mainWorks: _mainWorksCtl.text.trim(),
       biography: _bioCtl.text.trim(),
     );
@@ -325,14 +323,6 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     maxLength: 6,
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: _photoUrlCtl,
-                    decoration: const InputDecoration(
-                      labelText: '사진 URL (문자열)',
-                      border: OutlineInputBorder(),
-                    ),
                   ),
                   const SizedBox(height: 12),
                   TextField(
