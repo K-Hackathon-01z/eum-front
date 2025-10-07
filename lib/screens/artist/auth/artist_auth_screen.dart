@@ -150,7 +150,7 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
           elevation: 0,
-          title: const Text('아티스트 인증'),
+          title: const Text('작인·작가 인증'),
           centerTitle: true,
           bottom: const TabBar(
             tabs: [
