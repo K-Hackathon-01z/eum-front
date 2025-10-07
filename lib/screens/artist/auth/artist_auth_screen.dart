@@ -6,6 +6,8 @@ import '../../../widgets/user/popup.dart';
 import '../../../services/artist/auth_service.dart';
 import '../../../models/artist/signup_request.dart';
 import '../../../providers/auth_provider.dart';
+import 'package:eum_demo/providers/artist_provider.dart';
+import 'package:eum_demo/models/artist/artist.dart';
 
 // 아티스트 인증 화면 (로그인/회원가입 탭)
 class ArtistAuthScreen extends StatefulWidget {
@@ -88,6 +90,27 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
     );
   }
 
+  Future<void> _loadArtistAndGo(String email) async {
+    try {
+      final Artist artist = await _service.getByEmail(email);
+      if (!mounted) return;
+      Provider.of<ArtistProvider>(context, listen: false).setCurrent(artist);
+      Navigator.pushReplacementNamed(context, '/artist-home');
+    } catch (e) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (_) => CommonPopup(
+          icon: Icons.warning_amber_rounded,
+          title: '로그인 실패',
+          message: '해당 장인이 존재하지 않습니다',
+          button1Text: '확인',
+          onButtonFirstPressed: () => Navigator.of(context).pop(),
+        ),
+      );
+    }
+  }
+
   Future<void> _signup() async {
     // 유효성 검사
     final nameErr = Validators.validateName(_nameCtl.text.trim());
@@ -166,19 +189,7 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
       final ok = await _service.signup(req);
       if (!mounted) return;
       if (ok) {
-        showDialog(
-          context: context,
-          builder: (_) => CommonPopup(
-            icon: Icons.check_circle_outline,
-            title: '가입 완료',
-            message: '아티스트 회원가입이 완료되었습니다.',
-            button1Text: '확인',
-            onButtonFirstPressed: () {
-              Navigator.of(context).pop();
-              Navigator.pushReplacementNamed(context, '/artist-home');
-            },
-          ),
-        );
+        await _loadArtistAndGo(_emailCtl.text.trim()); // 가입 후 프로필 적재
       } else {
         showDialog(
           context: context,
@@ -208,7 +219,6 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
   }
 
   Future<void> _login() async {
-    // 로그인 API가 아직 없어, 이메일 형식만 확인 후 홈으로 이동 처리
     final emailErr = Validators.validateEmail(_loginEmailCtl.text.trim());
     if (emailErr != null) {
       showDialog(
@@ -223,12 +233,12 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
       );
       return;
     }
-    // 필요 시 AuthProvider 등에 저장 (사용자 플로우와 동일하게 형태만 맞춤)
+    // 사용자 AuthProvider 이메일 저장 유지
     Provider.of<AuthProvider>(
       context,
       listen: false,
     ).setEmail(_loginEmailCtl.text.trim());
-    Navigator.pushReplacementNamed(context, '/artist-home');
+    await _loadArtistAndGo(_loginEmailCtl.text.trim()); // 로그인 시 프로필 적재
   }
 
   @override
