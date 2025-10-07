@@ -47,6 +47,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       TableCalendar(
+                        locale: 'ko_KR',
                         firstDay: DateTime.now(),
                         lastDay: DateTime.now().add(const Duration(days: 365)),
                         focusedDay: focusedDay,
@@ -99,7 +100,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                                   padding: const EdgeInsets.all(16.0),
                                                   child: SizedBox(
                                                     width: 320,
-                                                    height: 260,
+                                                    height: 280,
                                                     child: Column(
                                                       mainAxisSize: MainAxisSize.max,
                                                       children: [
@@ -107,23 +108,34 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                                           '시간 선택',
                                                           style: TextStyle(
                                                             fontWeight: FontWeight.bold,
-                                                            fontSize: 16,
+                                                            fontSize: 24,
                                                             color: Color(0xFF9785BA),
                                                           ),
                                                         ),
                                                         const SizedBox(height: 8),
+                                                        if (selectedDay != null)
+                                                          Text(
+                                                            '${selectedDay!.year}년 ${selectedDay!.month}월 ${selectedDay!.day}일',
+                                                            style: const TextStyle(
+                                                              fontSize: 16,
+                                                              color: Colors.black87,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ),
+                                                        const SizedBox(height: 8),
                                                         TimePickerSpinner(
                                                           is24HourMode: false,
                                                           normalTextStyle: const TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors.black54,
+                                                            fontSize: 20,
+                                                            color: Colors.black87,
                                                           ),
                                                           highlightedTextStyle: const TextStyle(
-                                                            fontSize: 18,
+                                                            fontSize: 28,
                                                             color: Color(0xFF9785BA),
+                                                            fontWeight: FontWeight.bold,
                                                           ),
-                                                          spacing: 30,
-                                                          itemHeight: 30,
+                                                          spacing: 60,
+                                                          itemHeight: 50,
                                                           isShowSeconds: false,
                                                           onTimeChange: (time) {
                                                             setState(() {
@@ -216,11 +228,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       },
     );
     if (!mounted) return;
-    if (result == null) {
+    if (result != null) {
+      await _showConfirmDialog(result);
+    } else {
       Navigator.of(context).pop();
-      return;
     }
-    await _showConfirmDialog(result);
   }
 
   Future<void> _showConfirmDialog(DateTime date) async {
@@ -230,6 +242,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       builder: (context) {
         final dateStr = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
         return AlertDialog(
+          backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('예약 정보 확인', style: TextStyle(fontWeight: FontWeight.bold)),
           content: Column(
@@ -241,6 +254,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   const Icon(Icons.calendar_today, size: 20, color: Colors.deepPurple),
                   const SizedBox(width: 8),
                   Text(dateStr, style: const TextStyle(fontSize: 16)),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(Icons.access_time, size: 20, color: Colors.deepPurple),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')} ${date.hour < 12 ? 'AM' : 'PM'}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
                 ],
               ),
             ],
