@@ -233,19 +233,6 @@ class _ClassesPageState extends State<ClassesPage> {
                       Expanded(
                         child: Semantics(
                           button: true,
-                          label: '출석부 보기',
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // 출석부 보기 기능 구현 필요
-                            },
-                            child: const Text('출석부 보기'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Semantics(
-                          button: true,
                           label: '클래스 삭제',
                           child: ElevatedButton(
                             onPressed: () {
