@@ -25,6 +25,9 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
   final _photoUrlCtl = TextEditingController(text: 'string'); // 기본값 string
   final _mainWorksCtl = TextEditingController();
   final _bioCtl = TextEditingController();
+  // 추가: 인증 코드 입력 컨트롤러 + 전송 상태
+  final _codeCtl = TextEditingController();
+  bool _codeSent = false;
 
   bool _signingUp = false;
   final _service = ArtistAuthService();
@@ -37,7 +40,53 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
     _photoUrlCtl.dispose();
     _mainWorksCtl.dispose();
     _bioCtl.dispose();
+    _codeCtl.dispose(); // 추가
     super.dispose();
+  }
+
+  // 추가: 이메일 인증코드 전송
+  Future<void> _sendCode() async {
+    final emailErr = Validators.validateEmail(_emailCtl.text.trim());
+    if (emailErr != null) {
+      showDialog(
+        context: context,
+        builder: (_) => CommonPopup(
+          icon: Icons.warning_amber_rounded,
+          title: '입력 오류',
+          message: emailErr,
+          button1Text: '확인',
+          onButtonFirstPressed: () => Navigator.of(context).pop(),
+        ),
+      );
+      return;
+    }
+    final auth = Provider.of<AuthProvider>(context, listen: false);
+    await auth.requestEmailCode(_emailCtl.text.trim());
+    if (!mounted) return;
+
+    if (auth.error != null) {
+      showDialog(
+        context: context,
+        builder: (_) => CommonPopup(
+          icon: Icons.warning_amber_rounded,
+          title: '오류',
+          message: auth.error!,
+          button1Text: '확인',
+          onButtonFirstPressed: () => Navigator.of(context).pop(),
+        ),
+      );
+      return;
+    }
+    setState(() => _codeSent = true);
+    showDialog(
+      context: context,
+      builder: (_) => const CommonPopup(
+        icon: Icons.check_circle_outline,
+        title: '인증코드 발송',
+        message: '이메일로 인증코드를 전송했습니다.',
+        button1Text: '확인',
+      ),
+    );
   }
 
   Future<void> _signup() async {
@@ -51,6 +100,51 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
           icon: Icons.warning_amber_rounded,
           title: '입력 오류',
           message: nameErr ?? emailErr!,
+          button1Text: '확인',
+          onButtonFirstPressed: () => Navigator.of(context).pop(),
+        ),
+      );
+      return;
+    }
+    if (!_codeSent) {
+      showDialog(
+        context: context,
+        builder: (_) => const CommonPopup(
+          icon: Icons.info_outline,
+          title: '인증 필요',
+          message: '먼저 인증코드를 전송하고 인증을 완료해주세요.',
+          button1Text: '확인',
+        ),
+      );
+      return;
+    }
+    final codeErr = Validators.validateAuthCode(_codeCtl.text.trim());
+    if (codeErr != null) {
+      showDialog(
+        context: context,
+        builder: (_) => CommonPopup(
+          icon: Icons.warning_amber_rounded,
+          title: '입력 오류',
+          message: codeErr,
+          button1Text: '확인',
+          onButtonFirstPressed: () => Navigator.of(context).pop(),
+        ),
+      );
+      return;
+    }
+
+    // 이메일 인증 확인
+    final auth = Provider.of<AuthProvider>(context, listen: false);
+    await auth.confirmEmailCode(_emailCtl.text.trim(), _codeCtl.text.trim());
+    if (!mounted) return;
+
+    if (auth.error != null || !auth.emailConfirmed) {
+      showDialog(
+        context: context,
+        builder: (_) => CommonPopup(
+          icon: Icons.warning_amber_rounded,
+          title: '인증 실패',
+          message: auth.error ?? '이메일 인증에 실패했습니다. 인증코드를 확인해주세요.',
           button1Text: '확인',
           onButtonFirstPressed: () => Navigator.of(context).pop(),
         ),
@@ -91,12 +185,11 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
       } else {
         showDialog(
           context: context,
-          builder: (_) => CommonPopup(
+          builder: (_) => const CommonPopup(
             icon: Icons.warning_amber_rounded,
             title: '가입 실패',
             message: '서버에서 가입 처리에 실패했습니다.',
             button1Text: '확인',
-            onButtonFirstPressed: () => Navigator.of(context).pop(),
           ),
         );
       }
@@ -206,6 +299,33 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                      width: 160,
+                      height: 40,
+                      child: Button(
+                        text: _codeSent ? '인증코드 재전송' : '인증코드 전송',
+                        width: 160,
+                        height: 40,
+                        textColor: Colors.white,
+                        backgroundColor: const Color(0xFF9785BA),
+                        onPressed: _sendCode,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _codeCtl,
+                    decoration: const InputDecoration(
+                      labelText: '인증코드',
+                      border: OutlineInputBorder(),
+                    ),
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    maxLength: 6,
                   ),
                   const SizedBox(height: 12),
                   TextField(
