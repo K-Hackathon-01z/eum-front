@@ -73,12 +73,12 @@ class DashboardPage extends StatelessWidget {
         ], highContrast),
 
         _section(context, '수익 요약', [
-          // TODO: API 연동 시 실제 정산/매출 데이터로 대체 (더미 데이터)
+          // API 연동 시 실제 정산/매출 데이터로 대체 (더미 데이터)
           _row('이번 주 예상 정산', '₩ 0'),
           _row('이번 달 매출', '₩ 0'),
           const SizedBox(height: 8),
           ElevatedButton(onPressed: () {
-            // TODO: 정산 내역 보기 기능 구현
+            // 정산 내역 보기 기능 구현
           }, child: const Text('정산 내역 보기')),
         ], highContrast),
 
