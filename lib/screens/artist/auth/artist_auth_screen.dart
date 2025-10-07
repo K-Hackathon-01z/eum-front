@@ -310,7 +310,7 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
                         width: 160,
                         height: 40,
                         textColor: Colors.white,
-                        backgroundColor: const Color(0xFF9785BA),
+                        backgroundColor: const Color(0xFF6D5BD0), // 통일
                         onPressed: _sendCode,
                       ),
                     ),
