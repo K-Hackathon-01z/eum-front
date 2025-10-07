@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../widgets/user/button.dart';
 import '../../widgets/user/popup.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 /// Flutter 기본 제공 날짜/시간 선택 다이얼로그를 띄우는 위젯
 class CalendarWidget extends StatefulWidget {
-  final void Function(DateTime? date, TimeOfDay? time)? onSelected;
+  final void Function(DateTime? date)? onSelected;
   const CalendarWidget({super.key, this.onSelected});
 
   @override
@@ -35,31 +36,15 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       Navigator.of(context).pop();
       return;
     }
-    // Material input 방식 시간 선택
-    final time = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
-    );
-    if (!mounted) return;
-    if (time == null) {
-      Navigator.of(context).pop();
-      return;
-    }
-    // 30분 단위로 반올림
-    final roundedMinute = (time.minute < 15) ? 0 : (time.minute < 45 ? 30 : 0);
-    final roundedHour = (time.minute < 45) ? time.hour : (time.hour + 1) % 24;
-    final roundedTime = TimeOfDay(hour: roundedHour, minute: roundedMinute);
-    await _showConfirmDialog(date, roundedTime);
+    await _showConfirmDialog(date);
   }
 
-  Future<void> _showConfirmDialog(DateTime date, TimeOfDay time) async {
+  Future<void> _showConfirmDialog(DateTime date) async {
     final result = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) {
         final dateStr = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
-        final timeStr = time.format(context);
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('예약 정보 확인', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -72,14 +57,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   const Icon(Icons.calendar_today, size: 20, color: Colors.deepPurple),
                   const SizedBox(width: 8),
                   Text(dateStr, style: const TextStyle(fontSize: 16)),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  const Icon(Icons.access_time, size: 20, color: Colors.deepPurple),
-                  const SizedBox(width: 8),
-                  Text(timeStr, style: const TextStyle(fontSize: 16)),
                 ],
               ),
             ],
@@ -114,7 +91,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     );
     if (!mounted) return;
     if (result == true) {
-      widget.onSelected?.call(date, time);
+      widget.onSelected?.call(date);
       // 예약 성공 팝업 표시
       showDialog(
         context: context,

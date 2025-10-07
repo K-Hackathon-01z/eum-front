@@ -147,7 +147,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                         builder: (context) => Padding(
                           padding: MediaQuery.of(context).viewInsets,
                           child: CalendarWidget(
-                            onSelected: (date, time) {
+                            onSelected: (date) {
                               // 예약 처리 로직 추가 가능
                               Navigator.of(context).pop();
                             },
