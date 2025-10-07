@@ -25,7 +25,6 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
   final _photoUrlCtl = TextEditingController(text: 'string'); // 기본값 string
   final _mainWorksCtl = TextEditingController();
   final _bioCtl = TextEditingController();
-  // 추가: 인증 코드 입력 컨트롤러 + 전송 상태
   final _codeCtl = TextEditingController();
   bool _codeSent = false;
 
