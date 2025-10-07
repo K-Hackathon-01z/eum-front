@@ -50,7 +50,8 @@ class ArtistIntroScreen extends StatelessWidget {
                     backgroundColor: const Color(0xFF6D5BD0),
                     textColor: Colors.white,
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/artist-home');
+                      // 인증 모드로 넘어가기
+                       Navigator.pushReplacementNamed(context, '/artist-auth');
                     },
                   ),
                 ),
