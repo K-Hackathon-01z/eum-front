@@ -242,10 +242,6 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
                     onPressed: _signingUp ? null : _signup,
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'skillId는 1로 고정되어 전송됩니다.',
-                    style: TextStyle(color: Colors.grey),
-                  ),
                 ],
               ),
             ),
