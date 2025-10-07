@@ -28,8 +28,6 @@ class _ArtistShellScreenState extends State<ArtistShellScreen> {
             onPrimary: Colors.white,
             secondary: const Color(0xFFEBA0A0),
             onSecondary: Colors.white,
-            // background: Colors.white,
-            // onBackground: Colors.black,
             surface: Colors.white,
             onSurface: Colors.black,
           )
