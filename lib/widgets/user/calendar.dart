@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/user/button.dart';
 import '../../widgets/user/popup.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 
 class CalendarWidget extends StatefulWidget {
   final void Function(DateTime? date)? onSelected;
@@ -14,6 +15,7 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDay;
+  DateTime? selectedTime;
   bool _dialogShown = false;
 
   @override
@@ -70,7 +72,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         ),
                         headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
                       ),
-                      const SizedBox(height: 16),
                       Spacer(),
                       Row(
                         children: [
@@ -80,7 +81,115 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                 backgroundColor: selectedDay != null ? const Color(0xFF9785BA) : Colors.grey.shade300,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
-                              onPressed: selectedDay != null ? () => Navigator.of(context).pop(selectedDay) : null,
+                              onPressed: selectedDay != null
+                                  ? () async {
+                                      // 시간 선택 모달 오픈
+                                      DateTime pickedTime = DateTime.now();
+                                      final selectedDateTime = await showDialog<DateTime>(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (context) {
+                                          return StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return Dialog(
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                                insetPadding: const EdgeInsets.all(16),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(16.0),
+                                                  child: SizedBox(
+                                                    width: 320,
+                                                    height: 260,
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.max,
+                                                      children: [
+                                                        const Text(
+                                                          '시간 선택',
+                                                          style: TextStyle(
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 16,
+                                                            color: Color(0xFF9785BA),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(height: 8),
+                                                        TimePickerSpinner(
+                                                          is24HourMode: false,
+                                                          normalTextStyle: const TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors.black54,
+                                                          ),
+                                                          highlightedTextStyle: const TextStyle(
+                                                            fontSize: 18,
+                                                            color: Color(0xFF9785BA),
+                                                          ),
+                                                          spacing: 30,
+                                                          itemHeight: 30,
+                                                          isShowSeconds: false,
+                                                          onTimeChange: (time) {
+                                                            setState(() {
+                                                              pickedTime = time;
+                                                            });
+                                                          },
+                                                        ),
+                                                        const Spacer(),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: const Color(0xFF9785BA),
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(8),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  final resultDateTime = DateTime(
+                                                                    selectedDay!.year,
+                                                                    selectedDay!.month,
+                                                                    selectedDay!.day,
+                                                                    pickedTime.hour,
+                                                                    pickedTime.minute,
+                                                                  );
+                                                                  Navigator.of(context).pop(resultDateTime);
+                                                                },
+                                                                child: const Text(
+                                                                  '확인',
+                                                                  style: TextStyle(color: Colors.white),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            const SizedBox(width: 16),
+                                                            Expanded(
+                                                              child: OutlinedButton(
+                                                                style: OutlinedButton.styleFrom(
+                                                                  side: const BorderSide(color: Color(0xFF9785BA)),
+                                                                  shape: RoundedRectangleBorder(
+                                                                    borderRadius: BorderRadius.circular(8),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () => Navigator.of(context).pop(),
+                                                                child: const Text(
+                                                                  '닫기',
+                                                                  style: TextStyle(color: Color(0xFF9785BA)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                      if (selectedDateTime != null) {
+                                        Navigator.of(context).pop(selectedDateTime);
+                                      }
+                                    }
+                                  : null,
                               child: const Text('확인', style: TextStyle(color: Colors.white)),
                             ),
                           ),
