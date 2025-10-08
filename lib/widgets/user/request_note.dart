@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/creator_provider.dart';
+import '../../providers/send_note_provider.dart';
+import '../../models/note/send_note.dart';
 import 'button.dart';
 import 'popup.dart';
 
 class RequestNote extends StatelessWidget {
   final String nickname;
-  final ValueChanged<String>? onSend;
-
-  const RequestNote({super.key, this.nickname = '닉네임', this.onSend});
+  final String artisanEmail;
+  final int userId;
+  const RequestNote({super.key, this.nickname = '닉네임', required this.artisanEmail, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -30,50 +34,75 @@ class RequestNote extends StatelessWidget {
               top: cardHeight * 0.86,
               child: Button(
                 text: '메세지 전송',
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CommonPopup(
-                      showCloseIcon: false,
-                      icon: Icons.send,
-                      iconColor: const Color(0XFF9785BA),
-                      title: "매칭 신청할까요?",
-                      message: "매칭 신청 후에는 삭제가 불가능합니다.",
-                      button1Text: "전송",
-                      onButtonFirstPressed: () {
-                        if (onSend != null) onSend!(controller.text);
-                        Navigator.of(context).pop(); // 첫 번째 팝업 닫기
-                        Navigator.of(context).pop(); // RequestNote 닫기
-                        // 매칭 신청 완료 팝업 띄우기
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) => CommonPopup(
-                            showCloseIcon: true,
-                            icon: Icons.check_circle_outline,
-                            iconColor: const Color(0xFF9785BA),
-                            title: "매칭 신청 완료!",
-                            message: "매칭 신청이 성공적으로 완료되었습니다.",
-                            button1Text: "홈 바로가기",
-                            onButtonFirstPressed: () {
-                              Navigator.of(context).pop(); // 완료 팝업 닫기
-                              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                            },
-                            button2Text: "마이페이지 바로가기",
-                            onButtonSecondPressed: () {
-                              Navigator.of(context).pop(); // 완료 팝업 닫기
-                              final navigator = Navigator.of(context);
-                              navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
-                            },
-                          ),
-                        );
-                      },
-                      button2Text: "취소",
-                      onButtonSecondPressed: () {
-                        Navigator.of(context).pop(); // 팝업 닫기
-                      },
-                    ),
+                onPressed: () async {
+                  final creatorProvider = Provider.of<CreatorProvider>(context, listen: false);
+                  final sendNoteProvider = Provider.of<SendNoteProvider>(context, listen: false);
+                  await creatorProvider.fetchCreatorByEmail(artisanEmail);
+                  final creator = creatorProvider.creatorByEmail;
+                  if (creator == null) {
+                    // 에러 처리: 장인 정보 없음
+                    showDialog(
+                      context: context,
+                      builder: (context) => CommonPopup(
+                        showCloseIcon: true,
+                        icon: Icons.error,
+                        iconColor: Colors.red,
+                        title: "장인 정보 조회 실패",
+                        message: "장인 정보를 찾을 수 없습니다.",
+                        button1Text: "닫기",
+                        onButtonFirstPressed: () => Navigator.of(context).pop(),
+                      ),
+                    );
+                    return;
+                  }
+                  // SendNoteRequest 생성 및 전송
+                  final noteRequest = SendNote(
+                    userId: userId,
+                    artisanId: creator.id,
+                    message: controller.text,
+                    isAnonymous: false, // 익명 여부는 필요에 따라 변경
                   );
+                  await sendNoteProvider.sendNote(noteRequest);
+                  // 결과에 따라 팝업 처리
+                  if (sendNoteProvider.success) {
+                    Navigator.of(context).pop(); // 첫 번째 팝업 닫기
+                    Navigator.of(context).pop(); // RequestNote 닫기
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => CommonPopup(
+                        showCloseIcon: true,
+                        icon: Icons.check_circle_outline,
+                        iconColor: const Color(0xFF9785BA),
+                        title: "매칭 신청 완료!",
+                        message: "매칭 신청이 성공적으로 완료되었습니다.",
+                        button1Text: "홈 바로가기",
+                        onButtonFirstPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                        },
+                        button2Text: "마이페이지 바로가기",
+                        onButtonSecondPressed: () {
+                          Navigator.of(context).pop();
+                          final navigator = Navigator.of(context);
+                          navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
+                        },
+                      ),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CommonPopup(
+                        showCloseIcon: true,
+                        icon: Icons.error,
+                        iconColor: Colors.red,
+                        title: "전송 실패",
+                        message: sendNoteProvider.error ?? "쪽지 전송에 실패했습니다.",
+                        button1Text: "닫기",
+                        onButtonFirstPressed: () => Navigator.of(context).pop(),
+                      ),
+                    );
+                  }
                 },
                 width: cardWidth * 0.68,
                 height: 48,

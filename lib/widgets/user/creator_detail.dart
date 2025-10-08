@@ -109,12 +109,13 @@ class CreatorDetail extends StatelessWidget {
                   text: '매칭 신청하기',
                   onPressed: () {
                     final nickname = Provider.of<AuthProvider>(context, listen: false).name ?? '닉네임';
+                    final userId = Provider.of<AuthProvider>(context, listen: false).id ?? 0;
                     showDialog(
                       context: context,
                       builder: (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         insetPadding: EdgeInsets.zero,
-                        child: RequestNote(nickname: nickname),
+                        child: RequestNote(nickname: nickname, artisanEmail: email, userId: userId),
                       ),
                     );
                   },
