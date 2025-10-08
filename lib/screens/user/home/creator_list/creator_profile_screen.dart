@@ -8,8 +8,8 @@ class CreatorProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: API에서 artisan 리스트를 받아와서 사용하세요.
-    final List<String> artisans = [];
+    // TODO: API에서 creator 리스트를 받아와서 사용하세요.
+    final List<String> creators = [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
@@ -57,9 +57,9 @@ class CreatorProfileScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        children: artisans.isEmpty
+        children: creators.isEmpty
             ? [const Center(child: Text('해당 분야의 장인 정보가 없습니다', style: TextStyle(fontSize: 16)))]
-            : artisans.map((name) => CreatorList(title: name)).toList(),
+            : creators.map((name) => CreatorList(title: name)).toList(),
       ),
     );
   }
