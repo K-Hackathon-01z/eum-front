@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../models/creator/artisan.dart';
-import '../../services/creator/artisan_service.dart';
+import '../models/creator/creator.dart';
+import '../services/creator/creator_service.dart';
 
 class ArtisanProvider extends ChangeNotifier {
   final ArtisanService _service;
-  List<Artisan> _artisans = [];
+  List<Creator> _artisans = [];
   bool _isLoading = false;
   String? _error;
 
   ArtisanProvider({required ArtisanService service}) : _service = service;
 
-  List<Artisan> get artisans => _artisans;
+  List<Creator> get artisans => _artisans;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
