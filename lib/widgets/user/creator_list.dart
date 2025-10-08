@@ -3,6 +3,7 @@ import 'creator_detail.dart';
 
 class CreatorList extends StatelessWidget {
   final String title;
+  final String email;
   final String skill;
   final String works;
   final String bio;
@@ -12,6 +13,7 @@ class CreatorList extends StatelessWidget {
   const CreatorList({
     super.key,
     this.title = '이름',
+    this.email = '이메일',
     this.skill = '기술',
     this.works = '작품',
     this.bio = '약력',
@@ -27,7 +29,7 @@ class CreatorList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => CreatorDetail(name: title, skill: skill, works: works, bio: bio),
+              builder: (_) => CreatorDetail(name: title, email: email, skill: skill, works: works, bio: bio),
             );
           },
       child: Container(

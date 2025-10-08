@@ -9,6 +9,7 @@ class CreatorDetail extends StatelessWidget {
   final String skill;
   final String works;
   final String bio;
+  final String email;
   final Widget? image;
   final VoidCallback? onMatch;
 
@@ -18,6 +19,7 @@ class CreatorDetail extends StatelessWidget {
     required this.skill,
     required this.works,
     required this.bio,
+    required this.email,
     this.image,
     this.onMatch,
   });
@@ -89,7 +91,7 @@ class CreatorDetail extends StatelessWidget {
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.23,
                   child: Text(
-                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio',
+                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio\n\n이메일 : $email',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,

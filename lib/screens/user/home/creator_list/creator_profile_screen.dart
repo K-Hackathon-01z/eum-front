@@ -84,7 +84,13 @@ class _CreatorProfileScreenState extends State<CreatorProfileScreen> {
             ? [const Center(child: Text('해당 분야의 장인 정보가 없습니다', style: TextStyle(fontSize: 16)))]
             : filteredCreators
                   .map(
-                    (c) => CreatorList(title: c.name, skill: widget.subCategory, works: c.mainWorks, bio: c.biography),
+                    (c) => CreatorList(
+                      title: c.name,
+                      email: c.email,
+                      skill: widget.subCategory,
+                      works: c.mainWorks,
+                      bio: c.biography,
+                    ),
                   )
                   .toList(),
       ),
