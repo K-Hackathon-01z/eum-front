@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:eum_demo/services/artist/class_service.dart';
 import 'package:eum_demo/models/artist/class_request.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({super.key});
@@ -12,7 +14,12 @@ class ClassesPage extends StatefulWidget {
 class _ClassesPageState extends State<ClassesPage> {
   final List<_ClassItem> _classes = [
     // TODO: API 연동 시 실제 클래스 목록 데이터로 대체 (현재 더미 데이터)
-    _ClassItem('목공 기초 — 선반 만들기',DateTime.now().add(const Duration(days: 2)),6,2,),
+    _ClassItem(
+      '목공 기초 — 선반 만들기',
+      DateTime.now().add(const Duration(days: 2)),
+      6,
+      2,
+    ),
     _ClassItem('도마 만들기', DateTime.now().add(const Duration(days: 7)), 8, 5),
   ];
 
@@ -27,156 +34,230 @@ class _ClassesPageState extends State<ClassesPage> {
 
     DateTime? date;
     int capacity = 6;
+    File? pickedImage;
+    bool uploading = false;
 
     await showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('클래스 추가'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextField(
-                  controller: titleCtl,
-                  decoration: const InputDecoration(
-                    labelText: '제목',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
+        return StatefulBuilder(
+          builder: (context, setLocal) {
+            return AlertDialog(
+              title: const Text('클래스 추가'),
+              content: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () async {
-                          final now = DateTime.now();
-                          final picked = await showDatePicker(
-                            context: context,
-                            initialDate: now.add(const Duration(days: 1)),
-                            firstDate: now,
-                            lastDate: now.add(const Duration(days: 365)),
-                          );
-                          if (picked != null) {
-                            date = picked;
-                            // ignore: use_build_context_synchronously
-                            (context as Element).markNeedsBuild();
-                          }
-                        },
-                        child: Text(
-                          date == null
-                              ? '날짜 선택'
-                              : '${date!.year}-${date!.month}-${date!.day}',
-                        ),
+                    TextField(
+                      controller: titleCtl,
+                      decoration: const InputDecoration(
+                        labelText: '제목',
+                        border: OutlineInputBorder(),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: DropdownButtonFormField<int>(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: '정원',
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              final now = DateTime.now();
+                              final picked = await showDatePicker(
+                                context: context,
+                                initialDate: now.add(const Duration(days: 1)),
+                                firstDate: now,
+                                lastDate: now.add(const Duration(days: 365)),
+                              );
+                              if (picked != null) {
+                                date = picked;
+                                (context as Element).markNeedsBuild();
+                              }
+                            },
+                            child: Text(
+                              date == null
+                                  ? '날짜 선택'
+                                  : '${date!.year}-${date!.month}-${date!.day}',
+                            ),
+                          ),
                         ),
-                        value: capacity,
-                        items: [4, 6, 8, 10, 12]
-                            .map(
-                              (e) => DropdownMenuItem(
-                                value: e,
-                                child: Text('$e명'),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (v) => capacity = v ?? capacity,
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: DropdownButtonFormField<int>(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: '정원',
+                            ),
+                            value: capacity,
+                            items: [4, 6, 8, 10, 12]
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text('$e명'),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (v) => capacity = v ?? capacity,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+
+                    // 이미지 선택/업로드
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            icon: const Icon(Icons.photo_library),
+                            label: const Text('사진 선택'),
+                            onPressed: () async {
+                              final x = await ImagePicker().pickImage(
+                                source: ImageSource.gallery,
+                                maxWidth: 2000,
+                              );
+                              if (x != null) {
+                                pickedImage = File(x.path);
+                                setLocal(() {});
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            icon: uploading
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Icon(Icons.cloud_upload),
+                            label: Text(uploading ? '업로드 중...' : '업로드'),
+                            onPressed: (pickedImage == null || uploading)
+                                ? null
+                                : () async {
+                                    try {
+                                      setLocal(() => uploading = true);
+                                      final url = await _classService
+                                          .uploadClassImage(pickedImage!);
+                                      photoUrlCtl.text = url; // 응답 URL 자동 채움
+                                      if (mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text('이미지 업로드 완료'),
+                                          ),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      if (mounted) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(content: Text('업로드 실패: $e')),
+                                        );
+                                      }
+                                    } finally {
+                                      setLocal(() => uploading = false);
+                                    }
+                                  },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    if (pickedImage != null)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          pickedImage!,
+                          height: 140,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: priceCtl,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: '가격(정수, 원)',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: locationCtl,
+                      decoration: const InputDecoration(
+                        labelText: '장소',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    TextField(
+                      controller: descCtl,
+                      maxLines: 3,
+                      decoration: const InputDecoration(
+                        labelText: '설명',
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: priceCtl,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: '가격(정수, 원)',
-                    border: OutlineInputBorder(),
-                  ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('취소'),
                 ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: locationCtl,
-                  decoration: const InputDecoration(
-                    labelText: '장소',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: photoUrlCtl,
-                  decoration: const InputDecoration(
-                    labelText: '사진 URL(문자열)',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                TextField(
-                  controller: descCtl,
-                  maxLines: 3,
-                  decoration: const InputDecoration(
-                    labelText: '설명',
-                    border: OutlineInputBorder(),
-                  ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (titleCtl.text.trim().isEmpty || date == null) return;
+                    final price = int.tryParse(priceCtl.text.trim());
+                    if (price == null || price <= 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('가격을 올바르게 입력하세요.')),
+                      );
+                      return;
+                    }
+                    final req = ArtistClassRequest(
+                      skillId: 1,
+                      artisanId: 1,
+                      title: titleCtl.text.trim(),
+                      photoUrl: photoUrlCtl.text.trim().isEmpty
+                          ? 'string'
+                          : photoUrlCtl.text.trim(),
+                      description: descCtl.text.trim(),
+                      price: price,
+                      location: locationCtl.text.trim(),
+                      capacity: capacity,
+                    );
+                    try {
+                      await _classService.createClass(req);
+                      if (!mounted) return;
+                      setState(
+                        () => _classes.add(
+                          _ClassItem(req.title, date!, req.capacity, 0),
+                        ),
+                      );
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('클래스를 등록했습니다.')),
+                      );
+                    } catch (e) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('등록 실패: $e')));
+                    }
+                  },
+                  child: const Text('추가'),
                 ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('취소'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (titleCtl.text.trim().isEmpty || date == null) return;
-                final price = int.tryParse(priceCtl.text.trim());
-                if (price == null || price <= 0) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('가격을 올바르게 입력하세요.')),
-                  );
-                  return;
-                }
-
-                final req = ArtistClassRequest(
-                  skillId: 1, // 고정
-                  artisanId: 1, // TODO: 실제 로그인한 아티스트 id로 교체
-                  title: titleCtl.text.trim(),
-                  photoUrl: photoUrlCtl.text.trim().isEmpty
-                      ? 'string'
-                      : photoUrlCtl.text.trim(),
-                  description: descCtl.text.trim(),
-                  price: price,
-                  location: locationCtl.text.trim(),
-                  capacity: capacity,
-                );
-
-                try {
-                  await _classService.createClass(req);
-                  if (!mounted) return;
-
-                  setState(() {
-                    _classes.add(_ClassItem(req.title, date!, req.capacity, 0));
-                  });
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(const SnackBar(content: Text('클래스를 등록했습니다.')));
-                } catch (e) {
-                  if (!mounted) return;
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('등록 실패: $e')));
-                }
-              },
-              child: const Text('추가'),
-            ),
-          ],
+            );
+          },
         );
       },
     );
