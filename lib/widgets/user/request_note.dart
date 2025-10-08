@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/creator_provider.dart';
 import '../../providers/send_note_provider.dart';
 import '../../models/note/send_note.dart';
+import '../../providers/sent_note_provider.dart';
 import 'button.dart';
 import 'popup.dart';
 
@@ -85,15 +86,16 @@ class _RequestNoteState extends State<RequestNote> {
 
                         await sendNoteProvider.sendNote(noteRequest);
 
-                        Navigator.of(context).pop(); // 첫 번째 팝업 닫기
-                        Navigator.of(context).pop(); // RequestNote 닫기
-
                         if (sendNoteProvider.success) {
+                          // 매칭 신청 내역 즉시 갱신
+                          final sentNoteProvider = Provider.of<SentNoteProvider>(context, listen: false);
+                          await sentNoteProvider.fetchSentNotes(widget.userId);
+
                           showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (context) => CommonPopup(
-                              showCloseIcon: true,
+                              showCloseIcon: false,
                               icon: Icons.check_circle_outline,
                               iconColor: const Color(0xFF9785BA),
                               title: "매칭 신청 완료!",
@@ -101,10 +103,12 @@ class _RequestNoteState extends State<RequestNote> {
                               button1Text: "홈 바로가기",
                               onButtonFirstPressed: () {
                                 Navigator.of(context).pop();
+                                Navigator.of(context).pop();
                                 Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                               },
                               button2Text: "마이페이지 바로가기",
                               onButtonSecondPressed: () {
+                                Navigator.of(context).pop();
                                 Navigator.of(context).pop();
                                 final navigator = Navigator.of(context);
                                 navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
@@ -225,7 +229,7 @@ class _RequestNoteState extends State<RequestNote> {
                         children: [
                           Expanded(
                             child: Text(
-                              '장인•작가님께 전달하고 싶은 메시지를\n입력해주세요. (300자 이내)',
+                              '장인•작가님께 전달하고 싶은 메시지를\n입력해주세요. (200자 이내)',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black54,
@@ -242,7 +246,7 @@ class _RequestNoteState extends State<RequestNote> {
                         child: SingleChildScrollView(
                           child: TextField(
                             controller: controller,
-                            maxLength: 300,
+                            maxLength: 200,
                             maxLines: 10,
                             decoration: InputDecoration(
                               hintText: '메시지를 입력하세요',

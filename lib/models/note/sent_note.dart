@@ -8,6 +8,7 @@ class SentNote {
   final String? senderName;
   final String? senderEmail;
   final int? senderAge;
+  final String? artisanName;
 
   SentNote({
     required this.id,
@@ -19,6 +20,7 @@ class SentNote {
     this.senderName,
     this.senderEmail,
     this.senderAge,
+    this.artisanName,
   });
 
   factory SentNote.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class SentNote {
       senderName: json['senderName'],
       senderEmail: json['senderEmail'],
       senderAge: json['senderAge'],
+      artisanName: json['artisanName'],
     );
   }
 }
