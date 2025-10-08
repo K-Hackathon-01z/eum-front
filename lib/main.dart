@@ -14,6 +14,7 @@ import 'providers/auth_provider.dart';
 import 'providers/creator_provider.dart';
 import 'providers/artist_provider.dart';
 import 'providers/artist_matching_request_provider.dart';
+import 'providers/sent_note_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => CreatorProvider()),
+        ChangeNotifierProvider(create: (_) => SentNoteProvider()),
         // artist 모드
         ChangeNotifierProvider(create: (_) => ArtistProvider()),
         ChangeNotifierProvider(create: (_) => MatchingRequestProvider()),
