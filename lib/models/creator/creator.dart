@@ -44,6 +44,7 @@ class Creator {
     }
   }
 
+  final int id;
   final int skillId;
   final String name;
   final String photoUrl;
@@ -52,6 +53,7 @@ class Creator {
   final String email;
 
   Creator({
+    required this.id,
     required this.skillId,
     required this.name,
     required this.photoUrl,
@@ -62,6 +64,7 @@ class Creator {
 
   factory Creator.fromJson(Map<String, dynamic> json) {
     return Creator(
+      id: json['id'],
       skillId: json['skillId'],
       name: json['name'],
       photoUrl: json['photoUrl'],

@@ -1,4 +1,5 @@
 class SentNote {
+  final int id;
   final bool isAnonymous;
   final String message;
   final String requestDate;
@@ -9,6 +10,7 @@ class SentNote {
   final int? senderAge;
 
   SentNote({
+    required this.id,
     required this.isAnonymous,
     required this.message,
     required this.requestDate,
@@ -21,6 +23,7 @@ class SentNote {
 
   factory SentNote.fromJson(Map<String, dynamic> json) {
     return SentNote(
+      id: json['id'],
       isAnonymous: json['isAnonymous'],
       message: json['message'],
       requestDate: json['requestDate'],
