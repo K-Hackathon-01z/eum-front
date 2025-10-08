@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import '../models/creator/creator.dart';
 import '../services/creator/creator_service.dart';
 
-class ArtisanProvider extends ChangeNotifier {
-  final ArtisanService _service;
-  List<Creator> _artisans = [];
+class CreatorProvider extends ChangeNotifier {
+  final CreatorService _service;
+  List<Creator> _creators = [];
   bool _isLoading = false;
   String? _error;
 
-  ArtisanProvider({required ArtisanService service}) : _service = service;
+  CreatorProvider({required CreatorService service}) : _service = service;
 
-  List<Creator> get artisans => _artisans;
+  List<Creator> get creators => _creators;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
-  Future<void> fetchAllArtisans() async {
+  Future<void> fetchAllCreators() async {
     _isLoading = true;
     _error = null;
     notifyListeners();
     try {
-      final data = await _service.fetchAllArtisans();
-      _artisans = data;
+      final data = await _service.fetchAllCreators();
+      _creators = data;
     } catch (e) {
       _error = e.toString();
     } finally {
