@@ -174,7 +174,7 @@ class ProfilePage extends StatelessWidget {
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('프로필 수정'),
         content: SingleChildScrollView(
           child: Column(
@@ -201,10 +201,14 @@ class ProfilePage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text('취소'),
           ),
           TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: const Color(0xFF6D5BD0),
+              foregroundColor: Colors.white,
+            ),
             onPressed: () async {
               final mainWorks = mainCtl.text.trim();
               final biography = bioCtl.text.trim();
@@ -214,41 +218,44 @@ class ProfilePage extends StatelessWidget {
                   mainWorks: mainWorks,
                   biography: biography,
                 );
-                // 전역 상태 갱신(photourl은 'string' 유지 정책)
+                // 전역 상태 갱신
                 context.read<ArtistProvider>().updateProfile(
                   mainWorks: mainWorks,
                   biography: biography,
                   photoUrl: 'string',
                 );
                 if (context.mounted) {
-                  Navigator.pop(context); // 수정 다이얼로그 닫기
+                  // 1) 수정 다이얼로그 닫기
+                  Navigator.pop(dialogContext);
+                  // 2) 완료 팝업 띄우기
                   showDialog(
                     context: context,
-                    builder: (_) => CommonPopup(
+                    builder: (popCtx) => CommonPopup(
                       icon: Icons.check_circle_outline,
                       title: '저장 완료',
                       message: '프로필이 수정되었습니다.',
                       button1Text: '확인',
-                      button1Color: Color(0xFF6D5BD0), // 확인 버튼 색 강조
-                      // onButtonFirstPressed: () => Navigator.pop(context), // 확인 누르면 팝업 닫기
+                      button1Color: Color(0xFF6D5BD0),
+                      onButtonFirstPressed: () =>
+                          Navigator.pop(popCtx), // 확인 시 팝업 닫기
                     ),
                   );
                 }
               } catch (e) {
                 if (!context.mounted) return;
                 showDialog(
-                  context: context,
-                  builder: (_) => CommonPopup(
+                  context: dialogContext,
+                  builder: (errCtx) => CommonPopup(
                     icon: Icons.warning_amber_rounded,
                     title: '오류',
                     message: '수정 실패: $e',
                     button1Text: '확인',
-                    onButtonFirstPressed: () => Navigator.of(context).pop(),
+                    onButtonFirstPressed: () => Navigator.pop(errCtx),
                   ),
                 );
               }
             },
-            child: const Text('저장'),
+            child: const Text('완료'),
           ),
         ],
       ),
