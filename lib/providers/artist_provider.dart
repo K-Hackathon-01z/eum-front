@@ -14,4 +14,18 @@ class ArtistProvider extends ChangeNotifier {
     _current = null;
     notifyListeners();
   }
+
+  void updateProfile({String? mainWorks, String? biography, String? photoUrl}) {
+    if (_current == null) return;
+    _current = Artist(
+      id: _current!.id,
+      skillId: _current!.skillId,
+      email: _current!.email,
+      name: _current!.name,
+      photoUrl: photoUrl ?? _current!.photoUrl,
+      mainWorks: mainWorks ?? _current!.mainWorks,
+      biography: biography ?? _current!.biography,
+    );
+    notifyListeners();
+  }
 }

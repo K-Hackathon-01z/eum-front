@@ -3,7 +3,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/artist_provider.dart';
 import 'package:eum_demo/providers/artist_matching_request_provider.dart';
-import 'package:eum_demo/widgets/user/popup.dart'; // 추가: 공용 다이얼로그
+import 'package:eum_demo/widgets/user/popup.dart';
+import 'package:eum_demo/services/artist/artist_info_service.dart';
 
 class ProfilePage extends StatelessWidget {
   final double textScale;
@@ -28,7 +29,6 @@ class ProfilePage extends StatelessWidget {
         _section('내 정보', [
           _row('이름', artist?.name ?? '-'),
           // 사진 URL은 표시/사용하지 않음
-          // _row('전문 분야', (artist?.skillId ?? 0).toString()),
           _row(
             '주요 작품',
             artist?.mainWorks.isNotEmpty == true ? artist!.mainWorks : '-',
@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           ElevatedButton(
-            onPressed: () => _todo(context),
+            onPressed: () => _openEditDialog(context), // 수정 다이얼로그
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF6D5BD0),
             ),
@@ -137,12 +137,6 @@ class ProfilePage extends StatelessWidget {
     ),
   );
 
-  void _todo(BuildContext context) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('API 연동이 필요한 기능입니다.')));
-  }
-
   // 추가: 로그아웃 확인 다이얼로그
   void _confirmLogout(BuildContext context) {
     showDialog(
@@ -168,5 +162,96 @@ class ProfilePage extends StatelessWidget {
     context.read<MatchingRequestProvider>().reset();
     // 초기 타이틀 스크린로 이동
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  void _openEditDialog(BuildContext context) {
+    final artist = context.read<ArtistProvider>().current;
+    if (artist == null) return;
+
+    final mainCtl = TextEditingController(text: artist.mainWorks);
+    final bioCtl = TextEditingController(text: artist.biography);
+    final service = ArtistService();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('프로필 수정'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: mainCtl,
+                decoration: const InputDecoration(
+                  labelText: '주요 작품',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: bioCtl,
+                maxLines: 4,
+                decoration: const InputDecoration(
+                  labelText: '약력',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final mainWorks = mainCtl.text.trim();
+              final biography = bioCtl.text.trim();
+              try {
+                await service.updateProfile(
+                  id: artist.id,
+                  mainWorks: mainWorks,
+                  biography: biography,
+                );
+                // 전역 상태 갱신(photourl은 'string' 유지 정책)
+                context.read<ArtistProvider>().updateProfile(
+                  mainWorks: mainWorks,
+                  biography: biography,
+                  photoUrl: 'string',
+                );
+                if (context.mounted) {
+                  Navigator.pop(context); // 수정 다이얼로그 닫기
+                  showDialog(
+                    context: context,
+                    builder: (_) => CommonPopup(
+                      icon: Icons.check_circle_outline,
+                      title: '저장 완료',
+                      message: '프로필이 수정되었습니다.',
+                      button1Text: '확인',
+                      button1Color: Color(0xFF6D5BD0), // 확인 버튼 색 강조
+                      // onButtonFirstPressed: () => Navigator.pop(context), // 확인 누르면 팝업 닫기
+                    ),
+                  );
+                }
+              } catch (e) {
+                if (!context.mounted) return;
+                showDialog(
+                  context: context,
+                  builder: (_) => CommonPopup(
+                    icon: Icons.warning_amber_rounded,
+                    title: '오류',
+                    message: '수정 실패: $e',
+                    button1Text: '확인',
+                    onButtonFirstPressed: () => Navigator.of(context).pop(),
+                  ),
+                );
+              }
+            },
+            child: const Text('저장'),
+          ),
+        ],
+      ),
+    );
   }
 }
