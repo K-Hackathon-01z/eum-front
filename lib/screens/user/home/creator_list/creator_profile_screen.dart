@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
 import '../../../../widgets/user/appbar.dart';
 import '../../../../widgets/user/creator_list.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/creator_provider.dart';
 
-class CreatorProfileScreen extends StatelessWidget {
+class CreatorProfileScreen extends StatefulWidget {
   final String subCategory;
   const CreatorProfileScreen({super.key, required this.subCategory});
 
   @override
+  State<CreatorProfileScreen> createState() => _CreatorProfileScreenState();
+}
+
+class _CreatorProfileScreenState extends State<CreatorProfileScreen> {
+  bool _fetched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // 최초 1회만 fetchAllCreators 호출
+    Future.microtask(() {
+      if (!_fetched) {
+        Provider.of<CreatorProvider>(context, listen: false).fetchAllCreators();
+        _fetched = true;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: API에서 creator 리스트를 받아와서 사용하세요.
-    final List<String> creators = [];
+    final creatorProvider = Provider.of<CreatorProvider>(context);
+    final filteredCreators = creatorProvider.creators
+        .where((c) => c.subCategory.trim() == widget.subCategory.trim())
+        .toList();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
       appBar: CustomAppBar(
-        title: '$subCategory 장인',
+        title: '${widget.subCategory} 장인',
         showBack: true,
         showHome: true,
         showSearch: true,
@@ -57,9 +80,13 @@ class CreatorProfileScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        children: creators.isEmpty
+        children: filteredCreators.isEmpty
             ? [const Center(child: Text('해당 분야의 장인 정보가 없습니다', style: TextStyle(fontSize: 16)))]
-            : creators.map((name) => CreatorList(title: name)).toList(),
+            : filteredCreators
+                  .map(
+                    (c) => CreatorList(title: c.name, skill: widget.subCategory, works: c.mainWorks, bio: c.biography),
+                  )
+                  .toList(),
       ),
     );
   }

@@ -3,12 +3,11 @@ import '../models/creator/creator.dart';
 import '../services/creator/creator_service.dart';
 
 class CreatorProvider extends ChangeNotifier {
-  final CreatorService _service;
   List<Creator> _creators = [];
   bool _isLoading = false;
   String? _error;
 
-  CreatorProvider({required CreatorService service}) : _service = service;
+  final CreatorService _service = CreatorService();
 
   List<Creator> get creators => _creators;
   bool get isLoading => _isLoading;

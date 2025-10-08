@@ -11,6 +11,7 @@ import 'routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/user_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/creator_provider.dart';
 import 'providers/artist_provider.dart';
 import 'providers/artist_matching_request_provider.dart';
 
@@ -27,6 +28,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MyInfoProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CreatorProvider()),
         // artist 모드
         ChangeNotifierProvider(create: (_) => ArtistProvider()),
         ChangeNotifierProvider(create: (_) => MatchingRequestProvider()),

@@ -3,10 +3,21 @@ import 'creator_detail.dart';
 
 class CreatorList extends StatelessWidget {
   final String title;
+  final String skill;
+  final String works;
+  final String bio;
   final VoidCallback? onTap;
   final Color? color;
 
-  const CreatorList({super.key, this.title = '이름', this.onTap, this.color});
+  const CreatorList({
+    super.key,
+    this.title = '이름',
+    this.skill = '기술',
+    this.works = '작품',
+    this.bio = '약력',
+    this.onTap,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +27,7 @@ class CreatorList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => CreatorDetail(name: title, skill: '', works: '', bio: ''),
+              builder: (_) => CreatorDetail(name: title, skill: skill, works: works, bio: bio),
             );
           },
       child: Container(

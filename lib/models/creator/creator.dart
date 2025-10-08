@@ -2,7 +2,7 @@ class Creator {
   String get subCategory {
     switch (skillId) {
       case 1:
-        return "금속 공예";
+        return "금속공예";
       case 2:
         return "나전 칠기";
       case 3:
