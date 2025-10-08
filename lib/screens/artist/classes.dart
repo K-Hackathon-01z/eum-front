@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:eum_demo/services/artist/class_service.dart';
+import 'package:eum_demo/models/artist/class_request.dart';
 
 class ClassesPage extends StatefulWidget {
   const ClassesPage({super.key});
@@ -14,8 +16,15 @@ class _ClassesPageState extends State<ClassesPage> {
     _ClassItem('도마 만들기', DateTime.now().add(const Duration(days: 7)), 8, 5),
   ];
 
+  final _classService = ClassService(); // 추가
+
   Future<void> _addClassDialog() async {
     final titleCtl = TextEditingController();
+    final photoUrlCtl = TextEditingController(text: 'string');
+    final descCtl = TextEditingController();
+    final priceCtl = TextEditingController();
+    final locationCtl = TextEditingController();
+
     DateTime? date;
     int capacity = 6;
 
@@ -81,6 +90,40 @@ class _ClassesPageState extends State<ClassesPage> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: priceCtl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: '가격(정수, 원)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: locationCtl,
+                  decoration: const InputDecoration(
+                    labelText: '장소',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: photoUrlCtl,
+                  decoration: const InputDecoration(
+                    labelText: '사진 URL(문자열)',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: descCtl,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    labelText: '설명',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -90,14 +133,46 @@ class _ClassesPageState extends State<ClassesPage> {
               child: const Text('취소'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (titleCtl.text.trim().isEmpty || date == null) return;
-                setState(() {
-                  _classes.add(
-                    _ClassItem(titleCtl.text.trim(), date!, capacity, 0),
+                final price = int.tryParse(priceCtl.text.trim());
+                if (price == null || price <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('가격을 올바르게 입력하세요.')),
                   );
-                });
-                Navigator.pop(context);
+                  return;
+                }
+
+                final req = ArtistClassRequest(
+                  skillId: 1, // 고정
+                  artisanId: 1, // TODO: 실제 로그인한 아티스트 id로 교체
+                  title: titleCtl.text.trim(),
+                  photoUrl: photoUrlCtl.text.trim().isEmpty
+                      ? 'string'
+                      : photoUrlCtl.text.trim(),
+                  description: descCtl.text.trim(),
+                  price: price,
+                  location: locationCtl.text.trim(),
+                  capacity: capacity,
+                );
+
+                try {
+                  await _classService.createClass(req);
+                  if (!mounted) return;
+
+                  setState(() {
+                    _classes.add(_ClassItem(req.title, date!, req.capacity, 0));
+                  });
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('클래스를 등록했습니다.')));
+                } catch (e) {
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('등록 실패: $e')));
+                }
               },
               child: const Text('추가'),
             ),
@@ -150,19 +225,6 @@ class _ClassesPageState extends State<ClassesPage> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Expanded(
-                        child: Semantics(
-                          button: true,
-                          label: '출석부 보기',
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // 출석부 보기 기능 구현 필요
-                            },
-                            child: const Text('출석부 보기'),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
                       Expanded(
                         child: Semantics(
                           button: true,

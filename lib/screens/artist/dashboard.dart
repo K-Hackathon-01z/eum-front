@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:eum_demo/widgets/user/popup.dart'; // 다이얼로그 공용 위젯 추가
 
 class DashboardPage extends StatelessWidget {
   final bool highContrast;
   const DashboardPage({super.key, required this.highContrast});
+
+  // 공용 다이얼로그
+  void _showEmptyDialog(BuildContext context, String what) {
+    showDialog(
+      context: context,
+      builder: (_) => CommonPopup(
+        icon: Icons.info_outline,
+        title: '$what 없음',
+        message: '아직 등록된 $what이 없습니다.',
+        button1Text: '확인',
+        onButtonFirstPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +68,19 @@ class DashboardPage extends StatelessWidget {
                 const SizedBox(height: 14),
                 Row(
                   children: [
-                    _quick(cs, Icons.event_available_rounded, '일정'),
+                    _quick(
+                      cs,
+                      Icons.event_available_rounded,
+                      '일정',
+                      onTap: () => _showEmptyDialog(context, '일정'),
+                    ),
                     const SizedBox(width: 10),
-                    _quick(cs, Icons.class_rounded, '클래스'),
+                    _quick(
+                      cs,
+                      Icons.account_balance_wallet_rounded,
+                      '수익',
+                      onTap: () => _showEmptyDialog(context, '수익'),
+                    ),
                   ],
                 ),
               ],
@@ -64,20 +89,26 @@ class DashboardPage extends StatelessWidget {
         ),
 
         _section(context, '오늘 일정', [
-          // TODO: API 연동 시 실제 일정 데이터로 대체 (더미 데이터)
-          _row('10:00', '원데이 클래스 — 목공 기초'),
-          _row('14:00', '의뢰 상담 — 맞춤 선반'),
-          _row('16:30', '자재 수령'),
+          // API 연동 시 실제 일정 데이터로 대체 (더미 데이터)
+          _row('10:00', '원데이 클래스 — 목공 기초(예시)'),
+          _row('14:00', '의뢰 상담 — 맞춤 선반(예시)'),
+          _row('16:30', '자재 수령(예시)'),
           const SizedBox(height: 8),
-          ElevatedButton(onPressed: () {}, child: const Text('일정 전체 보기')),
+          ElevatedButton(
+            onPressed: () => _showEmptyDialog(context, '일정'),
+            child: const Text('일정 전체 보기'),
+          ),
         ], highContrast),
 
         _section(context, '수익 요약', [
-          // TODO: API 연동 시 실제 정산/매출 데이터로 대체 (더미 데이터)
-          _row('이번 주 예상 정산', '₩ 520,000'),
-          _row('이번 달 매출', '₩ 2,340,000'),
+          // API 연동 시 실제 정산/매출 데이터로 대체 (더미 데이터)
+          _row('이번 주 예상 정산', '₩ 0'),
+          _row('이번 달 매출', '₩ 0'),
           const SizedBox(height: 8),
-          ElevatedButton(onPressed: () {}, child: const Text('정산 내역 보기')),
+          ElevatedButton(
+            onPressed: () => _showEmptyDialog(context, '수익'),
+            child: const Text('정산 내역 보기'),
+          ),
         ], highContrast),
 
         const SizedBox(height: 16),
@@ -101,8 +132,6 @@ class DashboardPage extends StatelessWidget {
       ],
     ),
   );
-
-  // 의뢰함 제거에 따라 사용되지 않는 칩 위젯 제거됨
 
   Widget _section(
     BuildContext context,
@@ -140,27 +169,37 @@ class DashboardPage extends StatelessWidget {
     ),
   );
 
-  Widget _quick(ColorScheme cs, IconData icon, String label) {
+  // onTap 전달 가능하도록 수정
+  Widget _quick(
+    ColorScheme cs,
+    IconData icon,
+    String label, {
+    VoidCallback? onTap,
+  }) {
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: Colors.white, size: 20),
-            const SizedBox(width: 6),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w800,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: Colors.white, size: 20),
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

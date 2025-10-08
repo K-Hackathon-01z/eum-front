@@ -16,6 +16,8 @@ import 'screens/user/signup/gender_signup_screen.dart';
 import 'screens/user/signup/address_signup_screen.dart';
 import 'screens/user/signup/signup_success_screen.dart';
 import 'screens/user/signup/email_login_screen.dart';
+import 'screens/artist/auth/artist_auth_screen.dart';
+
 
 final Map<String, WidgetBuilder> appRoutes = {
   '/': (context) => const TitleScreen(),
@@ -36,4 +38,5 @@ final Map<String, WidgetBuilder> appRoutes = {
   // Artist mode
   '/artist-intro': (context) => const ArtistIntroScreen(),
   '/artist-home': (context) => const ArtistShellScreen(),
+  '/artist-auth': (context) => const ArtistAuthScreen(),
 };
