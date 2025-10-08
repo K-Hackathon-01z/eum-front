@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../models/user/sent_note.dart';
+import '../models/note/sent_note.dart';
 import '../../services/user/sent_note_service.dart';
 
 class SentNoteProvider extends ChangeNotifier {
