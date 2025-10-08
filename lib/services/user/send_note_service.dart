@@ -7,14 +7,18 @@ class SendNoteService {
   final String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   Future<bool> sendNote(SendNote request) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/api/matching-requests'),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(request.toJson()),
-    );
-    if (response.statusCode == 200) {
-      return true;
-    } else {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/api/matching-requests'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(request.toJson()),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        throw Exception('Failed to send note');
+      }
+    } catch (e) {
       throw Exception('Failed to send note');
     }
   }
