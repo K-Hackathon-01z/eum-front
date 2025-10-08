@@ -89,10 +89,10 @@ class DashboardPage extends StatelessWidget {
         ),
 
         _section(context, '오늘 일정', [
-          // TODO: API 연동 시 실제 일정 데이터로 대체 (더미 데이터)
-          _row('10:00', '원데이 클래스 — 목공 기초'),
-          _row('14:00', '의뢰 상담 — 맞춤 선반'),
-          _row('16:30', '자재 수령'),
+          // API 연동 시 실제 일정 데이터로 대체 (더미 데이터)
+          _row('10:00', '원데이 클래스 — 목공 기초(예시)'),
+          _row('14:00', '의뢰 상담 — 맞춤 선반(예시)'),
+          _row('16:30', '자재 수령(예시)'),
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () => _showEmptyDialog(context, '일정'),
