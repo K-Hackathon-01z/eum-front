@@ -40,10 +40,10 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () => _todo(context),
-            child: const Text('프로필 수정', style: TextStyle(color: Colors.white)),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF6D5BD0),
             ),
+            child: const Text('프로필 수정', style: TextStyle(color: Colors.white)),
           ),
         ]),
         const SizedBox(height: 16),
