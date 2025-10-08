@@ -9,6 +9,7 @@ class CreatorDetail extends StatelessWidget {
   final String skill;
   final String works;
   final String bio;
+  final String email;
   final Widget? image;
   final VoidCallback? onMatch;
 
@@ -18,6 +19,7 @@ class CreatorDetail extends StatelessWidget {
     required this.skill,
     required this.works,
     required this.bio,
+    required this.email,
     this.image,
     this.onMatch,
   });
@@ -89,7 +91,7 @@ class CreatorDetail extends StatelessWidget {
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.23,
                   child: Text(
-                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio',
+                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio\n\n이메일 : $email',
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -107,19 +109,20 @@ class CreatorDetail extends StatelessWidget {
                   text: '매칭 신청하기',
                   onPressed: () {
                     final nickname = Provider.of<AuthProvider>(context, listen: false).name ?? '닉네임';
+                    final userId = Provider.of<AuthProvider>(context, listen: false).id ?? 0;
                     showDialog(
                       context: context,
                       builder: (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         insetPadding: EdgeInsets.zero,
-                        child: RequestNote(nickname: nickname),
+                        child: RequestNote(nickname: nickname, artisanEmail: email, userId: userId),
                       ),
                     );
                   },
                   width: cardWidth * 0.65,
                   height: 48,
-                  backgroundColor: const Color(0xFFDAD3E8),
-                  textColor: Colors.black,
+                  backgroundColor: const Color(0xFF9785BA),
+                  textColor: Colors.white,
                 ),
               ),
             ],

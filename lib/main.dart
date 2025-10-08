@@ -11,8 +11,11 @@ import 'routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'providers/user_provider.dart';
 import 'providers/auth_provider.dart';
+import 'providers/creator_provider.dart';
 import 'providers/artist_provider.dart';
 import 'providers/artist_matching_request_provider.dart';
+import 'providers/sent_note_provider.dart';
+import 'providers/send_note_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +30,9 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MyInfoProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => CreatorProvider()),
+        ChangeNotifierProvider(create: (_) => SentNoteProvider()),
+        ChangeNotifierProvider(create: (_) => SendNoteProvider()),
         // artist 모드
         ChangeNotifierProvider(create: (_) => ArtistProvider()),
         ChangeNotifierProvider(create: (_) => MatchingRequestProvider()),

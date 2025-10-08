@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/creator_provider.dart';
+import '../../providers/send_note_provider.dart';
+import '../../models/note/send_note.dart';
+import '../../providers/sent_note_provider.dart';
 import 'button.dart';
 import 'popup.dart';
 
-class RequestNote extends StatelessWidget {
+class RequestNote extends StatefulWidget {
   final String nickname;
-  final ValueChanged<String>? onSend;
+  final String artisanEmail;
+  final int userId;
 
-  const RequestNote({super.key, this.nickname = '닉네임', this.onSend});
+  const RequestNote({super.key, this.nickname = '닉네임', required this.artisanEmail, required this.userId});
+
+  @override
+  State<RequestNote> createState() => _RequestNoteState();
+}
+
+class _RequestNoteState extends State<RequestNote> {
+  final TextEditingController controller = TextEditingController();
+  bool isAnonymous = false; // 체크박스 상태에 따라 변경됨
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.92;
     final double cardHeight = size.height * 0.85;
+
     return Center(
       child: Container(
         width: cardWidth,
@@ -30,7 +44,7 @@ class RequestNote extends StatelessWidget {
               top: cardHeight * 0.86,
               child: Button(
                 text: '메세지 전송',
-                onPressed: () {
+                onPressed: () async {
                   showDialog(
                     context: context,
                     builder: (context) => CommonPopup(
@@ -40,38 +54,84 @@ class RequestNote extends StatelessWidget {
                       title: "매칭 신청할까요?",
                       message: "매칭 신청 후에는 삭제가 불가능합니다.",
                       button1Text: "전송",
-                      onButtonFirstPressed: () {
-                        if (onSend != null) onSend!(controller.text);
-                        Navigator.of(context).pop(); // 첫 번째 팝업 닫기
-                        Navigator.of(context).pop(); // RequestNote 닫기
-                        // 매칭 신청 완료 팝업 띄우기
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (context) => CommonPopup(
-                            showCloseIcon: true,
-                            icon: Icons.check_circle_outline,
-                            iconColor: const Color(0xFF9785BA),
-                            title: "매칭 신청 완료!",
-                            message: "매칭 신청이 성공적으로 완료되었습니다.",
-                            button1Text: "홈 바로가기",
-                            onButtonFirstPressed: () {
-                              Navigator.of(context).pop(); // 완료 팝업 닫기
-                              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
-                            },
-                            button2Text: "마이페이지 바로가기",
-                            onButtonSecondPressed: () {
-                              Navigator.of(context).pop(); // 완료 팝업 닫기
-                              final navigator = Navigator.of(context);
-                              navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
-                            },
-                          ),
+                      onButtonFirstPressed: () async {
+                        final creatorProvider = Provider.of<CreatorProvider>(context, listen: false);
+                        final sendNoteProvider = Provider.of<SendNoteProvider>(context, listen: false);
+
+                        await creatorProvider.fetchCreatorByEmail(widget.artisanEmail);
+                        final creator = creatorProvider.creatorByEmail;
+
+                        if (creator == null) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CommonPopup(
+                              showCloseIcon: true,
+                              icon: Icons.error,
+                              iconColor: const Color(0xFF9785BA),
+                              title: "장인 정보 조회 실패",
+                              message: "장인 정보를 찾을 수 없습니다.",
+                              button1Text: "닫기",
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final noteRequest = SendNote(
+                          userId: widget.userId,
+                          artisanId: creator.id,
+                          message: controller.text,
+                          isAnonymous: isAnonymous,
                         );
+
+                        await sendNoteProvider.sendNote(noteRequest);
+
+                        if (sendNoteProvider.success) {
+                          // 매칭 신청 내역 즉시 갱신
+                          final sentNoteProvider = Provider.of<SentNoteProvider>(context, listen: false);
+                          await sentNoteProvider.fetchSentNotes(widget.userId);
+
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => CommonPopup(
+                              showCloseIcon: false,
+                              icon: Icons.check_circle_outline,
+                              iconColor: const Color(0xFF9785BA),
+                              title: "매칭 신청 완료!",
+                              message: "매칭 신청이 성공적으로 완료되었습니다.",
+                              button1Text: "홈 바로가기",
+                              onButtonFirstPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+                              },
+                              button2Text: "마이페이지 바로가기",
+                              onButtonSecondPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                final navigator = Navigator.of(context);
+                                navigator.pushNamedAndRemoveUntil('/home', (route) => false, arguments: {'tab': 3});
+                              },
+                            ),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CommonPopup(
+                              showCloseIcon: true,
+                              icon: Icons.error,
+                              iconColor: const Color(0xFF9785BA),
+                              title: "전송 실패",
+                              message: sendNoteProvider.error ?? "쪽지 전송에 실패했습니다.",
+                              button1Text: "닫기",
+                              onButtonFirstPressed: () => Navigator.of(context).pop(),
+                            ),
+                          );
+                        }
                       },
                       button2Text: "취소",
-                      onButtonSecondPressed: () {
-                        Navigator.of(context).pop(); // 팝업 닫기
-                      },
+                      onButtonSecondPressed: () => Navigator.of(context).pop(),
                     ),
                   );
                 },
@@ -109,7 +169,7 @@ class RequestNote extends StatelessWidget {
                       child: Container(
                         width: cardWidth * 0.15,
                         height: cardWidth * 0.15,
-                        decoration: BoxDecoration(color: const Color(0xFF747474), shape: BoxShape.circle),
+                        decoration: const BoxDecoration(color: Color(0xFF747474), shape: BoxShape.circle),
                       ),
                     ),
                     Positioned(
@@ -121,7 +181,7 @@ class RequestNote extends StatelessWidget {
                           SizedBox(
                             width: cardWidth * 0.41,
                             child: Text(
-                              nickname,
+                              widget.nickname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -133,7 +193,16 @@ class RequestNote extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: cardHeight * 0.018),
-                          SizedBox(width: cardWidth * 0.50, child: _RequestNoteCheckRow()),
+                          SizedBox(
+                            width: cardWidth * 0.50,
+                            child: _RequestNoteCheckRow(
+                              onCheckedChanged: (value) {
+                                setState(() {
+                                  isAnonymous = !value;
+                                });
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -160,7 +229,7 @@ class RequestNote extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '장인•작가님께 전달하고 싶은 메시지를\n입력해주세요. (300자 이내)',
+                              '장인•작가님께 전달하고 싶은 메시지를\n입력해주세요. (200자 이내)',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black54,
@@ -177,7 +246,7 @@ class RequestNote extends StatelessWidget {
                         child: SingleChildScrollView(
                           child: TextField(
                             controller: controller,
-                            maxLength: 300,
+                            maxLength: 200,
                             maxLines: 10,
                             decoration: InputDecoration(
                               hintText: '메시지를 입력하세요',
@@ -219,13 +288,17 @@ class RequestNote extends StatelessWidget {
 }
 
 class _RequestNoteCheckRow extends StatefulWidget {
-  const _RequestNoteCheckRow({Key? key}) : super(key: key);
+  final ValueChanged<bool>? onCheckedChanged; // 부모로 전달할 콜백
+
+  const _RequestNoteCheckRow({Key? key, this.onCheckedChanged}) : super(key: key);
+
   @override
   State<_RequestNoteCheckRow> createState() => _RequestNoteCheckRowState();
 }
 
 class _RequestNoteCheckRowState extends State<_RequestNoteCheckRow> {
   bool checked = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -242,16 +315,17 @@ class _RequestNoteCheckRowState extends State<_RequestNoteCheckRow> {
               setState(() {
                 checked = val ?? false;
               });
+              widget.onCheckedChanged?.call(checked); // 상태 부모로 전달
             },
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+            visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           ),
         ),
-        SizedBox(width: 5),
-        Text(
+        const SizedBox(width: 5),
+        const Text(
           '장인•작가님께 내 정보 함께 보내기',
-          style: const TextStyle(color: Colors.black54, fontSize: 10, fontWeight: FontWeight.w700, height: 2.20),
+          style: TextStyle(color: Colors.black54, fontSize: 10, fontWeight: FontWeight.w700, height: 2.20),
         ),
       ],
     );
