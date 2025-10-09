@@ -1,3 +1,5 @@
+import 'dart:io'; // 추가
+import 'package:image_picker/image_picker.dart'; // 추가
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../utils/validators.dart';
@@ -30,6 +32,10 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
   final _codeCtl = TextEditingController();
   bool _codeSent = false;
 
+  // 추가: 이미지 관련 상태
+  File? _pickedImage;
+  bool _isUploading = false;
+
   bool _signingUp = false;
   final _service = ArtistAuthService();
 
@@ -41,7 +47,7 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
     _photoUrlCtl.dispose();
     _mainWorksCtl.dispose();
     _bioCtl.dispose();
-    _codeCtl.dispose(); // 추가
+    _codeCtl.dispose();
     super.dispose();
   }
 
@@ -179,7 +185,9 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
       skillId: 1,
       email: _emailCtl.text.trim(),
       name: _nameCtl.text.trim(),
-      photoUrl: 'string',
+      photoUrl: _photoUrlCtl.text.trim().isNotEmpty
+          ? _photoUrlCtl.text.trim()
+          : 'string',
       mainWorks: _mainWorksCtl.text.trim(),
       biography: _bioCtl.text.trim(),
     );
@@ -333,6 +341,83 @@ class _ArtistAuthScreenState extends State<ArtistAuthScreen>
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     maxLength: 6,
+                  ),
+                  const SizedBox(height: 12),
+                  if (_pickedImage != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          _pickedImage!,
+                          height: 150,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          icon: const Icon(Icons.photo_library),
+                          label: const Text('사진 선택'),
+                          onPressed: () async {
+                            final picker = ImagePicker();
+                            final pickedFile = await picker.pickImage(
+                              source: ImageSource.gallery,
+                            );
+                            if (pickedFile != null) {
+                              setState(() {
+                                _pickedImage = File(pickedFile.path);
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          icon: _isUploading
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Icon(Icons.cloud_upload),
+                          label: Text(_isUploading ? '업로드 중' : '업로드'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF6D5BD0),
+                            foregroundColor: Colors.white,
+                          ),
+                          onPressed: (_pickedImage == null || _isUploading)
+                              ? null
+                              : () async {
+                                  setState(() => _isUploading = true);
+                                  try {
+                                    final url = await _service
+                                        .uploadArtisanImage(_pickedImage!);
+                                    _photoUrlCtl.text =
+                                        url; // 업로드된 URL을 컨트롤러에 저장
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('이미지 업로드가 완료되었습니다.'),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('업로드 실패: $e')),
+                                    );
+                                  } finally {
+                                    setState(() => _isUploading = false);
+                                  }
+                                },
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 12),
                   TextField(
