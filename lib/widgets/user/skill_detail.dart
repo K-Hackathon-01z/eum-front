@@ -18,6 +18,7 @@ class SkillDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.92;
     final double cardHeight = size.height * 0.85;
@@ -79,17 +80,27 @@ class SkillDetail extends StatelessWidget {
               // 상세 정보
               Positioned(
                 left: cardWidth * 0.13,
-                top: cardHeight * 0.52,
+                top: cardHeight * 0.45,
                 child: SizedBox(
                   width: cardWidth * 0.77,
-                  height: cardHeight * 0.23,
-                  child: Text(
-                    '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      height: 1.38,
+                  height: cardHeight * 0.53,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: scrollController,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            height: 1.38,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
