@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'skill_section.dart';
 
 class SkillDetail extends StatelessWidget {
   final String name;
   final String category;
   final String description;
   final String careerPath;
-  final Widget? image;
+  final String image_url;
 
   const SkillDetail({
     super.key,
@@ -13,11 +14,12 @@ class SkillDetail extends StatelessWidget {
     required this.category,
     required this.description,
     required this.careerPath,
-    this.image,
+    required this.image_url,
   });
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.92;
     final double cardHeight = size.height * 0.85;
@@ -51,7 +53,8 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.8,
                   height: cardHeight * 0.29,
                   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(18)),
-                  child: image ?? Center(),
+                  clipBehavior: Clip.antiAlias,
+                  child: image_url.isNotEmpty ? Image.network(image_url, fit: BoxFit.cover) : Center(),
                 ),
               ),
               // 이름
@@ -78,17 +81,41 @@ class SkillDetail extends StatelessWidget {
               // 상세 정보
               Positioned(
                 left: cardWidth * 0.13,
-                top: cardHeight * 0.52,
+                top: cardHeight * 0.43,
                 child: SizedBox(
                   width: cardWidth * 0.77,
-                  height: cardHeight * 0.23,
-                  child: Text(
-                    '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      height: 1.38,
+                  height: cardHeight * 0.53,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: scrollController,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SkillSection(
+                              icon: Icons.category,
+                              title: '[분류]',
+                              content: category,
+                              color: Colors.deepPurple,
+                            ),
+                            SkillSection(
+                              icon: Icons.info_outline,
+                              title: '[정보]',
+                              content: description,
+                              color: Colors.blue,
+                            ),
+                            SkillSection(
+                              icon: Icons.work_outline,
+                              title: '[진로]',
+                              content: careerPath,
+                              color: Colors.green,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

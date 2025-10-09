@@ -3,10 +3,25 @@ import 'creator_detail.dart';
 
 class CreatorList extends StatelessWidget {
   final String title;
+  final String email;
+  final String skill;
+  final String works;
+  final String bio;
+  final String photoUrl;
   final VoidCallback? onTap;
   final Color? color;
 
-  const CreatorList({super.key, this.title = '이름', this.onTap, this.color});
+  const CreatorList({
+    super.key,
+    this.title = '이름',
+    this.email = '이메일',
+    this.skill = '기술',
+    this.works = '작품',
+    this.bio = '약력',
+    this.photoUrl = '',
+    this.onTap,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +31,8 @@ class CreatorList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => CreatorDetail(name: title, skill: '', works: '', bio: ''),
+              builder: (_) =>
+                  CreatorDetail(name: title, email: email, skill: skill, works: works, bio: bio, photoUrl: photoUrl),
             );
           },
       child: Container(
@@ -31,18 +47,21 @@ class CreatorList extends StatelessWidget {
         child: Row(
           children: [
             // 왼쪽 회색 아이콘 영역
-            Container(
-              width: 65,
-              height: 55,
-              margin: const EdgeInsets.only(left: 17, right: 16),
-              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(10)),
-            ),
+            // Container(
+            //   width: 65,
+            //   height: 55,
+            //   margin: const EdgeInsets.only(left: 17, right: 16),
+            //   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(10)),
+            // ),
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 32.0), // 왼쪽 여백 추가
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
                 ),
               ),
             ),

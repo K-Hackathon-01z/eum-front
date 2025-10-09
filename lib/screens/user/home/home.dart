@@ -376,14 +376,14 @@ class HomeScreen extends StatelessWidget {
               children: [
                 BannerButton(
                   icon: Icons.handyman,
-                  text: '전통 기술 목록 보기',
+                  text: '전통 기술 아카이빙',
                   onTap: () {
                     Navigator.pushNamed(context, '/skill-list');
                   },
                 ),
                 BannerButton(
                   icon: Icons.people,
-                  text: '장인 • 작가 목록 보기',
+                  text: '장인 • 작가 아카이빙',
                   onTap: () {
                     Navigator.pushNamed(context, '/creator-list');
                   },

@@ -1,3 +1,4 @@
+import 'creator_section.dart';
 import 'button.dart';
 import 'request_note.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,8 @@ class CreatorDetail extends StatelessWidget {
   final String skill;
   final String works;
   final String bio;
-  final Widget? image;
-  final VoidCallback? onMatch;
+  final String email;
+  final String photoUrl;
 
   const CreatorDetail({
     super.key,
@@ -18,12 +19,13 @@ class CreatorDetail extends StatelessWidget {
     required this.skill,
     required this.works,
     required this.bio,
-    this.image,
-    this.onMatch,
+    required this.email,
+    required this.photoUrl,
   });
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.92;
     final double cardHeight = size.height * 0.85;
@@ -57,16 +59,17 @@ class CreatorDetail extends StatelessWidget {
                   width: cardWidth * 0.8,
                   height: cardHeight * 0.29,
                   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(18)),
-                  child: image ?? Center(),
+                  clipBehavior: Clip.antiAlias,
+                  child: photoUrl.isNotEmpty ? Image.network(photoUrl, fit: BoxFit.cover) : Center(),
                 ),
               ),
               // 이름
               Positioned(
                 left: cardWidth * 0.15,
-                top: cardHeight * 0.36,
+                top: cardHeight * 0.34,
                 child: SizedBox(
                   width: cardWidth * 0.7,
-                  height: cardHeight * 0.09,
+                  height: cardHeight * 0.07,
                   child: Center(
                     child: Text(
                       name,
@@ -84,17 +87,32 @@ class CreatorDetail extends StatelessWidget {
               // 상세 정보
               Positioned(
                 left: cardWidth * 0.13,
-                top: cardHeight * 0.52,
+                top: cardHeight * 0.43,
                 child: SizedBox(
                   width: cardWidth * 0.77,
-                  height: cardHeight * 0.23,
-                  child: Text(
-                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      height: 1.38,
+                  height: cardHeight * 0.38,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    controller: scrollController,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CreatorSection(
+                              icon: Icons.handyman,
+                              title: '[기술]',
+                              content: skill,
+                              color: Colors.deepPurple,
+                            ),
+                            CreatorSection(icon: Icons.star, title: '[주요 활동]', content: works, color: Colors.blue),
+                            CreatorSection(icon: Icons.person, title: '[약력]', content: bio, color: Colors.green),
+                            CreatorSection(icon: Icons.email, title: '[이메일]', content: email, color: Colors.orange),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -107,19 +125,20 @@ class CreatorDetail extends StatelessWidget {
                   text: '매칭 신청하기',
                   onPressed: () {
                     final nickname = Provider.of<AuthProvider>(context, listen: false).name ?? '닉네임';
+                    final userId = Provider.of<AuthProvider>(context, listen: false).id ?? 0;
                     showDialog(
                       context: context,
                       builder: (_) => Dialog(
                         backgroundColor: Colors.transparent,
                         insetPadding: EdgeInsets.zero,
-                        child: RequestNote(nickname: nickname),
+                        child: RequestNote(nickname: nickname, artisanEmail: email, userId: userId),
                       ),
                     );
                   },
                   width: cardWidth * 0.65,
                   height: 48,
-                  backgroundColor: const Color(0xFFDAD3E8),
-                  textColor: Colors.black,
+                  backgroundColor: const Color(0xFF9785BA),
+                  textColor: Colors.white,
                 ),
               ),
             ],

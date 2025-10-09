@@ -19,7 +19,8 @@ class CreatorDetailScreen extends StatelessWidget {
       '예술': ['판소리', '민요', '탈춤', '무용'],
       '기타': ['단청장', '소목장'],
     };
-    final List<String> creators = subCreators[category] ?? [];
+
+    final List<String> subCategoryList = subCreators[category] ?? [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
@@ -67,16 +68,21 @@ class CreatorDetailScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-        children: creators
-            .map(
-              (c) => CreatorList(
-                title: c,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CreatorProfileScreen(subCategory: c)));
-                },
-              ),
-            )
-            .toList(),
+        children: subCategoryList.isEmpty
+            ? [const Center(child: Text('해당 분야의 세부 분류가 없습니다', style: TextStyle(fontSize: 16)))]
+            : subCategoryList
+                  .map(
+                    (subCategory) => CreatorList(
+                      title: subCategory,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => CreatorProfileScreen(subCategory: subCategory)),
+                        );
+                      },
+                    ),
+                  )
+                  .toList(),
       ),
     );
   }

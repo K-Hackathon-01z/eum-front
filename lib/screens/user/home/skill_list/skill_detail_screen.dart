@@ -87,6 +87,7 @@ class SkillDetailScreen extends StatelessWidget {
                       category: skill.category,
                       description: skill.description,
                       careerPath: skill.careerPath ?? '',
+                      image_url: skill.image_url ?? '',
                     ),
                   );
                 },
