@@ -15,7 +15,8 @@ class SkillList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => SkillDetail(name: title, category: '분류 예시', description: '설명 예시', careerPath: '진로 예시'),
+              builder: (_) =>
+                  SkillDetail(name: title, category: '분류 예시', description: '설명 예시', careerPath: '진로 예시', image_url: ''),
             );
           },
       child: Container(

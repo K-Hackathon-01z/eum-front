@@ -5,7 +5,7 @@ class SkillDetail extends StatelessWidget {
   final String category;
   final String description;
   final String careerPath;
-  final Widget? image;
+  final String image_url;
 
   const SkillDetail({
     super.key,
@@ -13,7 +13,7 @@ class SkillDetail extends StatelessWidget {
     required this.category,
     required this.description,
     required this.careerPath,
-    this.image,
+    required this.image_url,
   });
 
   @override
@@ -51,7 +51,8 @@ class SkillDetail extends StatelessWidget {
                   width: cardWidth * 0.8,
                   height: cardHeight * 0.29,
                   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(18)),
-                  child: image ?? Center(),
+                  clipBehavior: Clip.antiAlias,
+                  child: image_url.isNotEmpty ? Image.network(image_url, fit: BoxFit.cover) : Center(),
                 ),
               ),
               // 이름
