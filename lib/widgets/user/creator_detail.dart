@@ -65,10 +65,10 @@ class CreatorDetail extends StatelessWidget {
               // 이름
               Positioned(
                 left: cardWidth * 0.15,
-                top: cardHeight * 0.36,
+                top: cardHeight * 0.34,
                 child: SizedBox(
                   width: cardWidth * 0.7,
-                  height: cardHeight * 0.09,
+                  height: cardHeight * 0.07,
                   child: Center(
                     child: Text(
                       name,
@@ -86,17 +86,25 @@ class CreatorDetail extends StatelessWidget {
               // 상세 정보
               Positioned(
                 left: cardWidth * 0.13,
-                top: cardHeight * 0.52,
+                top: cardHeight * 0.43,
                 child: SizedBox(
                   width: cardWidth * 0.77,
-                  height: cardHeight * 0.23,
-                  child: Text(
-                    '기술 : $skill\n\n주요작품 : $works\n\n약력 : $bio\n\n이메일 : $email',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      height: 1.38,
+                  height: cardHeight * 0.38,
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          '기술 : $skill\n\n주요 활동 : $works\n\n약력 : $bio\n\n이메일 : $email',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            height: 1.38,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
