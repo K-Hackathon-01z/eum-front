@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'skill_section.dart';
 
 class SkillDetail extends StatelessWidget {
   final String name;
@@ -80,7 +81,7 @@ class SkillDetail extends StatelessWidget {
               // 상세 정보
               Positioned(
                 left: cardWidth * 0.13,
-                top: cardHeight * 0.45,
+                top: cardHeight * 0.43,
                 child: SizedBox(
                   width: cardWidth * 0.77,
                   height: cardHeight * 0.53,
@@ -91,14 +92,28 @@ class SkillDetail extends StatelessWidget {
                       controller: scrollController,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          '분류 : $category\n\n정보 : $description\n\n진로 : $careerPath',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            height: 1.38,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SkillSection(
+                              icon: Icons.category,
+                              title: '[분류]',
+                              content: category,
+                              color: Colors.deepPurple,
+                            ),
+                            SkillSection(
+                              icon: Icons.info_outline,
+                              title: '[정보]',
+                              content: description,
+                              color: Colors.blue,
+                            ),
+                            SkillSection(
+                              icon: Icons.work_outline,
+                              title: '[진로]',
+                              content: careerPath,
+                              color: Colors.green,
+                            ),
+                          ],
                         ),
                       ),
                     ),

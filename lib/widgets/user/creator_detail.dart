@@ -1,3 +1,4 @@
+import 'creator_section.dart';
 import 'button.dart';
 import 'request_note.dart';
 import 'package:flutter/material.dart';
@@ -97,14 +98,19 @@ class CreatorDetail extends StatelessWidget {
                       controller: scrollController,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          '기술 : $skill\n\n주요 활동 : $works\n\n약력 : $bio\n\n이메일 : $email',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            height: 1.38,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CreatorSection(
+                              icon: Icons.handyman,
+                              title: '[기술]',
+                              content: skill,
+                              color: Colors.deepPurple,
+                            ),
+                            CreatorSection(icon: Icons.star, title: '[주요 활동]', content: works, color: Colors.blue),
+                            CreatorSection(icon: Icons.person, title: '[약력]', content: bio, color: Colors.green),
+                            CreatorSection(icon: Icons.email, title: '[이메일]', content: email, color: Colors.orange),
+                          ],
                         ),
                       ),
                     ),
