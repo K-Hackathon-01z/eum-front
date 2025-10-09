@@ -14,12 +14,22 @@ import 'providers/auth_provider.dart';
 import 'providers/creator_provider.dart';
 import 'providers/artist_provider.dart';
 import 'providers/artist_matching_request_provider.dart';
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'providers/sent_note_provider.dart';
 import 'providers/send_note_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
+
+  // Google Maps Android 설정 (선택사항, 성능 향상에 도움)
+  final GoogleMapsFlutterPlatform mapsImplementation =
+      GoogleMapsFlutterPlatform.instance;
+  if (mapsImplementation is GoogleMapsFlutterAndroid) {
+    mapsImplementation.useAndroidViewSurface = true;
+  }
+
   runApp(
     MultiProvider(
       providers: [

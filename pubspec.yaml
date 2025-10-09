@@ -47,6 +47,10 @@ dependencies:
   table_calendar: ^3.0.9
   flutter_time_picker_spinner: ^2.0.0
   image_picker: ^1.0.7
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
+  geolocator: ^12.0.0
+  google_maps_flutter: ^2.7.0 # 추가
 
 dev_dependencies:
   flutter_test:
