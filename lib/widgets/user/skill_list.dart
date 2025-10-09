@@ -31,18 +31,21 @@ class SkillList extends StatelessWidget {
         child: Row(
           children: [
             // 왼쪽 회색 아이콘 영역
-            Container(
-              width: 65,
-              height: 55,
-              margin: const EdgeInsets.only(left: 17, right: 16),
-              decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(10)),
-            ),
+            // Container(
+            //   width: 65,
+            //   height: 55,
+            //   margin: const EdgeInsets.only(left: 17, right: 16),
+            //   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(10)),
+            // ),
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 32.0), // 왼쪽 여백 추가
+                  child: Text(
+                    title,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
                 ),
               ),
             ),
