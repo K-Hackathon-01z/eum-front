@@ -90,6 +90,7 @@ class _CreatorProfileScreenState extends State<CreatorProfileScreen> {
                       skill: widget.subCategory,
                       works: c.mainWorks,
                       bio: c.biography,
+                      photoUrl: c.photoUrl,
                     ),
                   )
                   .toList(),

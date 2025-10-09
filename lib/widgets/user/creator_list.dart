@@ -7,6 +7,7 @@ class CreatorList extends StatelessWidget {
   final String skill;
   final String works;
   final String bio;
+  final String photoUrl;
   final VoidCallback? onTap;
   final Color? color;
 
@@ -17,6 +18,7 @@ class CreatorList extends StatelessWidget {
     this.skill = '기술',
     this.works = '작품',
     this.bio = '약력',
+    this.photoUrl = '',
     this.onTap,
     this.color,
   });
@@ -29,7 +31,8 @@ class CreatorList extends StatelessWidget {
           () {
             showDialog(
               context: context,
-              builder: (_) => CreatorDetail(name: title, email: email, skill: skill, works: works, bio: bio),
+              builder: (_) =>
+                  CreatorDetail(name: title, email: email, skill: skill, works: works, bio: bio, photoUrl: photoUrl),
             );
           },
       child: Container(

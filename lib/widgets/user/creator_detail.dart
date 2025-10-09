@@ -10,8 +10,7 @@ class CreatorDetail extends StatelessWidget {
   final String works;
   final String bio;
   final String email;
-  final Widget? image;
-  final VoidCallback? onMatch;
+  final String photoUrl;
 
   const CreatorDetail({
     super.key,
@@ -20,12 +19,12 @@ class CreatorDetail extends StatelessWidget {
     required this.works,
     required this.bio,
     required this.email,
-    this.image,
-    this.onMatch,
+    required this.photoUrl,
   });
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     final size = MediaQuery.of(context).size;
     final double cardWidth = size.width * 0.92;
     final double cardHeight = size.height * 0.85;
@@ -59,7 +58,8 @@ class CreatorDetail extends StatelessWidget {
                   width: cardWidth * 0.8,
                   height: cardHeight * 0.29,
                   decoration: BoxDecoration(color: const Color(0xFFD9D9D9), borderRadius: BorderRadius.circular(18)),
-                  child: image ?? Center(),
+                  clipBehavior: Clip.antiAlias,
+                  child: photoUrl.isNotEmpty ? Image.network(photoUrl, fit: BoxFit.cover) : Center(),
                 ),
               ),
               // 이름
@@ -92,7 +92,9 @@ class CreatorDetail extends StatelessWidget {
                   height: cardHeight * 0.38,
                   child: Scrollbar(
                     thumbVisibility: true,
+                    controller: scrollController,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(

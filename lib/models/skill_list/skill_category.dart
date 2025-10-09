@@ -3,7 +3,7 @@ class SkillCategory {
   final String name;
   final String category;
   final String description;
-  final String? imageUrl;
+  final String? image_url;
   final String? careerPath;
 
   SkillCategory({
@@ -11,7 +11,7 @@ class SkillCategory {
     required this.name,
     required this.category,
     required this.description,
-    this.imageUrl,
+    this.image_url,
     this.careerPath,
   });
 
@@ -21,7 +21,7 @@ class SkillCategory {
       name: json['name'] as String,
       category: json['category'] as String,
       description: json['description'] as String,
-      imageUrl: json['image_url'] as String?,
+      image_url: json['image_url'] as String?,
       careerPath: json['career_path'] as String?,
     );
   }
