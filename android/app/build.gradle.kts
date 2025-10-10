@@ -8,11 +8,20 @@ plugins {
 }
 
 // .env 파일을 읽기 위한 로직
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file(".env")
-if (localPropertiesFile.exists()) {
-    localProperties.load(localPropertiesFile.inputStream())
-}
+val envProps = Properties()
+listOf(
+    rootProject.file("../.env"),   // 프로젝트 루트 .env
+    rootProject.file(".env")       // android/.env
+).firstOrNull { it.exists() }?.reader(Charsets.UTF_8)?.use { envProps.load(it) }
+
+fun readMapsKey(): String =
+    (envProps.getProperty("GOOGLE_MAPS_API_KEY")
+        ?: System.getenv("GOOGLE_MAPS_API_KEY")
+        ?: "")
+        .trim()
+        .removePrefix("export ")
+        .removePrefix("GOOGLE_MAPS_API_KEY=")
+        .removeSurrounding("\"")
 
 android {
     namespace = "com.example.eum_demo"
@@ -29,8 +38,8 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 
-        // Manifest Placeholder로 API 키 전달
-        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = localProperties.getProperty("GOOGLE_MAPS_API_KEY_ANDROID") ?: ""
+        // .env → Manifest placeholder 주입
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = readMapsKey()
     }
 
     buildTypes {
