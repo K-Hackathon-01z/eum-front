@@ -29,73 +29,76 @@ class _NicknameSignupScreenState extends State<NicknameSignupScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: [
-              const SizedBox(height: 32),
-              SignupStepIndicator(currentStep: 0, totalSteps: 5, stepLabels: ['이름', '이메일', '나이', '성별', '주소']),
-              const Spacer(flex: 1),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 24),
-                child: Text(
-                  '이름을 입력해주세요',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 32),
+                SignupStepIndicator(currentStep: 0, totalSteps: 5, stepLabels: ['이름', '이메일', '나이', '성별', '주소']),
+                const SizedBox(height: 24),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 24),
+                  child: Text(
+                    '이름을 입력해주세요',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xff3B2D5B)),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                TextField(
+                  controller: _nicknameController,
+                  decoration: const InputDecoration(labelText: '이름', border: OutlineInputBorder()),
                   textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 18),
+                  maxLength: 10,
                 ),
-              ),
-              TextField(
-                controller: _nicknameController,
-                decoration: const InputDecoration(labelText: '이름', border: OutlineInputBorder()),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 18),
-                maxLength: 10,
-              ),
-              const Spacer(flex: 3),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Column(
-                  children: [
-                    Button(
-                      text: '다음으로',
-                      width: double.infinity,
-                      height: 48,
-                      textColor: Colors.white,
-                      backgroundColor: const Color(0xFF9785BA),
-                      onPressed: () {
-                        final error = Validators.validateName(_nicknameController.text);
-                        if (error != null) {
-                          showDialog(
-                            context: context,
-                            builder: (_) => CommonPopup(
-                              icon: Icons.warning_amber_rounded,
-                              title: '입력 오류',
-                              message: error,
-                              button1Text: '확인',
-                              onButtonFirstPressed: () => Navigator.of(context).pop(),
-                            ),
-                          );
-                          return;
-                        }
-                        // 닉네임을 AuthProvider에 저장
-                        Provider.of<AuthProvider>(context, listen: false).setName(_nicknameController.text);
-                        Navigator.pushNamed(context, '/signup-email');
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    Button(
-                      text: '돌아가기',
-                      width: double.infinity,
-                      height: 48,
-                      backgroundColor: Colors.white,
-                      textColor: const Color(0xFF9785BA),
-                      borderColor: const Color(0xFF9785BA),
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-                      },
-                    ),
-                  ],
+                const SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Column(
+                    children: [
+                      Button(
+                        text: '다음으로',
+                        width: double.infinity,
+                        height: 48,
+                        textColor: Colors.white,
+                        backgroundColor: const Color(0xFF9785BA),
+                        onPressed: () {
+                          final error = Validators.validateName(_nicknameController.text);
+                          if (error != null) {
+                            showDialog(
+                              context: context,
+                              builder: (_) => CommonPopup(
+                                icon: Icons.warning_amber_rounded,
+                                title: '입력 오류',
+                                message: error,
+                                button1Text: '확인',
+                                onButtonFirstPressed: () => Navigator.of(context).pop(),
+                              ),
+                            );
+                            return;
+                          }
+                          Provider.of<AuthProvider>(context, listen: false).setName(_nicknameController.text);
+                          Navigator.pushNamed(context, '/signup-email');
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      Button(
+                        text: '돌아가기',
+                        width: double.infinity,
+                        height: 48,
+                        backgroundColor: Colors.white,
+                        textColor: const Color(0xFF9785BA),
+                        borderColor: const Color(0xFF9785BA),
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
