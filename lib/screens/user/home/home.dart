@@ -169,7 +169,9 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: classDataByCategory['인기']?.length ?? 0,
+                      itemCount: (classDataByCategory['인기']?.length ?? 0) > 3
+                          ? 3
+                          : (classDataByCategory['인기']?.length ?? 0),
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
                         final data = classDataByCategory['인기']![index];

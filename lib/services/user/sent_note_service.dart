@@ -7,7 +7,9 @@ class SentNoteService {
   final String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   Future<List<SentNote>> fetchSentNotes(int userId) async {
-    final response = await http.get(Uri.parse('$baseUrl/api/matching-requests/user/$userId'));
+    final response = await http
+        .get(Uri.parse('$baseUrl/api/matching-requests/user/$userId'))
+        .timeout(const Duration(seconds: 10));
     if (response.statusCode == 200) {
       final List data = json.decode(response.body);
       return data.map((e) => SentNote.fromJson(e)).toList();

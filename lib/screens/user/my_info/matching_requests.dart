@@ -50,7 +50,7 @@ class _MatchingRequestsState extends State<MatchingRequests> {
           ? const Center(child: Text('유저 정보를 불러오는 중입니다.'))
           : sentNoteProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : sentNoteProvider.notes.isEmpty
+          : (sentNoteProvider.notes.isEmpty && (sentNoteProvider.error == null || sentNoteProvider.error != null))
           ? const Center(child: Text('매칭 신청 내역이 없습니다.'))
           : ListView.builder(
               itemCount: sentNoteProvider.notes.length,
