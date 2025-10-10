@@ -52,7 +52,7 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 32),
-                SignupStepIndicator(currentStep: 4, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
+                SignupStepIndicator(currentStep: 4, totalSteps: 5, stepLabels: ['이름', '이메일', '나이', '성별', '주소']),
                 const SizedBox(height: 24),
                 const Padding(
                   padding: EdgeInsets.only(bottom: 24),
@@ -136,7 +136,7 @@ class _AddressSignupScreenState extends State<AddressSignupScreen> {
                         textColor: const Color(0xFF9785BA),
                         borderColor: const Color(0xFF9785BA),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                          Navigator.pushNamed(context, '/signup-gender');
                         },
                       ),
                     ],

@@ -12,6 +12,7 @@ class AddressSearchPopupV2 extends StatefulWidget {
 
 class _AddressSearchPopupV2State extends State<AddressSearchPopupV2> {
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   List<String> _results = [];
   bool _isSearching = false;
   String? _error = '검색어를 입력해주세요.';
@@ -19,6 +20,7 @@ class _AddressSearchPopupV2State extends State<AddressSearchPopupV2> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -108,7 +110,9 @@ class _AddressSearchPopupV2State extends State<AddressSearchPopupV2> {
                       height: 190,
                       child: Scrollbar(
                         thumbVisibility: true,
+                        controller: _scrollController,
                         child: ListView.builder(
+                          controller: _scrollController,
                           itemCount: _results.length,
                           itemBuilder: (context, idx) {
                             return Card(

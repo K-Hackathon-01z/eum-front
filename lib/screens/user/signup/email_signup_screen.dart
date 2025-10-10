@@ -39,7 +39,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 32),
-                SignupStepIndicator(currentStep: 1, totalSteps: 5, stepLabels: ['닉네임', '이메일', '나이', '성별', '주소']),
+                SignupStepIndicator(currentStep: 1, totalSteps: 5, stepLabels: ['이름', '이메일', '나이', '성별', '주소']),
                 const SizedBox(height: 16),
                 const Padding(
                   padding: EdgeInsets.only(bottom: 24),
@@ -221,7 +221,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                         textColor: const Color(0xFF9785BA),
                         borderColor: const Color(0xFF9785BA),
                         onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                          Navigator.pushNamed(context, '/signup-name');
                         },
                       ),
                     ],
