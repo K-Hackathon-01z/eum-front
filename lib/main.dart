@@ -24,8 +24,7 @@ void main() async {
   await dotenv.load(fileName: '.env');
 
   // Google Maps Android 설정 (선택사항, 성능 향상에 도움)
-  final GoogleMapsFlutterPlatform mapsImplementation =
-      GoogleMapsFlutterPlatform.instance;
+  final GoogleMapsFlutterPlatform mapsImplementation = GoogleMapsFlutterPlatform.instance;
   if (mapsImplementation is GoogleMapsFlutterAndroid) {
     mapsImplementation.useAndroidViewSurface = true;
   }
@@ -59,6 +58,8 @@ class PreviewApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
+      themeMode: ThemeMode.system,
       initialRoute: '/',
       routes: appRoutes,
       debugShowCheckedModeBanner: false,
