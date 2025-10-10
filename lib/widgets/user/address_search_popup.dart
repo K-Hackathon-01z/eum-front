@@ -105,40 +105,43 @@ class _AddressSearchPopupV2State extends State<AddressSearchPopupV2> {
                     ),
                   if (_results.isNotEmpty)
                     SizedBox(
-                      height: 200,
-                      child: ListView.builder(
-                        itemCount: _results.length,
-                        itemBuilder: (context, idx) {
-                          return Card(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            elevation: 0,
-                            margin: const EdgeInsets.symmetric(vertical: 6),
-                            color: const Color(0xFFF5F2FA),
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(12),
-                              onTap: () {
-                                widget.onSelect?.call(_results[idx]);
-                                Navigator.of(context).pop();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.home, color: Color(0xFF9785BA), size: 20),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(
-                                        _results[idx],
-                                        style: const TextStyle(fontSize: 16, color: Color(0xFF3B2D5B)),
-                                        overflow: TextOverflow.ellipsis,
+                      height: 190,
+                      child: Scrollbar(
+                        thumbVisibility: true,
+                        child: ListView.builder(
+                          itemCount: _results.length,
+                          itemBuilder: (context, idx) {
+                            return Card(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              elevation: 0,
+                              margin: const EdgeInsets.symmetric(vertical: 6),
+                              color: const Color(0xFFF5F2FA),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {
+                                  widget.onSelect?.call(_results[idx]);
+                                  Navigator.of(context).pop();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.home, color: Color(0xFF9785BA), size: 20),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Text(
+                                          _results[idx],
+                                          style: const TextStyle(fontSize: 16, color: Color(0xFF3B2D5B)),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                 ],
