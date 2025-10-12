@@ -26,15 +26,15 @@ class SubCategoryTab extends StatelessWidget {
       ),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24), // 좌우 여백 넉넉하게
         itemCount: subCategories.length,
-        separatorBuilder: (_, __) => SizedBox(width: separatorWidth),
+        separatorBuilder: (_, __) => const SizedBox(width: 18), // 탭 사이 간격 넉넉하게
         itemBuilder: (context, idx) {
           final selected = selectedIndex == idx;
           return GestureDetector(
             onTap: () => onSelected(idx),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   subCategories[idx],
@@ -45,14 +45,7 @@ class SubCategoryTab extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Container(
-                  width: 28,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: selected ? Colors.black : Colors.transparent,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
+                // 밑줄 제거
               ],
             ),
           );

@@ -16,9 +16,9 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
   final List<String> categories = ['인기', '공예', '섬유', '식문화', '예술', '기타'];
   int selectedCategory = 0;
 
-  // 세부 카테고리 맵으로 관리 (확장성)
+  // 세부 카테고리 맵으로 관리
   final Map<String, List<String>> subCategoryMap = {
-    '공예': ['금속', '나전 칠기', '도자기', '매듭장', '칠장', '한지'],
+    '공예': ['금속 공예', '나전칠기', '도자기', '매듭장', '칠장', '한지'],
     '섬유': ['홍염장', '한복장', '자수', '매듭'],
     '식문화': ['전통주', '장', '다과'],
     '예술': ['판소리', '민요', '탈춤', '무용'],
@@ -29,13 +29,28 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double horizontalPadding = 32; // 좌우 16씩
+    final double horizontalPadding = 32;
     final int categoryCount = categories.length;
-    final double minTextWidth = 32; // 카테고리 텍스트의 최소 너비(더 넓은 간격)
+    final double minTextWidth = 32;
     final double separatorWidth =
         (screenWidth - horizontalPadding - (categoryCount * minTextWidth)) / (categoryCount - 1);
-    final classDataByCategory = Provider.of<ClassDataProvider>(context).classDataByCategory;
-    final classData = classDataByCategory[categories[selectedCategory]] ?? [];
+
+    final onedayClassList = Provider.of<ClassDataProvider>(context).onedayClassList;
+
+    // 인기 탭은 interestedCount 기준 TOP3만 보여줌
+    List<dynamic> classData;
+    if (categories[selectedCategory] == '인기') {
+      classData = (onedayClassList.toList()..sort((a, b) => b.interestedCount.compareTo(a.interestedCount)))
+          .take(3)
+          .toList();
+    } else if (subCategoryMap.containsKey(categories[selectedCategory])) {
+      final subCategories = subCategoryMap[categories[selectedCategory]]!;
+      final selectedSub = subCategories[selectedSubCategory];
+      classData = onedayClassList.where((c) => c.subCategory == selectedSub).toList();
+    } else {
+      // 기타 등 세부 카테고리 없는 경우 전체 리스트 반환
+      classData = onedayClassList;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -144,7 +159,7 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
               },
             ),
           ),
-          // 공예/섬유 등 세부 카테고리 노출
+          // 세부 카테고리 노출
           if (subCategoryMap.containsKey(categories[selectedCategory]))
             SubCategoryTab(
               subCategories: subCategoryMap[categories[selectedCategory]]!,
@@ -166,43 +181,51 @@ class _OnedayClassScreenState extends State<OnedayClassScreen> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: GridView.builder(
-                itemCount: classData.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 18,
-                  crossAxisSpacing: 18,
-                  childAspectRatio: 0.55,
-                ),
-                itemBuilder: (context, idx) {
-                  final data = classData[idx];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => CardDetailScreen(
-                            imageUrl: data['image'] ?? null,
-                            title: data['title']!,
-                            desc: data['desc']!,
-                            price: data['price']!,
-                            region: data['region']!,
-                            capacity: 0, // 필요시 데이터 추가
-                            interest: 0, // 필요시 데이터 추가
+              child: classData.isEmpty
+                  ? Center(
+                      child: Text(
+                        '곧 새로운 강의가 추가될 예정입니다.',
+                        style: TextStyle(fontSize: 18, color: Colors.grey, fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : GridView.builder(
+                      itemCount: classData.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 18,
+                        crossAxisSpacing: 18,
+                        childAspectRatio: 0.55,
+                      ),
+                      itemBuilder: (context, idx) {
+                        final data = classData[idx];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => CardDetailScreen(
+                                  imageUrl: data.photoUrl,
+                                  title: data.title,
+                                  desc: data.description,
+                                  price: data.price.toString(),
+                                  region: data.location,
+                                  capacity: data.capacity,
+                                  interest: data.interestedCount,
+                                ),
+                              ),
+                            );
+                          },
+                          child: OnedayClassCard(
+                            title: data.title,
+                            region: data.location,
+                            desc: data.description,
+                            price: '${data.price}원',
+                            imagePath: data.photoUrl,
                           ),
-                        ),
-                      );
-                    },
-                    child: OnedayClassCard(
-                      title: data['title']!,
-                      region: data['region']!,
-                      desc: data['desc']!,
-                      price: data['price']!,
-                      imagePath: data['image'],
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ),
         ],

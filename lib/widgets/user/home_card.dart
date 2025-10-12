@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class HomeCard extends StatelessWidget {
   final String imagePath;
   final String title;
-  final String price;
+  final int price;
 
   const HomeCard({super.key, required this.imagePath, required this.title, required this.price});
 
@@ -42,7 +42,7 @@ class HomeCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    price,
+                    price.toString() + '원',
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                     textAlign: TextAlign.left,
                   ),

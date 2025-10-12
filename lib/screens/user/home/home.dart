@@ -100,7 +100,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final double bannerHeight = 108;
 
-    final classDataByCategory = Provider.of<ClassDataProvider>(context).classDataByCategory;
+    final onedayClassList = Provider.of<ClassDataProvider>(context).onedayClassList;
+    // interestedCount 기준 내림차순 정렬 후 상위 3개 추출
+    final top3Classes = (onedayClassList.toList()..sort((a, b) => b.interestedCount.compareTo(a.interestedCount)))
+        .take(3)
+        .toList();
+
+    final nearClasses = onedayClassList.where((c) => c.location == '서울시 광진구').take(3).toList();
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -169,17 +176,11 @@ class HomeScreen extends StatelessWidget {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: (classDataByCategory['인기']?.length ?? 0) > 3
-                          ? 3
-                          : (classDataByCategory['인기']?.length ?? 0),
+                      itemCount: top3Classes.length,
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
                       itemBuilder: (context, index) {
-                        final data = classDataByCategory['인기']![index];
-                        return HomeCard(
-                          imagePath: data['image'] ?? '',
-                          title: data['title'] ?? '',
-                          price: data['price'] ?? '',
-                        );
+                        final data = top3Classes[index];
+                        return HomeCard(imagePath: data.photoUrl, title: data.title, price: data.price);
                       },
                     ),
                   ),
@@ -187,7 +188,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // 위치 기반 추천 강의
+          // 위치 기반 추천 강의 (서울시 광진구)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: Container(
@@ -215,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Text('사용자 정보 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            const Text('사용자 위치 기반 추천 강의', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                             const SizedBox(width: 4),
                             Icon(Icons.place, size: 20),
                           ],
@@ -231,21 +232,20 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 170,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: 3,
-                      separatorBuilder: (_, __) => const SizedBox(width: 12),
-                      itemBuilder: (context, index) {
-                        final classData = [
-                          {'image': 'assets/images/home/home04.png', 'desc': '홍염장 입문', 'price': '25,000원'},
-                          {'image': 'assets/images/home/home05.png', 'desc': '금속 공예 체험 준비', 'price': '30,000원'},
-                          {'image': 'assets/images/home/home06.png', 'desc': '도자기 기초 과정', 'price': '41,000원'},
-                        ];
-                        final data = classData[index % classData.length];
-                        return HomeCard(imagePath: data['image']!, title: data['desc']!, price: data['price']!);
-                      },
-                    ),
+                    child: nearClasses.isEmpty
+                        ? Center(
+                            child: Text('강의가 없습니다.', style: TextStyle(color: Colors.grey)),
+                          )
+                        : ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            itemCount: nearClasses.length,
+                            separatorBuilder: (_, __) => const SizedBox(width: 12),
+                            itemBuilder: (context, index) {
+                              final data = nearClasses[index];
+                              return HomeCard(imagePath: data.photoUrl, title: data.title, price: data.price);
+                            },
+                          ),
                   ),
                 ],
               ),
