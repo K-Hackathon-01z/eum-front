@@ -2,7 +2,6 @@ import 'package:eum_demo/widgets/user/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/auth_provider.dart';
-import '../../../providers/user_provider.dart';
 import '../../../providers/sent_note_provider.dart';
 
 String formatDate(String date) {
@@ -17,18 +16,22 @@ class MatchingRequests extends StatefulWidget {
 }
 
 class _MatchingRequestsState extends State<MatchingRequests> {
-  bool _userRequested = false;
+  bool _notesRequested = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final String email = authProvider.email ?? '';
-    if (!_userRequested && authProvider.email == null && !authProvider.isLoading && email.isNotEmpty) {
-      _userRequested = true;
-      Future.microtask(() => userProvider.fetchUserByEmail(email));
-    }
+  void initState() {
+    super.initState();
+    // user 정보는 기존대로 didChangeDependencies에서 처리
+    // 매칭 신청 내역은 initState에서 한 번만 처리
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final sentNoteProvider = Provider.of<SentNoteProvider>(context, listen: false);
+      final int? userId = authProvider.id;
+      if (userId != null && !_notesRequested) {
+        _notesRequested = true;
+        sentNoteProvider.fetchSentNotes(userId);
+      }
+    });
   }
 
   @override
@@ -37,9 +40,6 @@ class _MatchingRequestsState extends State<MatchingRequests> {
     final sentNoteProvider = Provider.of<SentNoteProvider>(context);
 
     final int? userId = authProvider.id;
-    if (userId != null && sentNoteProvider.notes.isEmpty && !sentNoteProvider.isLoading) {
-      sentNoteProvider.fetchSentNotes(userId);
-    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFF1F1F1),
@@ -50,7 +50,7 @@ class _MatchingRequestsState extends State<MatchingRequests> {
           ? const Center(child: Text('유저 정보를 불러오는 중입니다.'))
           : sentNoteProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : (sentNoteProvider.notes.isEmpty && (sentNoteProvider.error == null || sentNoteProvider.error != null))
+          : sentNoteProvider.notes.isEmpty
           ? const Center(child: Text('매칭 신청 내역이 없습니다.'))
           : ListView.builder(
               itemCount: sentNoteProvider.notes.length,
