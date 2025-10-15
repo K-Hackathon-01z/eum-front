@@ -18,49 +18,49 @@ class OnedayClassCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE0E0E0), width: 1.2),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 180,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final double size = constraints.maxWidth;
-                  if (imagePath != null && imagePath!.isNotEmpty) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(18),
-                      child: Image.asset(imagePath!, width: size, height: size, fit: BoxFit.cover),
-                    );
-                  } else {
-                    return Container(
-                      width: size,
-                      height: size,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFD9D9D9),
+    return SingleChildScrollView(
+      child: Container(
+        width: 200,
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: const Color(0xFFE0E0E0), width: 1.2),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.07), blurRadius: 10, offset: const Offset(0, 4))],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 180,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final double size = constraints.maxWidth;
+                    if (imagePath != null && imagePath!.isNotEmpty) {
+                      return ClipRRect(
                         borderRadius: BorderRadius.circular(18),
-                      ),
-                      alignment: Alignment.center,
-                    );
-                  }
-                },
+                        child: Image.asset(imagePath!, width: size, height: size, fit: BoxFit.cover),
+                      );
+                    } else {
+                      return Container(
+                        width: size,
+                        height: size,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFD9D9D9),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        alignment: Alignment.center,
+                      );
+                    }
+                  },
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            child: SingleChildScrollView(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -83,8 +83,8 @@ class OnedayClassCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
