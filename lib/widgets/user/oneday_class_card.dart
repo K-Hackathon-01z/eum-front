@@ -58,28 +58,30 @@ class OnedayClassCard extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  region,
-                  style: const TextStyle(fontSize: 13, color: Colors.black54, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 10),
-                Text(desc, style: const TextStyle(fontSize: 13, color: Colors.black, height: 1.3)),
-                const SizedBox(height: 10),
-                Text(
-                  price,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-                ),
-              ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    region,
+                    style: const TextStyle(fontSize: 13, color: Colors.black54, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(desc, style: const TextStyle(fontSize: 13, color: Colors.black, height: 1.3)),
+                  const SizedBox(height: 10),
+                  Text(
+                    price,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
