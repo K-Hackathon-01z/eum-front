@@ -9,7 +9,13 @@ class UsageHistory extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: '예약 내역'),
-      body: Container(),
+      body: const Center(
+        child: Text(
+          '예약 내역이 없습니다.',
+          style: TextStyle(fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w500),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }

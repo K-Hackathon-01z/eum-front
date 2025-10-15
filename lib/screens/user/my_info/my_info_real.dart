@@ -128,7 +128,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           ),
           Divider(height: 1, thickness: 1, color: Colors.grey[300]),
           ListTile(
-            title: Text('나의 관심 등록 클래스'),
+            title: Text('관심 등록 클래스'),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right),
               onPressed: () {
