@@ -25,7 +25,8 @@ fun readMapsKey(): String =
 
 android {
     namespace = "com.example.eum_demo"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35  // 36에서 35로 변경
+    buildToolsVersion = "35.0.0"  // 안정 버전 명시
     ndkVersion = "27.0.12077973"
 
     defaultConfig {
@@ -34,7 +35,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdkVersion (flutter.minSdkVersion)
-        targetSdk = 36
+        targetSdk = 35  // 36에서 35로 변경
         versionCode = flutter.versionCode
         versionName = flutter.versionName
 

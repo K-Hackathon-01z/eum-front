@@ -59,7 +59,6 @@ class ProfilePage extends StatelessWidget {
               segments: const [
                 ButtonSegment(value: 1.0, label: Text('보통')),
                 ButtonSegment(value: 1.2, label: Text('크게')),
-                ButtonSegment(value: 1.35, label: Text('아주 크게')),
               ],
               selected: {textScale},
               onSelectionChanged: (s) {
