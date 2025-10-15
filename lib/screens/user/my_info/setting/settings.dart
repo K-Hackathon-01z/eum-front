@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eum_demo/widgets/user/appbar.dart';
-import './change_profile.dart';
 import 'package:eum_demo/widgets/user/popup.dart';
 import 'package:provider/provider.dart';
 import 'package:eum_demo/providers/auth_provider.dart';
@@ -21,19 +20,6 @@ class SettingsScreen extends StatelessWidget {
         color: Colors.white, // 배경색
         child: Column(
           children: [
-            // 비밀번호 변경 섹션
-            ListTile(
-              title: Text('사용자 정보 변경하기'),
-              trailing: IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: () {
-                  // 여기서 원하는 페이지로 이동
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ChangeProfile()));
-                },
-              ),
-            ),
-
-            Divider(height: 1, thickness: 1, color: Colors.grey[300]),
             // 계정 탈퇴
             ListTile(
               title: Text('계정 탈퇴'),
