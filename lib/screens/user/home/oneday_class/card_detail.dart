@@ -100,7 +100,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
                       const SizedBox(height: 10),
                       Text(widget.desc, style: const TextStyle(fontSize: 16)),
                       const SizedBox(height: 10),
-                      Text(widget.price, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                      Text('${widget.price}원', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 16),
                       Row(
                         children: [
