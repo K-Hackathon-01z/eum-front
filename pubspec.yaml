@@ -2,7 +2,7 @@
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icons/eum.png"
+  image_path: "assets/icons/eum_white.png"
 name: eum_demo
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
